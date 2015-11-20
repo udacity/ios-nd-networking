@@ -108,7 +108,7 @@ class TMDBClient : NSObject {
     }
     
     // create a URL from parameters
-    private func tmdbURLFromParameters(parameters: [String:AnyObject], withPathExtension: String? = nil) -> NSURL {
+    class func tmdbURLFromParameters(parameters: [String:AnyObject], withPathExtension: String? = nil) -> NSURL {
         
         let components = NSURLComponents()
         components.scheme = TMDBClient.Constants.ApiScheme

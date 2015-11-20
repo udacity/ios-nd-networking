@@ -50,11 +50,6 @@ class LoginViewController: UIViewController {
             Bonus Step: Go ahead and get the user id 😄!
         */
         getRequestToken()
-        
-        tmdbClient.taskForGETImage("medium", filePath: "some path") { (imageData, error) in
-            <#code#>
-        }
-        
     }
     
     // MARK: Login
