@@ -1,0 +1,317 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		A9A3A2081BEBB443009BE8E1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A3A2071BEBB443009BE8E1 /* AppDelegate.swift */; };
+		A9A3A20A1BEBB443009BE8E1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A3A2091BEBB443009BE8E1 /* ViewController.swift */; };
+		A9A3A20D1BEBB443009BE8E1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A9A3A20B1BEBB443009BE8E1 /* Main.storyboard */; };
+		A9A3A20F1BEBB443009BE8E1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A9A3A20E1BEBB443009BE8E1 /* Assets.xcassets */; };
+		A9A3A2121BEBB443009BE8E1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A9A3A2101BEBB443009BE8E1 /* LaunchScreen.storyboard */; };
+		A9A3A21A1BEBB46B009BE8E1 /* GCDBlackBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A3A2191BEBB46B009BE8E1 /* GCDBlackBox.swift */; };
+		A9A3A2241BEBD15B009BE8E1 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A3A2231BEBD15B009BE8E1 /* Constants.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		A9A3A2041BEBB443009BE8E1 /* FlickFinder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FlickFinder.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A9A3A2071BEBB443009BE8E1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		A9A3A2091BEBB443009BE8E1 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		A9A3A20C1BEBB443009BE8E1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		A9A3A20E1BEBB443009BE8E1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		A9A3A2111BEBB443009BE8E1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		A9A3A2131BEBB443009BE8E1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A9A3A2191BEBB46B009BE8E1 /* GCDBlackBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GCDBlackBox.swift; sourceTree = "<group>"; };
+		A9A3A2231BEBD15B009BE8E1 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		A9A3A2011BEBB443009BE8E1 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		A9A3A1FB1BEBB443009BE8E1 = {
+			isa = PBXGroup;
+			children = (
+				A9A3A2061BEBB443009BE8E1 /* FlickFinder */,
+				A9A3A2051BEBB443009BE8E1 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		A9A3A2051BEBB443009BE8E1 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A9A3A2041BEBB443009BE8E1 /* FlickFinder.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A9A3A2061BEBB443009BE8E1 /* FlickFinder */ = {
+			isa = PBXGroup;
+			children = (
+				A9A3A2071BEBB443009BE8E1 /* AppDelegate.swift */,
+				A9A3A2091BEBB443009BE8E1 /* ViewController.swift */,
+				A9A3A2231BEBD15B009BE8E1 /* Constants.swift */,
+				A9A3A2191BEBB46B009BE8E1 /* GCDBlackBox.swift */,
+				A9A3A21B1BEBB478009BE8E1 /* Assets */,
+				A9A3A21C1BEBB47E009BE8E1 /* Supporting Files */,
+			);
+			path = FlickFinder;
+			sourceTree = "<group>";
+		};
+		A9A3A21B1BEBB478009BE8E1 /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				A9A3A20E1BEBB443009BE8E1 /* Assets.xcassets */,
+				A9A3A20B1BEBB443009BE8E1 /* Main.storyboard */,
+				A9A3A2101BEBB443009BE8E1 /* LaunchScreen.storyboard */,
+			);
+			name = Assets;
+			sourceTree = "<group>";
+		};
+		A9A3A21C1BEBB47E009BE8E1 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				A9A3A2131BEBB443009BE8E1 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		A9A3A2031BEBB443009BE8E1 /* FlickFinder */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A9A3A2161BEBB443009BE8E1 /* Build configuration list for PBXNativeTarget "FlickFinder" */;
+			buildPhases = (
+				A9A3A2001BEBB443009BE8E1 /* Sources */,
+				A9A3A2011BEBB443009BE8E1 /* Frameworks */,
+				A9A3A2021BEBB443009BE8E1 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = FlickFinder;
+			productName = FlickFinder;
+			productReference = A9A3A2041BEBB443009BE8E1 /* FlickFinder.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		A9A3A1FC1BEBB443009BE8E1 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0710;
+				LastUpgradeCheck = 0710;
+				ORGANIZATIONNAME = Udacity;
+				TargetAttributes = {
+					A9A3A2031BEBB443009BE8E1 = {
+						CreatedOnToolsVersion = 7.1;
+					};
+				};
+			};
+			buildConfigurationList = A9A3A1FF1BEBB443009BE8E1 /* Build configuration list for PBXProject "FlickFinder" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = A9A3A1FB1BEBB443009BE8E1;
+			productRefGroup = A9A3A2051BEBB443009BE8E1 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				A9A3A2031BEBB443009BE8E1 /* FlickFinder */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		A9A3A2021BEBB443009BE8E1 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A9A3A2121BEBB443009BE8E1 /* LaunchScreen.storyboard in Resources */,
+				A9A3A20F1BEBB443009BE8E1 /* Assets.xcassets in Resources */,
+				A9A3A20D1BEBB443009BE8E1 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		A9A3A2001BEBB443009BE8E1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A9A3A20A1BEBB443009BE8E1 /* ViewController.swift in Sources */,
+				A9A3A21A1BEBB46B009BE8E1 /* GCDBlackBox.swift in Sources */,
+				A9A3A2081BEBB443009BE8E1 /* AppDelegate.swift in Sources */,
+				A9A3A2241BEBD15B009BE8E1 /* Constants.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		A9A3A20B1BEBB443009BE8E1 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A9A3A20C1BEBB443009BE8E1 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		A9A3A2101BEBB443009BE8E1 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A9A3A2111BEBB443009BE8E1 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		A9A3A2141BEBB443009BE8E1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		A9A3A2151BEBB443009BE8E1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		A9A3A2171BEBB443009BE8E1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = FlickFinder/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.Udacity.FlickFinder;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		A9A3A2181BEBB443009BE8E1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = FlickFinder/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.Udacity.FlickFinder;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		A9A3A1FF1BEBB443009BE8E1 /* Build configuration list for PBXProject "FlickFinder" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A9A3A2141BEBB443009BE8E1 /* Debug */,
+				A9A3A2151BEBB443009BE8E1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A9A3A2161BEBB443009BE8E1 /* Build configuration list for PBXNativeTarget "FlickFinder" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A9A3A2171BEBB443009BE8E1 /* Debug */,
+				A9A3A2181BEBB443009BE8E1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = A9A3A1FC1BEBB443009BE8E1 /* Project object */;
+}
