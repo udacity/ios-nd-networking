@@ -31,6 +31,7 @@ extension TMDBClient {
             if success {
                 
                 // success! we have the requestToken!
+                print(requestToken)
                 self.requestToken = requestToken
                 
                 self.loginWithToken(requestToken, hostViewController: hostViewController) { (success, errorString) in
@@ -76,6 +77,13 @@ extension TMDBClient {
         /* 2. Make the request */
         /* 3. Send the desired value(s) to completion handler */
         
+        /*
+        
+        taskForGETMethod(method, parameters: parameters) { (results, error) in
+        
+        }
+        
+        */
     }
     
     private func loginWithToken(requestToken: String?, hostViewController: UIViewController, completionHandlerForLogin: (success: Bool, errorString: String?) -> Void) {
@@ -101,6 +109,13 @@ extension TMDBClient {
         /* 2. Make the request */
         /* 3. Send the desired value(s) to completion handler */
         
+        /*
+        
+        taskForGETMethod(method, parameters: parameters) { (results, error) in
+        
+        }
+        
+        */
     }
     
     private func getUserID(completionHandlerForUserID: (success: Bool, userID: Int?, errorString: String?) -> Void) {
@@ -109,6 +124,13 @@ extension TMDBClient {
         /* 2. Make the request */
         /* 3. Send the desired value(s) to completion handler */
         
+        /*
+        
+        taskForGETMethod(method, parameters: parameters) { (results, error) in
+        
+        }
+        
+        */
     }
     
     // MARK: GET Convenience Methods
