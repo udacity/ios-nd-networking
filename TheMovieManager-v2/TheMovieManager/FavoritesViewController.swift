@@ -24,13 +24,24 @@ class FavoritesViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // create and set the logout button
         parentViewController!.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Reply, target: self, action: "logout")
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        
+        TMDBClient.sharedInstance().getFavoriteMovies { (movies, error) in
+            if let movies = movies {
+                self.movies = movies
+                performUIUpdatesOnMain {
+                    self.moviesTableView.reloadData()
+                }
+            } else {
+                print(error)
+            }
+        }
     }
     
     // MARK: Logout
@@ -55,7 +66,19 @@ extension FavoritesViewController: UITableViewDelegate, UITableViewDataSource {
         cell.textLabel!.text = movie.title
         cell.imageView!.image = UIImage(named: "Film")
         cell.imageView!.contentMode = UIViewContentMode.ScaleAspectFit
-                
+        
+        if let posterPath = movie.posterPath {
+            TMDBClient.sharedInstance().taskForGETImage(TMDBClient.PosterSizes.RowPoster, filePath: posterPath, completionHandlerForImage: { (imageData, error) in
+                if let image = UIImage(data: imageData!) {
+                    performUIUpdatesOnMain {
+                        cell.imageView!.image = image
+                    }
+                } else {
+                    print(error)
+                }
+            })
+        }
+        
         return cell
     }
     
@@ -63,7 +86,7 @@ extension FavoritesViewController: UITableViewDelegate, UITableViewDataSource {
         return movies.count
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {        
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let controller = storyboard!.instantiateViewControllerWithIdentifier("MovieDetailViewController") as! MovieDetailViewController
         controller.movie = movies[indexPath.row]
         navigationController!.pushViewController(controller, animated: true)

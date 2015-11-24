@@ -80,6 +80,14 @@ class TMDBConfig: NSObject, NSCoding {
     
     private func updateConfiguration() {
         
+        TMDBClient.sharedInstance().getConfig() { (didSucceed, error) in
+            if let error = error {
+                print("Error updating config: \(error.localizedDescription)")
+            } else {
+                print("Updated Config: \(didSucceed)")
+                self.save()
+            }
+        }
     }
     
     // MARK: NSCoding
