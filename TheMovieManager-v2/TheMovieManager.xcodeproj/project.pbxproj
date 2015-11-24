@@ -1,0 +1,397 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		A9855BAD1BEC3EDB00000031 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9855BAC1BEC3EDB00000031 /* AppDelegate.swift */; };
+		A9855BB21BEC3EDB00000031 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A9855BB01BEC3EDB00000031 /* Main.storyboard */; };
+		A9855BB41BEC3EDB00000031 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A9855BB31BEC3EDB00000031 /* Assets.xcassets */; };
+		A9855BB71BEC3EDB00000031 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A9855BB51BEC3EDB00000031 /* LaunchScreen.storyboard */; };
+		A9855BC21BEC40C400000031 /* BorderedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9855BC01BEC40C400000031 /* BorderedButton.swift */; };
+		A9855BC51BEC411E00000031 /* TMDBConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9855BC41BEC411E00000031 /* TMDBConstants.swift */; };
+		A9855BC71BEC414700000031 /* TMDBClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9855BC61BEC414700000031 /* TMDBClient.swift */; };
+		A9855BC91BEC415F00000031 /* TMDBConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9855BC81BEC415F00000031 /* TMDBConfig.swift */; };
+		A9855BCD1BEC41A800000031 /* TMDBAuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9855BCA1BEC41A800000031 /* TMDBAuthViewController.swift */; };
+		A9855BCE1BEC41A800000031 /* TMDBConvenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9855BCB1BEC41A800000031 /* TMDBConvenience.swift */; };
+		A9855BCF1BEC41A800000031 /* TMDBMovie.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9855BCC1BEC41A800000031 /* TMDBMovie.swift */; };
+		A9855BD11BEC41F500000031 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9855BD01BEC41F500000031 /* LoginViewController.swift */; };
+		A9855BD61BEC42A200000031 /* GCDBlackBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9855BD51BEC42A200000031 /* GCDBlackBox.swift */; };
+		A9855BDD1BEC4DEB00000031 /* FavoritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9855BD91BEC4DEB00000031 /* FavoritesViewController.swift */; };
+		A9855BDE1BEC4DEB00000031 /* MovieDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9855BDA1BEC4DEB00000031 /* MovieDetailViewController.swift */; };
+		A9855BDF1BEC4DEB00000031 /* MoviePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9855BDB1BEC4DEB00000031 /* MoviePickerViewController.swift */; };
+		A9855BE01BEC4DEB00000031 /* WatchlistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9855BDC1BEC4DEB00000031 /* WatchlistViewController.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		A9855BA91BEC3EDB00000031 /* TheMovieManager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TheMovieManager.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A9855BAC1BEC3EDB00000031 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		A9855BB11BEC3EDB00000031 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		A9855BB31BEC3EDB00000031 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		A9855BB61BEC3EDB00000031 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		A9855BB81BEC3EDB00000031 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A9855BC01BEC40C400000031 /* BorderedButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BorderedButton.swift; sourceTree = "<group>"; };
+		A9855BC41BEC411E00000031 /* TMDBConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TMDBConstants.swift; sourceTree = "<group>"; };
+		A9855BC61BEC414700000031 /* TMDBClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TMDBClient.swift; sourceTree = "<group>"; };
+		A9855BC81BEC415F00000031 /* TMDBConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TMDBConfig.swift; sourceTree = "<group>"; };
+		A9855BCA1BEC41A800000031 /* TMDBAuthViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TMDBAuthViewController.swift; sourceTree = "<group>"; };
+		A9855BCB1BEC41A800000031 /* TMDBConvenience.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TMDBConvenience.swift; sourceTree = "<group>"; };
+		A9855BCC1BEC41A800000031 /* TMDBMovie.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TMDBMovie.swift; sourceTree = "<group>"; };
+		A9855BD01BEC41F500000031 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		A9855BD51BEC42A200000031 /* GCDBlackBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GCDBlackBox.swift; sourceTree = "<group>"; };
+		A9855BD91BEC4DEB00000031 /* FavoritesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoritesViewController.swift; sourceTree = "<group>"; };
+		A9855BDA1BEC4DEB00000031 /* MovieDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovieDetailViewController.swift; sourceTree = "<group>"; };
+		A9855BDB1BEC4DEB00000031 /* MoviePickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoviePickerViewController.swift; sourceTree = "<group>"; };
+		A9855BDC1BEC4DEB00000031 /* WatchlistViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WatchlistViewController.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		A9855BA61BEC3EDB00000031 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		A9855BA01BEC3EDB00000031 = {
+			isa = PBXGroup;
+			children = (
+				A9855BAB1BEC3EDB00000031 /* TheMovieManager */,
+				A9855BAA1BEC3EDB00000031 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		A9855BAA1BEC3EDB00000031 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A9855BA91BEC3EDB00000031 /* TheMovieManager.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A9855BAB1BEC3EDB00000031 /* TheMovieManager */ = {
+			isa = PBXGroup;
+			children = (
+				A9855BAC1BEC3EDB00000031 /* AppDelegate.swift */,
+				A9855BD51BEC42A200000031 /* GCDBlackBox.swift */,
+				A9855BD21BEC425F00000031 /* Model */,
+				A9855BD41BEC426A00000031 /* View */,
+				A9855BD31BEC426300000031 /* Controller */,
+				A9855BBE1BEC3EE300000031 /* Assets */,
+				A9855BBF1BEC3EEF00000031 /* Supporting Files */,
+			);
+			path = TheMovieManager;
+			sourceTree = "<group>";
+		};
+		A9855BBE1BEC3EE300000031 /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				A9855BB31BEC3EDB00000031 /* Assets.xcassets */,
+				A9855BB01BEC3EDB00000031 /* Main.storyboard */,
+				A9855BB51BEC3EDB00000031 /* LaunchScreen.storyboard */,
+			);
+			name = Assets;
+			sourceTree = "<group>";
+		};
+		A9855BBF1BEC3EEF00000031 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				A9855BB81BEC3EDB00000031 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		A9855BD21BEC425F00000031 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				A9855BD71BEC430C00000031 /* Clients */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		A9855BD31BEC426300000031 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				A9855BD01BEC41F500000031 /* LoginViewController.swift */,
+				A9855BDA1BEC4DEB00000031 /* MovieDetailViewController.swift */,
+				A9855BDB1BEC4DEB00000031 /* MoviePickerViewController.swift */,
+				A9855BD91BEC4DEB00000031 /* FavoritesViewController.swift */,
+				A9855BDC1BEC4DEB00000031 /* WatchlistViewController.swift */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		A9855BD41BEC426A00000031 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				A9855BC01BEC40C400000031 /* BorderedButton.swift */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		A9855BD71BEC430C00000031 /* Clients */ = {
+			isa = PBXGroup;
+			children = (
+				A9855BD81BEC431200000031 /* TMDB */,
+			);
+			name = Clients;
+			sourceTree = "<group>";
+		};
+		A9855BD81BEC431200000031 /* TMDB */ = {
+			isa = PBXGroup;
+			children = (
+				A9855BCA1BEC41A800000031 /* TMDBAuthViewController.swift */,
+				A9855BCB1BEC41A800000031 /* TMDBConvenience.swift */,
+				A9855BC61BEC414700000031 /* TMDBClient.swift */,
+				A9855BC41BEC411E00000031 /* TMDBConstants.swift */,
+				A9855BC81BEC415F00000031 /* TMDBConfig.swift */,
+				A9855BCC1BEC41A800000031 /* TMDBMovie.swift */,
+			);
+			name = TMDB;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		A9855BA81BEC3EDB00000031 /* TheMovieManager */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A9855BBB1BEC3EDB00000031 /* Build configuration list for PBXNativeTarget "TheMovieManager" */;
+			buildPhases = (
+				A9855BA51BEC3EDB00000031 /* Sources */,
+				A9855BA61BEC3EDB00000031 /* Frameworks */,
+				A9855BA71BEC3EDB00000031 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = TheMovieManager;
+			productName = TheMovieManager;
+			productReference = A9855BA91BEC3EDB00000031 /* TheMovieManager.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		A9855BA11BEC3EDB00000031 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0710;
+				LastUpgradeCheck = 0710;
+				ORGANIZATIONNAME = Udacity;
+				TargetAttributes = {
+					A9855BA81BEC3EDB00000031 = {
+						CreatedOnToolsVersion = 7.1;
+					};
+				};
+			};
+			buildConfigurationList = A9855BA41BEC3EDB00000031 /* Build configuration list for PBXProject "TheMovieManager" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = A9855BA01BEC3EDB00000031;
+			productRefGroup = A9855BAA1BEC3EDB00000031 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				A9855BA81BEC3EDB00000031 /* TheMovieManager */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		A9855BA71BEC3EDB00000031 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A9855BB71BEC3EDB00000031 /* LaunchScreen.storyboard in Resources */,
+				A9855BB41BEC3EDB00000031 /* Assets.xcassets in Resources */,
+				A9855BB21BEC3EDB00000031 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		A9855BA51BEC3EDB00000031 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A9855BAD1BEC3EDB00000031 /* AppDelegate.swift in Sources */,
+				A9855BCF1BEC41A800000031 /* TMDBMovie.swift in Sources */,
+				A9855BC91BEC415F00000031 /* TMDBConfig.swift in Sources */,
+				A9855BCE1BEC41A800000031 /* TMDBConvenience.swift in Sources */,
+				A9855BDE1BEC4DEB00000031 /* MovieDetailViewController.swift in Sources */,
+				A9855BD61BEC42A200000031 /* GCDBlackBox.swift in Sources */,
+				A9855BC71BEC414700000031 /* TMDBClient.swift in Sources */,
+				A9855BDD1BEC4DEB00000031 /* FavoritesViewController.swift in Sources */,
+				A9855BC51BEC411E00000031 /* TMDBConstants.swift in Sources */,
+				A9855BC21BEC40C400000031 /* BorderedButton.swift in Sources */,
+				A9855BE01BEC4DEB00000031 /* WatchlistViewController.swift in Sources */,
+				A9855BDF1BEC4DEB00000031 /* MoviePickerViewController.swift in Sources */,
+				A9855BD11BEC41F500000031 /* LoginViewController.swift in Sources */,
+				A9855BCD1BEC41A800000031 /* TMDBAuthViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		A9855BB01BEC3EDB00000031 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A9855BB11BEC3EDB00000031 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		A9855BB51BEC3EDB00000031 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A9855BB61BEC3EDB00000031 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		A9855BB91BEC3EDB00000031 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		A9855BBA1BEC3EDB00000031 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		A9855BBC1BEC3EDB00000031 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = TheMovieManager/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.Udacity.TheMovieManager;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		A9855BBD1BEC3EDB00000031 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = TheMovieManager/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.Udacity.TheMovieManager;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		A9855BA41BEC3EDB00000031 /* Build configuration list for PBXProject "TheMovieManager" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A9855BB91BEC3EDB00000031 /* Debug */,
+				A9855BBA1BEC3EDB00000031 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A9855BBB1BEC3EDB00000031 /* Build configuration list for PBXNativeTarget "TheMovieManager" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A9855BBC1BEC3EDB00000031 /* Debug */,
+				A9855BBD1BEC3EDB00000031 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = A9855BA11BEC3EDB00000031 /* Project object */;
+}
