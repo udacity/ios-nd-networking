@@ -21,13 +21,13 @@
     {
       "size" : "40x40",
       "idiom" : "iphone",
-      "filename" : "u_120.png",
+      "filename" : "u_120-1.png",
       "scale" : "3x"
     },
     {
       "size" : "60x60",
       "idiom" : "iphone",
-      "filename" : "u_120-1.png",
+      "filename" : "u_120.png",
       "scale" : "2x"
     },
     {
@@ -70,6 +70,12 @@
       "size" : "76x76",
       "idiom" : "ipad",
       "filename" : "u_152.png",
+      "scale" : "2x"
+    },
+    {
+      "size" : "83.5x83.5",
+      "idiom" : "ipad",
+      "filename" : "u_167.png",
       "scale" : "2x"
     }
   ],
