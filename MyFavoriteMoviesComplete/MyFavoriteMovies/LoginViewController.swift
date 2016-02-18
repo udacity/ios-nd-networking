@@ -22,8 +22,9 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var usernameTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var loginButton: BorderedButton!
-    @IBOutlet weak var debugTextLabel: UILabel!
-        
+    @IBOutlet weak var debugTextLabel: UILabel!        
+    @IBOutlet weak var movieImageView: UIImageView!
+    
     // MARK: Life Cycle
     
     override func viewDidLoad() {
@@ -392,12 +393,14 @@ extension LoginViewController: UITextFieldDelegate {
     func keyboardWillShow(notification: NSNotification) {
         if !keyboardOnScreen {
             view.frame.origin.y -= keyboardHeight(notification)
+            movieImageView.hidden = true
         }
     }
     
     func keyboardWillHide(notification: NSNotification) {
         if keyboardOnScreen {
             view.frame.origin.y += keyboardHeight(notification)
+            movieImageView.hidden = false
         }
     }
     
