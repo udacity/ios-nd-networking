@@ -33,10 +33,11 @@ class ViewController: UIViewController {
         phraseTextField.delegate = self
         latitudeTextField.delegate = self
         longitudeTextField.delegate = self
-        subscribeToNotification(UIKeyboardWillShowNotification, selector: Constants.Selectors.KeyboardWillShow)
-        subscribeToNotification(UIKeyboardWillHideNotification, selector: Constants.Selectors.KeyboardWillHide)
-        subscribeToNotification(UIKeyboardDidShowNotification, selector: Constants.Selectors.KeyboardDidShow)
-        subscribeToNotification(UIKeyboardDidHideNotification, selector: Constants.Selectors.KeyboardDidHide)
+        // FIX: As of Swift 2.2, using strings for selectors has been deprecated. Instead, #selector(methodName) should be used.
+        subscribeToNotification(UIKeyboardWillShowNotification, selector: #selector(keyboardWillShow))
+        subscribeToNotification(UIKeyboardWillHideNotification, selector: #selector(keyboardWillHide))
+        subscribeToNotification(UIKeyboardDidShowNotification, selector: #selector(keyboardDidShow))
+        subscribeToNotification(UIKeyboardDidHideNotification, selector: #selector(keyboardDidHide))
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -182,10 +183,13 @@ class ViewController: UIViewController {
         task.resume()
     }
     
-    private func displayImageFromFlickrBySearch(var methodParameters: [String:AnyObject], withPageNumber: Int) {
+    // FIX: For Swift 3, variable parameters are being depreciated. Instead, create a copy of the parameter inside the function.
+    
+    private func displayImageFromFlickrBySearch(methodParameters: [String:AnyObject], withPageNumber: Int) {
         
         // add the page to the method's parameters
-        methodParameters[Constants.FlickrParameterKeys.Page] = withPageNumber
+        var methodParametersWithPageNumber = methodParameters
+        methodParametersWithPageNumber[Constants.FlickrParameterKeys.Page] = withPageNumber
         
         // create session and request
         let session = NSURLSession.sharedSession()

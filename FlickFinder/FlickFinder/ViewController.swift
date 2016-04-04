@@ -33,10 +33,11 @@ class ViewController: UIViewController {
         phraseTextField.delegate = self
         latitudeTextField.delegate = self
         longitudeTextField.delegate = self
-        subscribeToNotification(UIKeyboardWillShowNotification, selector: Constants.Selectors.KeyboardWillShow)
-        subscribeToNotification(UIKeyboardWillHideNotification, selector: Constants.Selectors.KeyboardWillHide)
-        subscribeToNotification(UIKeyboardDidShowNotification, selector: Constants.Selectors.KeyboardDidShow)
-        subscribeToNotification(UIKeyboardDidHideNotification, selector: Constants.Selectors.KeyboardDidHide)
+        // FIX: As of Swift 2.2, using strings for selectors has been deprecated. Instead, #selector(methodName) should be used.
+        subscribeToNotification(UIKeyboardWillShowNotification, selector: #selector(keyboardWillShow))
+        subscribeToNotification(UIKeyboardWillHideNotification, selector: #selector(keyboardWillHide))
+        subscribeToNotification(UIKeyboardDidShowNotification, selector: #selector(keyboardDidShow))
+        subscribeToNotification(UIKeyboardDidHideNotification, selector: #selector(keyboardDidHide))
     }
     
     override func viewWillDisappear(animated: Bool) {
