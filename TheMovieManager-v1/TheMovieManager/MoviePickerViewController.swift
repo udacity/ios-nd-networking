@@ -37,10 +37,10 @@ class MoviePickerViewController: UIViewController {
     // MARK: Life Cycle
     
     override func viewDidLoad() {
-        parentViewController!.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Reply, target: self, action: "logout")
+        parentViewController!.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Reply, target: self, action: #selector(logout))
         
         // configure tap recognizer
-        let tapRecognizer = UITapGestureRecognizer(target: self, action: "handleSingleTap:")
+        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleSingleTap(_:)))
         tapRecognizer.numberOfTapsRequired = 1
         tapRecognizer.delegate = self
         view.addGestureRecognizer(tapRecognizer)

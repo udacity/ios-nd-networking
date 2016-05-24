@@ -30,7 +30,7 @@ class TMDBAuthViewController: UIViewController {
         webView.delegate = self
         
         navigationItem.title = "TheMovieDB Auth"
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .Plain, target: self, action: "cancelAuth")
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .Plain, target: self, action: #selector(cancelAuth))
     }
     
     override func viewWillAppear(animated: Bool) {

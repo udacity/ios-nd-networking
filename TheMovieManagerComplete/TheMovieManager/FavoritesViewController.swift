@@ -26,7 +26,7 @@ class FavoritesViewController: UIViewController {
         super.viewDidLoad()
 
         // create and set the logout button
-        parentViewController!.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Reply, target: self, action: "logout")
+        parentViewController!.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Reply, target: self, action: #selector(logout))
     }
     
     override func viewWillAppear(animated: Bool) {

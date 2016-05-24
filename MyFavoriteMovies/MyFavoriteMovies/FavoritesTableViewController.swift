@@ -26,7 +26,7 @@ class FavoritesTableViewController: UITableViewController {
         appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         
         // create and set logout button
-        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Reply, target: self, action: "logout")
+        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Reply, target: self, action: #selector(logout))
     }
     
     override func viewWillAppear(animated: Bool) {
