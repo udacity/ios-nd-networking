@@ -17,7 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
     
-    var sharedSession = NSURLSession.sharedSession()
+    var sharedSession = URLSession.shared()
     var requestToken: String? = nil
     var sessionID: String? = nil
     var userID: Int? = nil
@@ -27,7 +27,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // MARK: UIApplicationDelegate
     
-    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
         // if necessary, update the configuration...
         config.updateIfDaysSinceUpdateExceeds(7)
@@ -40,19 +40,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 extension AppDelegate {
     
-    func tmdbURLFromParameters(parameters: [String:AnyObject], withPathExtension: String? = nil) -> NSURL {
+    func tmdbURLFromParameters(_ parameters: [String:AnyObject], withPathExtension: String? = nil) -> URL {
         
-        let components = NSURLComponents()
+        var components = URLComponents()
         components.scheme = Constants.TMDB.ApiScheme
         components.host = Constants.TMDB.ApiHost
         components.path = Constants.TMDB.ApiPath + (withPathExtension ?? "")
-        components.queryItems = [NSURLQueryItem]()
+        components.queryItems = [URLQueryItem]()
         
         for (key, value) in parameters {
-            let queryItem = NSURLQueryItem(name: key, value: "\(value)")
+            let queryItem = URLQueryItem(name: key, value: "\(value)")
             components.queryItems!.append(queryItem)
         }
         
-        return components.URL!
+        return components.url!
     }
 }

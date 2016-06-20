@@ -11,7 +11,7 @@ import UIKit
 // MARK: - MoviePickerViewControllerDelegate
 
 protocol MoviePickerViewControllerDelegate {
-    func moviePicker(moviePicker: MoviePickerViewController, didPickMovie movie: TMDBMovie?)
+    func moviePicker(_ moviePicker: MoviePickerViewController, didPickMovie movie: TMDBMovie?)
 }
 
 // MARK: - MoviePickerViewController: UIViewController
@@ -27,7 +27,7 @@ class MoviePickerViewController: UIViewController {
     var delegate: MoviePickerViewControllerDelegate?
     
     // the most recent data download task. We keep a reference to it so that it can be canceled every time the search text changes
-    var searchTask: NSURLSessionDataTask?
+    var searchTask: URLSessionDataTask?
     
     // MARK: Outlets
     
@@ -37,7 +37,7 @@ class MoviePickerViewController: UIViewController {
     // MARK: Life Cycle
     
     override func viewDidLoad() {
-        parentViewController!.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Reply, target: self, action: #selector(logout))
+        parent!.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .reply, target: self, action: #selector(logout))
         
         // configure tap recognizer
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleSingleTap(_:)))
@@ -48,7 +48,7 @@ class MoviePickerViewController: UIViewController {
     
     // MARK: Dismissals
     
-    func handleSingleTap(recognizer: UITapGestureRecognizer) {
+    func handleSingleTap(_ recognizer: UITapGestureRecognizer) {
         view.endEditing(true)
     }
     
@@ -58,14 +58,14 @@ class MoviePickerViewController: UIViewController {
     }
     
     func logout() {
-        dismissViewControllerAnimated(true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
 }
 
 // MARK: - MoviePickerViewController: UIGestureRecognizerDelegate
 
 extension MoviePickerViewController: UIGestureRecognizerDelegate {
-    func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldReceiveTouch touch: UITouch) -> Bool {
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
         return movieSearchBar.isFirstResponder()
     }
 }
@@ -75,7 +75,7 @@ extension MoviePickerViewController: UIGestureRecognizerDelegate {
 extension MoviePickerViewController: UISearchBarDelegate {
     
     // each time the search text changes we want to cancel any current download and start a new one
-    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         
         // cancel the last task
         if let task = searchTask {
@@ -101,7 +101,7 @@ extension MoviePickerViewController: UISearchBarDelegate {
         }
     }
     
-    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
     }
 }
@@ -110,28 +110,28 @@ extension MoviePickerViewController: UISearchBarDelegate {
 
 extension MoviePickerViewController: UITableViewDelegate, UITableViewDataSource {
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let CellReuseId = "MovieSearchCell"
-        let movie = movies[indexPath.row]
-        let cell = tableView.dequeueReusableCellWithIdentifier(CellReuseId) as UITableViewCell!
+        let movie = movies[(indexPath as NSIndexPath).row]
+        let cell = tableView.dequeueReusableCell(withIdentifier: CellReuseId) as UITableViewCell!
         
         if let releaseYear = movie.releaseYear {
-            cell.textLabel!.text = "\(movie.title) (\(releaseYear))"
+            cell?.textLabel!.text = "\(movie.title) (\(releaseYear))"
         } else {
-            cell.textLabel!.text = "\(movie.title)"
+            cell?.textLabel!.text = "\(movie.title)"
         }
         
-        return cell
+        return cell!
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return movies.count
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let movie = movies[indexPath.row]
-        let controller = storyboard!.instantiateViewControllerWithIdentifier("MovieDetailViewController") as! MovieDetailViewController
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let movie = movies[(indexPath as NSIndexPath).row]
+        let controller = storyboard!.instantiateViewController(withIdentifier: "MovieDetailViewController") as! MovieDetailViewController
         controller.movie = movie
         navigationController!.pushViewController(controller, animated: true)
     }

@@ -29,10 +29,10 @@ class MovieDetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationController!.navigationBar.translucent = false
+        navigationController!.navigationBar.isTranslucent = false
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         activityIndicator.alpha = 1.0
@@ -66,7 +66,7 @@ class MovieDetailViewController: UIViewController {
                         if self.isFavorite {
                             self.toggleFavoriteButton.tintColor = nil
                         } else {
-                            self.toggleFavoriteButton.tintColor = UIColor.blackColor()
+                            self.toggleFavoriteButton.tintColor = UIColor.black()
                         }
                     }
                 } else {
@@ -88,7 +88,7 @@ class MovieDetailViewController: UIViewController {
                         if self.isWatchlist {
                             self.toggleWatchlistButton.tintColor = nil
                         } else {
-                            self.toggleWatchlistButton.tintColor = UIColor.blackColor()
+                            self.toggleWatchlistButton.tintColor = UIColor.black()
                         }
                     }
                 } else {
@@ -98,7 +98,7 @@ class MovieDetailViewController: UIViewController {
             
             // set the poster image
             if let posterPath = movie.posterPath {
-                TMDBClient.sharedInstance().taskForGETImage(TMDBClient.PosterSizes.DetailPoster, filePath: posterPath, completionHandlerForImage: { (imageData, error) in
+                let _ = TMDBClient.sharedInstance().taskForGETImage(TMDBClient.PosterSizes.DetailPoster, filePath: posterPath, completionHandlerForImage: { (imageData, error) in
                     if let image = UIImage(data: imageData!) {
                         performUIUpdatesOnMain {
                             self.activityIndicator.alpha = 0.0
@@ -116,7 +116,7 @@ class MovieDetailViewController: UIViewController {
     
     // MARK: Actions
     
-    @IBAction func toggleFavorite(sender: AnyObject) {
+    @IBAction func toggleFavorite(_ sender: AnyObject) {
         
         let shouldFavorite = !isFavorite
         
@@ -127,7 +127,7 @@ class MovieDetailViewController: UIViewController {
                 if statusCode == 1 || statusCode == 12 || statusCode == 13 {
                     self.isFavorite = shouldFavorite
                     performUIUpdatesOnMain {
-                        self.toggleFavoriteButton.tintColor = (shouldFavorite) ? nil : UIColor.blackColor()
+                        self.toggleFavoriteButton.tintColor = (shouldFavorite) ? nil : UIColor.black()
                     }
                 } else {
                     print("Unexpected status code \(statusCode)")
@@ -136,7 +136,7 @@ class MovieDetailViewController: UIViewController {
         }
     }
     
-    @IBAction func toggleWatchlist(sender: AnyObject) {
+    @IBAction func toggleWatchlist(_ sender: AnyObject) {
         
         let shouldWatchlist = !isWatchlist
         
@@ -147,7 +147,7 @@ class MovieDetailViewController: UIViewController {
                 if statusCode == 1 || statusCode == 12 || statusCode == 13 {
                     self.isWatchlist = shouldWatchlist
                     performUIUpdatesOnMain {
-                        self.toggleWatchlistButton.tintColor = (shouldWatchlist) ? nil : UIColor.blackColor()
+                        self.toggleWatchlistButton.tintColor = (shouldWatchlist) ? nil : UIColor.black()
                     }
                 } else {
                     print("Unexpected status code \(statusCode)")

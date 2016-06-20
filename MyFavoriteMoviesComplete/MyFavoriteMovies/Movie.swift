@@ -26,7 +26,7 @@ struct Movie {
         posterPath = dictionary[Constants.TMDBResponseKeys.PosterPath] as? String
     }
     
-    static func moviesFromResults(results: [[String:AnyObject]]) -> [Movie] {
+    static func moviesFromResults(_ results: [[String:AnyObject]]) -> [Movie] {
         
         var movies = [Movie]()
         

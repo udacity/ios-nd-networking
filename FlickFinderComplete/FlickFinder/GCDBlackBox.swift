@@ -8,8 +8,8 @@
 
 import Foundation
 
-func performUIUpdatesOnMain(updates: () -> Void) {
-    dispatch_async(dispatch_get_main_queue()) {
+func performUIUpdatesOnMain(_ updates: () -> Void) {
+    DispatchQueue.main.async {
         updates()
     }
 }

@@ -26,13 +26,13 @@ struct TMDBMovie {
         posterPath = dictionary[TMDBClient.JSONResponseKeys.MoviePosterPath] as? String
         
         if let releaseDateString = dictionary[TMDBClient.JSONResponseKeys.MovieReleaseDate] as? String where releaseDateString.isEmpty == false {
-            releaseYear = releaseDateString.substringToIndex(releaseDateString.startIndex.advancedBy(4))
+            releaseYear = releaseDateString.substring(to: releaseDateString.characters.index(releaseDateString.startIndex, offsetBy: 4))
         } else {
             releaseYear = ""
         }
     }
     
-    static func moviesFromResults(results: [[String:AnyObject]]) -> [TMDBMovie] {
+    static func moviesFromResults(_ results: [[String:AnyObject]]) -> [TMDBMovie] {
         
         var movies = [TMDBMovie]()
         

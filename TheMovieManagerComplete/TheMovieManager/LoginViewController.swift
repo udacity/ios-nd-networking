@@ -17,7 +17,7 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var debugTextLabel: UILabel!
     @IBOutlet weak var loginButton: BorderedButton!
 
-    var session: NSURLSession!
+    var session: URLSession!
     
     // MARK: Life Cycle
     
@@ -26,14 +26,14 @@ class LoginViewController: UIViewController {
         configureBackground()
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         debugTextLabel.text = ""
     }
     
     // MARK: Actions
     
-    @IBAction func loginPressed(sender: AnyObject) {
+    @IBAction func loginPressed(_ sender: AnyObject) {
         TMDBClient.sharedInstance().authenticateWithViewController(self) { (success, errorString) in
             performUIUpdatesOnMain {
                 if success {
@@ -49,8 +49,8 @@ class LoginViewController: UIViewController {
     
     private func completeLogin() {
         debugTextLabel.text = ""
-        let controller = storyboard!.instantiateViewControllerWithIdentifier("ManagerNavigationController") as! UINavigationController
-        presentViewController(controller, animated: true, completion: nil)
+        let controller = storyboard!.instantiateViewController(withIdentifier: "ManagerNavigationController") as! UINavigationController
+        present(controller, animated: true, completion: nil)
     }
 }
 
@@ -58,9 +58,9 @@ class LoginViewController: UIViewController {
 
 extension LoginViewController {
     
-    private func setUIEnabled(enabled: Bool) {
-        loginButton.enabled = enabled
-        debugTextLabel.enabled = enabled
+    private func setUIEnabled(_ enabled: Bool) {
+        loginButton.isEnabled = enabled
+        debugTextLabel.isEnabled = enabled
         
         // adjust login button alpha
         if enabled {
@@ -70,7 +70,7 @@ extension LoginViewController {
         }
     }
     
-    private func displayError(errorString: String?) {
+    private func displayError(_ errorString: String?) {
         if let errorString = errorString {
             debugTextLabel.text = errorString
         }
@@ -78,11 +78,11 @@ extension LoginViewController {
     
     private func configureBackground() {
         let backgroundGradient = CAGradientLayer()
-        let colorTop = UIColor(red: 0.345, green: 0.839, blue: 0.988, alpha: 1.0).CGColor
-        let colorBottom = UIColor(red: 0.023, green: 0.569, blue: 0.910, alpha: 1.0).CGColor
+        let colorTop = UIColor(red: 0.345, green: 0.839, blue: 0.988, alpha: 1.0).cgColor
+        let colorBottom = UIColor(red: 0.023, green: 0.569, blue: 0.910, alpha: 1.0).cgColor
         backgroundGradient.colors = [colorTop, colorBottom]
         backgroundGradient.locations = [0.0, 1.0]
         backgroundGradient.frame = view.frame
-        view.layer.insertSublayer(backgroundGradient, atIndex: 0)
+        view.layer.insertSublayer(backgroundGradient, at: 0)
     }
 }

@@ -34,20 +34,20 @@ class ViewController: UIViewController {
         latitudeTextField.delegate = self
         longitudeTextField.delegate = self
         // FIX: As of Swift 2.2, using strings for selectors has been deprecated. Instead, #selector(methodName) should be used.
-        subscribeToNotification(UIKeyboardWillShowNotification, selector: #selector(keyboardWillShow))
-        subscribeToNotification(UIKeyboardWillHideNotification, selector: #selector(keyboardWillHide))
-        subscribeToNotification(UIKeyboardDidShowNotification, selector: #selector(keyboardDidShow))
-        subscribeToNotification(UIKeyboardDidHideNotification, selector: #selector(keyboardDidHide))
+        subscribeToNotification(NSNotification.Name.UIKeyboardWillShow.rawValue, selector: #selector(keyboardWillShow))
+        subscribeToNotification(NSNotification.Name.UIKeyboardWillHide.rawValue, selector: #selector(keyboardWillHide))
+        subscribeToNotification(NSNotification.Name.UIKeyboardDidShow.rawValue, selector: #selector(keyboardDidShow))
+        subscribeToNotification(NSNotification.Name.UIKeyboardDidHide.rawValue, selector: #selector(keyboardDidHide))
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         unsubscribeFromAllNotifications()
     }
     
     // MARK: Search Actions
     
-    @IBAction func searchByPhrase(sender: AnyObject) {
+    @IBAction func searchByPhrase(_ sender: AnyObject) {
 
         userDidTapView(self)
         setUIEnabled(false)
@@ -55,7 +55,7 @@ class ViewController: UIViewController {
         if !phraseTextField.text!.isEmpty {
             photoTitleLabel.text = "Searching..."
             // TODO: Set necessary parameters!
-            let methodParameters: [String: String!] = [:]
+            let methodParameters: [String: AnyObject] = [:]
             displayImageFromFlickrBySearch(methodParameters)
         } else {
             setUIEnabled(true)
@@ -63,7 +63,7 @@ class ViewController: UIViewController {
         }
     }
     
-    @IBAction func searchByLatLon(sender: AnyObject) {
+    @IBAction func searchByLatLon(_ sender: AnyObject) {
 
         userDidTapView(self)
         setUIEnabled(false)
@@ -71,7 +71,7 @@ class ViewController: UIViewController {
         if isTextFieldValid(latitudeTextField, forRange: Constants.Flickr.SearchLatRange) && isTextFieldValid(longitudeTextField, forRange: Constants.Flickr.SearchLonRange) {
             photoTitleLabel.text = "Searching..."
             // TODO: Set necessary parameters!
-            let methodParameters: [String: String!] = [:]
+            let methodParameters: [String: AnyObject] = [:]
             displayImageFromFlickrBySearch(methodParameters)
         }
         else {
@@ -82,7 +82,7 @@ class ViewController: UIViewController {
     
     // MARK: Flickr API
     
-    private func displayImageFromFlickrBySearch(methodParameters: [String:AnyObject]) {
+    private func displayImageFromFlickrBySearch(_ methodParameters: [String: AnyObject]) {
         
         print(flickrURLFromParameters(methodParameters))
         
@@ -91,20 +91,20 @@ class ViewController: UIViewController {
     
     // MARK: Helper for Creating a URL from Parameters
     
-    private func flickrURLFromParameters(parameters: [String:AnyObject]) -> NSURL {
+    private func flickrURLFromParameters(_ parameters: [String: AnyObject]) -> URL {
         
-        let components = NSURLComponents()
+        var components = URLComponents()
         components.scheme = Constants.Flickr.APIScheme
         components.host = Constants.Flickr.APIHost
         components.path = Constants.Flickr.APIPath
-        components.queryItems = [NSURLQueryItem]()
+        components.queryItems = [URLQueryItem]()
         
         for (key, value) in parameters {
-            let queryItem = NSURLQueryItem(name: key, value: "\(value)")
+            let queryItem = URLQueryItem(name: key, value: "\(value)")
             components.queryItems!.append(queryItem)
         }
         
-        return components.URL!
+        return components.url!
     }
 }
 
@@ -114,46 +114,46 @@ extension ViewController: UITextFieldDelegate {
     
     // MARK: UITextFieldDelegate
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
     }
     
     // MARK: Show/Hide Keyboard
     
-    func keyboardWillShow(notification: NSNotification) {
+    func keyboardWillShow(_ notification: Notification) {
         if !keyboardOnScreen {
             view.frame.origin.y -= keyboardHeight(notification)
         }
     }
     
-    func keyboardWillHide(notification: NSNotification) {
+    func keyboardWillHide(_ notification: Notification) {
         if keyboardOnScreen {
             view.frame.origin.y += keyboardHeight(notification)
         }
     }
     
-    func keyboardDidShow(notification: NSNotification) {
+    func keyboardDidShow(_ notification: Notification) {
         keyboardOnScreen = true
     }
     
-    func keyboardDidHide(notification: NSNotification) {
+    func keyboardDidHide(_ notification: Notification) {
         keyboardOnScreen = false
     }
     
-    private func keyboardHeight(notification: NSNotification) -> CGFloat {
-        let userInfo = notification.userInfo
+    private func keyboardHeight(_ notification: Notification) -> CGFloat {
+        let userInfo = (notification as NSNotification).userInfo
         let keyboardSize = userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue
-        return keyboardSize.CGRectValue().height
+        return keyboardSize.cgRectValue().height
     }
     
-    private func resignIfFirstResponder(textField: UITextField) {
+    private func resignIfFirstResponder(_ textField: UITextField) {
         if textField.isFirstResponder() {
             textField.resignFirstResponder()
         }
     }
     
-    @IBAction func userDidTapView(sender: AnyObject) {
+    @IBAction func userDidTapView(_ sender: AnyObject) {
         resignIfFirstResponder(phraseTextField)
         resignIfFirstResponder(latitudeTextField)
         resignIfFirstResponder(longitudeTextField)
@@ -161,7 +161,7 @@ extension ViewController: UITextFieldDelegate {
     
     // MARK: TextField Validation
     
-    private func isTextFieldValid(textField: UITextField, forRange: (Double, Double)) -> Bool {
+    private func isTextFieldValid(_ textField: UITextField, forRange: (Double, Double)) -> Bool {
         if let value = Double(textField.text!) where !textField.text!.isEmpty {
             return isValueInRange(value, min: forRange.0, max: forRange.1)
         } else {
@@ -169,7 +169,7 @@ extension ViewController: UITextFieldDelegate {
         }
     }
     
-    private func isValueInRange(value: Double, min: Double, max: Double) -> Bool {
+    private func isValueInRange(_ value: Double, min: Double, max: Double) -> Bool {
         return !(value < min || value > max)
     }
 }
@@ -178,13 +178,13 @@ extension ViewController: UITextFieldDelegate {
 
 extension ViewController {
     
-    private func setUIEnabled(enabled: Bool) {
-        photoTitleLabel.enabled = enabled
-        phraseTextField.enabled = enabled
-        latitudeTextField.enabled = enabled
-        longitudeTextField.enabled = enabled
-        phraseSearchButton.enabled = enabled
-        latLonSearchButton.enabled = enabled
+    private func setUIEnabled(_ enabled: Bool) {
+        photoTitleLabel.isEnabled = enabled
+        phraseTextField.isEnabled = enabled
+        latitudeTextField.isEnabled = enabled
+        longitudeTextField.isEnabled = enabled
+        phraseSearchButton.isEnabled = enabled
+        latLonSearchButton.isEnabled = enabled
         
         // adjust search button alphas
         if enabled {
@@ -201,11 +201,11 @@ extension ViewController {
 
 extension ViewController {
     
-    private func subscribeToNotification(notification: String, selector: Selector) {
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: selector, name: notification, object: nil)
+    private func subscribeToNotification(_ notification: String, selector: Selector) {
+        NotificationCenter.default().addObserver(self, selector: selector, name: notification, object: nil)
     }
     
     private func unsubscribeFromAllNotifications() {
-        NSNotificationCenter.defaultCenter().removeObserver(self)
+        NotificationCenter.default().removeObserver(self)
     }
 }

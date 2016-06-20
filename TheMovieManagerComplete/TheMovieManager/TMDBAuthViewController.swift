@@ -14,7 +14,7 @@ class TMDBAuthViewController: UIViewController {
 
     // MARK: Properties
     
-    var urlRequest: NSURLRequest? = nil
+    var urlRequest: URLRequest? = nil
     var requestToken: String? = nil
     var completionHandlerForView: ((success: Bool, errorString: String?) -> Void)? = nil
     
@@ -30,10 +30,10 @@ class TMDBAuthViewController: UIViewController {
         webView.delegate = self
         
         navigationItem.title = "TheMovieDB Auth"
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .Plain, target: self, action: #selector(cancelAuth))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(cancelAuth))
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         if let urlRequest = urlRequest {
@@ -44,7 +44,7 @@ class TMDBAuthViewController: UIViewController {
     // MARK: Cancel Auth Flow
     
     func cancelAuth() {
-        dismissViewControllerAnimated(true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
 }
 
@@ -52,11 +52,11 @@ class TMDBAuthViewController: UIViewController {
 
 extension TMDBAuthViewController: UIWebViewDelegate {
     
-    func webViewDidFinishLoad(webView: UIWebView) {
+    func webViewDidFinishLoad(_ webView: UIWebView) {
         
-        if webView.request!.URL!.absoluteString == "\(TMDBClient.Constants.AuthorizationURL)\(requestToken!)/allow" {
+        if webView.request!.url!.absoluteString == "\(TMDBClient.Constants.AuthorizationURL)\(requestToken!)/allow" {
             
-            dismissViewControllerAnimated(true) {
+            dismiss(animated: true) {
                 self.completionHandlerForView!(success: true, errorString: nil)
             }
         }

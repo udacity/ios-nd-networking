@@ -29,20 +29,20 @@ class MovieDetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationController!.navigationBar.translucent = false
+        navigationController!.navigationBar.isTranslucent = false
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
     }
     
     // MARK: Actions
     
-    @IBAction func toggleFavorite(sender: AnyObject) {
+    @IBAction func toggleFavorite(_ sender: AnyObject) {
 
     }
     
-    @IBAction func toggleWatchlist(sender: AnyObject) {
+    @IBAction func toggleWatchlist(_ sender: AnyObject) {
 
     }
 }

@@ -18,8 +18,8 @@ import Foundation
 
 // MARK: - File Support
 
-private let _documentsDirectoryURL: NSURL = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first as NSURL!
-private let _fileURL: NSURL = _documentsDirectoryURL.URLByAppendingPathComponent("TheMovieDB-Context")
+private let _documentsDirectoryURL: URL = FileManager.default().urlsForDirectory(.documentDirectory, inDomains: .userDomainMask).first as URL!
+private let _fileURL: URL = try! _documentsDirectoryURL.appendingPathComponent("TheMovieDB-Context")
 
 // MARK: - TMDBConfig: NSObject, NSCoding
 
@@ -32,12 +32,12 @@ class TMDBConfig: NSObject, NSCoding {
     var secureBaseImageURLString =  "https://image.tmdb.org/t/p/"
     var posterSizes = ["w92", "w154", "w185", "w342", "w500", "w780", "original"]
     var profileSizes = ["w45", "w185", "h632", "original"]
-    var dateUpdated: NSDate? = nil
+    var dateUpdated: Date? = nil
     
     // returns the number days since the config was last updated
     var daysSinceLastUpdate: Int? {
         if let lastUpdate = dateUpdated {
-            return Int(NSDate().timeIntervalSinceDate(lastUpdate)) / 60*60*24
+            return Int(Date().timeIntervalSince(lastUpdate)) / 60*60*24
         } else {
             return nil
         }
@@ -60,7 +60,7 @@ class TMDBConfig: NSObject, NSCoding {
                 secureBaseImageURLString = secureURLString
                 posterSizes = posterSizesArray
                 profileSizes = profileSizesArray
-                dateUpdated = NSDate()
+                dateUpdated = Date()
         } else {
             return nil
         }
@@ -68,7 +68,7 @@ class TMDBConfig: NSObject, NSCoding {
     
     // MARK: Update
     
-    func updateIfDaysSinceUpdateExceeds(days: Int) {
+    func updateIfDaysSinceUpdateExceeds(_ days: Int) {
         
         // if the config is up to date then return
         if let daysSinceLastUpdate = daysSinceLastUpdate where daysSinceLastUpdate <= days {
@@ -91,19 +91,19 @@ class TMDBConfig: NSObject, NSCoding {
     let DateUpdatedKey = "config.date_update_key"
     
     required init(coder aDecoder: NSCoder) {
-        baseImageURLString = aDecoder.decodeObjectForKey(BaseImageURLStringKey) as! String
-        secureBaseImageURLString = aDecoder.decodeObjectForKey(SecureBaseImageURLStringKey) as! String
-        posterSizes = aDecoder.decodeObjectForKey(PosterSizesKey) as! [String]
-        profileSizes = aDecoder.decodeObjectForKey(ProfileSizesKey) as! [String]
-        dateUpdated = aDecoder.decodeObjectForKey(DateUpdatedKey) as? NSDate
+        baseImageURLString = aDecoder.decodeObject(forKey: BaseImageURLStringKey) as! String
+        secureBaseImageURLString = aDecoder.decodeObject(forKey: SecureBaseImageURLStringKey) as! String
+        posterSizes = aDecoder.decodeObject(forKey: PosterSizesKey) as! [String]
+        profileSizes = aDecoder.decodeObject(forKey: ProfileSizesKey) as! [String]
+        dateUpdated = aDecoder.decodeObject(forKey: DateUpdatedKey) as? Date
     }
     
-    func encodeWithCoder(aCoder: NSCoder) {
-        aCoder.encodeObject(baseImageURLString, forKey: BaseImageURLStringKey)
-        aCoder.encodeObject(secureBaseImageURLString, forKey: SecureBaseImageURLStringKey)
-        aCoder.encodeObject(posterSizes, forKey: PosterSizesKey)
-        aCoder.encodeObject(profileSizes, forKey: ProfileSizesKey)
-        aCoder.encodeObject(dateUpdated, forKey: DateUpdatedKey)
+    func encode(with aCoder: NSCoder) {
+        aCoder.encode(baseImageURLString, forKey: BaseImageURLStringKey)
+        aCoder.encode(secureBaseImageURLString, forKey: SecureBaseImageURLStringKey)
+        aCoder.encode(posterSizes, forKey: PosterSizesKey)
+        aCoder.encode(profileSizes, forKey: ProfileSizesKey)
+        aCoder.encode(dateUpdated, forKey: DateUpdatedKey)
     }
     
     private func save() {
@@ -111,8 +111,8 @@ class TMDBConfig: NSObject, NSCoding {
     }
     
     class func unarchivedInstance() -> TMDBConfig? {
-        if NSFileManager.defaultManager().fileExistsAtPath(_fileURL.path!) {
-            return NSKeyedUnarchiver.unarchiveObjectWithFile(_fileURL.path!) as? TMDBConfig
+        if FileManager.default().fileExists(atPath: _fileURL.path!) {
+            return NSKeyedUnarchiver.unarchiveObject(withFile: _fileURL.path!) as? TMDBConfig
         } else {
             return nil
         }

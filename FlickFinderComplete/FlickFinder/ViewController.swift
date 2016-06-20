@@ -34,30 +34,30 @@ class ViewController: UIViewController {
         latitudeTextField.delegate = self
         longitudeTextField.delegate = self
         // FIX: As of Swift 2.2, using strings for selectors has been deprecated. Instead, #selector(methodName) should be used.
-        subscribeToNotification(UIKeyboardWillShowNotification, selector: #selector(keyboardWillShow))
-        subscribeToNotification(UIKeyboardWillHideNotification, selector: #selector(keyboardWillHide))
-        subscribeToNotification(UIKeyboardDidShowNotification, selector: #selector(keyboardDidShow))
-        subscribeToNotification(UIKeyboardDidHideNotification, selector: #selector(keyboardDidHide))
+        subscribeToNotification(NSNotification.Name.UIKeyboardWillShow.rawValue, selector: #selector(keyboardWillShow))
+        subscribeToNotification(NSNotification.Name.UIKeyboardWillHide.rawValue, selector: #selector(keyboardWillHide))
+        subscribeToNotification(NSNotification.Name.UIKeyboardDidShow.rawValue, selector: #selector(keyboardDidShow))
+        subscribeToNotification(NSNotification.Name.UIKeyboardDidHide.rawValue, selector: #selector(keyboardDidHide))
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         unsubscribeFromAllNotifications()
     }
     
     // MARK: Search Actions
     
-    @IBAction func searchByPhrase(sender: AnyObject) {
+    @IBAction func searchByPhrase(_ sender: AnyObject) {
 
         userDidTapView(self)
         setUIEnabled(false)
         
         if !phraseTextField.text!.isEmpty {
             photoTitleLabel.text = "Searching..."
-            let methodParameters: [String: String!] = [
+            let methodParameters: [String: AnyObject] = [
                 Constants.FlickrParameterKeys.Method: Constants.FlickrParameterValues.SearchMethod,
                 Constants.FlickrParameterKeys.APIKey: Constants.FlickrParameterValues.APIKey,
-                Constants.FlickrParameterKeys.Text: phraseTextField.text,
+                Constants.FlickrParameterKeys.Text: phraseTextField.text!,
                 Constants.FlickrParameterKeys.SafeSearch: Constants.FlickrParameterValues.UseSafeSearch,
                 Constants.FlickrParameterKeys.Extras: Constants.FlickrParameterValues.MediumURL,
                 Constants.FlickrParameterKeys.Format: Constants.FlickrParameterValues.ResponseFormat,
@@ -70,7 +70,7 @@ class ViewController: UIViewController {
         }
     }
     
-    @IBAction func searchByLatLon(sender: AnyObject) {
+    @IBAction func searchByLatLon(_ sender: AnyObject) {
 
         userDidTapView(self)
         setUIEnabled(false)
@@ -109,17 +109,17 @@ class ViewController: UIViewController {
         
     // MARK: Flickr API
     
-    private func displayImageFromFlickrBySearch(methodParameters: [String:AnyObject]) {
+    private func displayImageFromFlickrBySearch(_ methodParameters: [String: AnyObject]) {
         
         // create session and request
-        let session = NSURLSession.sharedSession()
-        let request = NSURLRequest(URL: flickrURLFromParameters(methodParameters))
+        let session = URLSession.shared()
+        let request = URLRequest(url: flickrURLFromParameters(methodParameters))
         
         // create network request
-        let task = session.dataTaskWithRequest(request) { (data, response, error) in
+        let task = session.dataTask(with: request) { (data, response, error) in
             
             // if an error occurs, print it and re-enable the UI
-            func displayError(error: String) {
+            func displayError(_ error: String) {
                 print(error)
                 performUIUpdatesOnMain {
                     self.setUIEnabled(true)
@@ -135,7 +135,7 @@ class ViewController: UIViewController {
             }
             
             /* GUARD: Did we get a successful 2XX response? */
-            guard let statusCode = (response as? NSHTTPURLResponse)?.statusCode where statusCode >= 200 && statusCode <= 299 else {
+            guard let statusCode = (response as? HTTPURLResponse)?.statusCode where statusCode >= 200 && statusCode <= 299 else {
                 displayError("Your request returned a status code other than 2xx!")
                 return
             }
@@ -149,7 +149,7 @@ class ViewController: UIViewController {
             // parse the data
             let parsedResult: AnyObject!
             do {
-                parsedResult = try NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments)
+                parsedResult = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
             } catch {
                 displayError("Could not parse the data as JSON: '\(data)'")
                 return
@@ -185,21 +185,21 @@ class ViewController: UIViewController {
     
     // FIX: For Swift 3, variable parameters are being depreciated. Instead, create a copy of the parameter inside the function.
     
-    private func displayImageFromFlickrBySearch(methodParameters: [String:AnyObject], withPageNumber: Int) {
+    private func displayImageFromFlickrBySearch(_ methodParameters: [String: AnyObject], withPageNumber: Int) {
         
         // add the page to the method's parameters
         var methodParametersWithPageNumber = methodParameters
         methodParametersWithPageNumber[Constants.FlickrParameterKeys.Page] = withPageNumber
         
         // create session and request
-        let session = NSURLSession.sharedSession()
-        let request = NSURLRequest(URL: flickrURLFromParameters(methodParameters))
+        let session = URLSession.shared()
+        let request = URLRequest(url: flickrURLFromParameters(methodParameters))
         
         // create network request
-        let task = session.dataTaskWithRequest(request) { (data, response, error) in
+        let task = session.dataTask(with: request) { (data, response, error) in
             
             // if an error occurs, print it and re-enable the UI
-            func displayError(error: String) {
+            func displayError(_ error: String) {
                 print(error)
                 performUIUpdatesOnMain {
                     self.setUIEnabled(true)
@@ -215,7 +215,7 @@ class ViewController: UIViewController {
             }
             
             /* GUARD: Did we get a successful 2XX response? */
-            guard let statusCode = (response as? NSHTTPURLResponse)?.statusCode where statusCode >= 200 && statusCode <= 299 else {
+            guard let statusCode = (response as? HTTPURLResponse)?.statusCode where statusCode >= 200 && statusCode <= 299 else {
                 displayError("Your request returned a status code other than 2xx!")
                 return
             }
@@ -229,7 +229,7 @@ class ViewController: UIViewController {
             // parse the data
             let parsedResult: AnyObject!
             do {
-                parsedResult = try NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments)
+                parsedResult = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
             } catch {
                 displayError("Could not parse the data as JSON: '\(data)'")
                 return
@@ -268,8 +268,8 @@ class ViewController: UIViewController {
                 }
                 
                 // if an image exists at the url, set the image and title
-                let imageURL = NSURL(string: imageUrlString)
-                if let imageData = NSData(contentsOfURL: imageURL!) {
+                let imageURL = URL(string: imageUrlString)
+                if let imageData = try? Data(contentsOf: imageURL!) {
                     performUIUpdatesOnMain {
                         self.setUIEnabled(true)
                         self.photoImageView.image = UIImage(data: imageData)
@@ -287,20 +287,20 @@ class ViewController: UIViewController {
     
     // MARK: Helper for Creating a URL from Parameters
     
-    private func flickrURLFromParameters(parameters: [String:AnyObject]) -> NSURL {
+    private func flickrURLFromParameters(_ parameters: [String:AnyObject]) -> URL {
         
-        let components = NSURLComponents()
+        var components = URLComponents()
         components.scheme = Constants.Flickr.APIScheme
         components.host = Constants.Flickr.APIHost
         components.path = Constants.Flickr.APIPath
-        components.queryItems = [NSURLQueryItem]()
+        components.queryItems = [URLQueryItem]()
         
         for (key, value) in parameters {
-            let queryItem = NSURLQueryItem(name: key, value: "\(value)")
+            let queryItem = URLQueryItem(name: key, value: "\(value)")
             components.queryItems!.append(queryItem)
         }
         
-        return components.URL!
+        return components.url!
     }
 }
 
@@ -310,46 +310,46 @@ extension ViewController: UITextFieldDelegate {
     
     // MARK: UITextFieldDelegate
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
     }
     
     // MARK: Show/Hide Keyboard
     
-    func keyboardWillShow(notification: NSNotification) {
+    func keyboardWillShow(_ notification: Notification) {
         if !keyboardOnScreen {
             view.frame.origin.y -= keyboardHeight(notification)
         }
     }
     
-    func keyboardWillHide(notification: NSNotification) {
+    func keyboardWillHide(_ notification: Notification) {
         if keyboardOnScreen {
             view.frame.origin.y += keyboardHeight(notification)
         }
     }
     
-    func keyboardDidShow(notification: NSNotification) {
+    func keyboardDidShow(_ notification: Notification) {
         keyboardOnScreen = true
     }
     
-    func keyboardDidHide(notification: NSNotification) {
+    func keyboardDidHide(_ notification: Notification) {
         keyboardOnScreen = false
     }
     
-    private func keyboardHeight(notification: NSNotification) -> CGFloat {
-        let userInfo = notification.userInfo
+    private func keyboardHeight(_ notification: Notification) -> CGFloat {
+        let userInfo = (notification as NSNotification).userInfo
         let keyboardSize = userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue
-        return keyboardSize.CGRectValue().height
+        return keyboardSize.cgRectValue().height
     }
     
-    private func resignIfFirstResponder(textField: UITextField) {
+    private func resignIfFirstResponder(_ textField: UITextField) {
         if textField.isFirstResponder() {
             textField.resignFirstResponder()
         }
     }
     
-    @IBAction func userDidTapView(sender: AnyObject) {
+    @IBAction func userDidTapView(_ sender: AnyObject) {
         resignIfFirstResponder(phraseTextField)
         resignIfFirstResponder(latitudeTextField)
         resignIfFirstResponder(longitudeTextField)
@@ -357,7 +357,7 @@ extension ViewController: UITextFieldDelegate {
     
     // MARK: TextField Validation
     
-    private func isTextFieldValid(textField: UITextField, forRange: (Double, Double)) -> Bool {
+    private func isTextFieldValid(_ textField: UITextField, forRange: (Double, Double)) -> Bool {
         if let value = Double(textField.text!) where !textField.text!.isEmpty {
             return isValueInRange(value, min: forRange.0, max: forRange.1)
         } else {
@@ -365,7 +365,7 @@ extension ViewController: UITextFieldDelegate {
         }
     }
     
-    private func isValueInRange(value: Double, min: Double, max: Double) -> Bool {
+    private func isValueInRange(_ value: Double, min: Double, max: Double) -> Bool {
         return !(value < min || value > max)
     }
 }
@@ -374,13 +374,13 @@ extension ViewController: UITextFieldDelegate {
 
 extension ViewController {
     
-    private func setUIEnabled(enabled: Bool) {
-        photoTitleLabel.enabled = enabled
-        phraseTextField.enabled = enabled
-        latitudeTextField.enabled = enabled
-        longitudeTextField.enabled = enabled
-        phraseSearchButton.enabled = enabled
-        latLonSearchButton.enabled = enabled
+    private func setUIEnabled(_ enabled: Bool) {
+        photoTitleLabel.isEnabled = enabled
+        phraseTextField.isEnabled = enabled
+        latitudeTextField.isEnabled = enabled
+        longitudeTextField.isEnabled = enabled
+        phraseSearchButton.isEnabled = enabled
+        latLonSearchButton.isEnabled = enabled
         
         // adjust search button alphas
         if enabled {
@@ -397,11 +397,11 @@ extension ViewController {
 
 extension ViewController {
     
-    private func subscribeToNotification(notification: String, selector: Selector) {
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: selector, name: notification, object: nil)
+    private func subscribeToNotification(_ notification: String, selector: Selector) {
+        NotificationCenter.default().addObserver(self, selector: selector, name: notification, object: nil)
     }
     
     private func unsubscribeFromAllNotifications() {
-        NSNotificationCenter.defaultCenter().removeObserver(self)
+        NotificationCenter.default().removeObserver(self)
     }
 }

@@ -24,16 +24,16 @@ class GenreTableViewController: UITableViewController {
         super.viewDidLoad()
         
         // get the app delegate
-        appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        appDelegate = UIApplication.shared().delegate as! AppDelegate
         
         // get the correct genre id
         genreID = genreIDFromItemTag(tabBarItem.tag)
         
         // create and set logout button
-        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Reply, target: self, action: #selector(logout))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .reply, target: self, action: #selector(logout))
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         
         super.viewWillAppear(animated)
         
@@ -45,11 +45,11 @@ class GenreTableViewController: UITableViewController {
         ]
         
         /* 2/3. Build the URL, Configure the request */
-        let request = NSMutableURLRequest(URL: appDelegate.tmdbURLFromParameters(methodParameters, withPathExtension: "/genre/\(genreID!)/movies"))
+        let request = NSMutableURLRequest(url: appDelegate.tmdbURLFromParameters(methodParameters, withPathExtension: "/genre/\(genreID!)/movies"))
         request.addValue("application/json", forHTTPHeaderField: "Accept")
         
         /* 4. Make the request */
-        let task = appDelegate.sharedSession.dataTaskWithRequest(request) { (data, response, error) in
+        let task = appDelegate.sharedSession.dataTask(with: request as URLRequest) { (data, response, error) in
             
             /* GUARD: Was there an error? */
             guard (error == nil) else {
@@ -58,7 +58,7 @@ class GenreTableViewController: UITableViewController {
             }
             
             /* GUARD: Did we get a successful 2XX response? */
-            guard let statusCode = (response as? NSHTTPURLResponse)?.statusCode where statusCode >= 200 && statusCode <= 299 else {
+            guard let statusCode = (response as? HTTPURLResponse)?.statusCode where statusCode >= 200 && statusCode <= 299 else {
                 print("Your request returned a status code other than 2xx!")
                 return
             }
@@ -72,7 +72,7 @@ class GenreTableViewController: UITableViewController {
             /* 5. Parse the data */
             let parsedResult: AnyObject!
             do {
-                parsedResult = try NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments)
+                parsedResult = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
             } catch {
                 print("Could not parse the data as JSON: '\(data)'")
                 return
@@ -104,7 +104,7 @@ class GenreTableViewController: UITableViewController {
     // MARK: Logout
     
     func logout() {
-        dismissViewControllerAnimated(true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
 }
 
@@ -112,17 +112,17 @@ class GenreTableViewController: UITableViewController {
 
 extension GenreTableViewController {
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         // get cell type
         let cellReuseIdentifier = "MovieTableViewCell"
-        let movie = movies[indexPath.row]
-        let cell = tableView.dequeueReusableCellWithIdentifier(cellReuseIdentifier) as UITableViewCell!
+        let movie = movies[(indexPath as NSIndexPath).row]
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier) as UITableViewCell!
         
         // set cell defaults
-        cell.textLabel!.text = movie.title
-        cell.imageView!.image = UIImage(named: "Film Icon")
-        cell.imageView!.contentMode = UIViewContentMode.ScaleAspectFit
+        cell?.textLabel!.text = movie.title
+        cell?.imageView!.image = UIImage(named: "Film Icon")
+        cell?.imageView!.contentMode = UIViewContentMode.scaleAspectFit
         
         /* TASK: Get the poster image, then populate the image view */
         if let posterPath = movie.posterPath {
@@ -131,14 +131,14 @@ extension GenreTableViewController {
             // There are none...
             
             /* 2. Build the URL */
-            let baseURL = NSURL(string: appDelegate.config.baseImageURLString)!
-            let url = baseURL.URLByAppendingPathComponent("w154").URLByAppendingPathComponent(posterPath)
+            let baseURL = URL(string: appDelegate.config.baseImageURLString)!
+            let url = try! baseURL.appendingPathComponent("w154").appendingPathComponent(posterPath)
             
             /* 3. Configure the request */
-            let request = NSURLRequest(URL: url)
+            let request = URLRequest(url: url)
             
             /* 4. Make the request */
-            let task = appDelegate.sharedSession.dataTaskWithRequest(request) { (data, response, error) in
+            let task = appDelegate.sharedSession.dataTask(with: request) { (data, response, error) in
                 
                 /* GUARD: Was there an error? */
                 guard (error == nil) else {
@@ -147,7 +147,7 @@ extension GenreTableViewController {
                 }
                 
                 /* GUARD: Did we get a successful 2XX response? */
-                guard let statusCode = (response as? NSHTTPURLResponse)?.statusCode where statusCode >= 200 && statusCode <= 299 else {
+                guard let statusCode = (response as? HTTPURLResponse)?.statusCode where statusCode >= 200 && statusCode <= 299 else {
                     print("Your request returned a status code other than 2xx!")
                     return
                 }
@@ -164,7 +164,7 @@ extension GenreTableViewController {
                 /* 6. Use the data! */
                 if let image = UIImage(data: data) {
                     performUIUpdatesOnMain {
-                        cell.imageView!.image = image
+                        cell?.imageView!.image = image
                     }
                 } else {
                     print("Could not create image from \(data)")
@@ -175,18 +175,18 @@ extension GenreTableViewController {
             task.resume()
         }
         
-        return cell
+        return cell!
     }
     
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return movies.count
     }
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         // push the movie detail view
-        let controller = storyboard!.instantiateViewControllerWithIdentifier("MovieDetailViewController") as! MovieDetailViewController
-        controller.movie = movies[indexPath.row]
+        let controller = storyboard!.instantiateViewController(withIdentifier: "MovieDetailViewController") as! MovieDetailViewController
+        controller.movie = movies[(indexPath as NSIndexPath).row]
         navigationController!.pushViewController(controller, animated: true)
     }
     
@@ -197,7 +197,7 @@ extension GenreTableViewController {
 
 extension GenreTableViewController {
     
-    private func genreIDFromItemTag(itemTag: Int) -> Int {
+    private func genreIDFromItemTag(_ itemTag: Int) -> Int {
         
         let genres: [String] = [
             "Sci-Fi",

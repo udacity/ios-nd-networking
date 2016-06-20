@@ -31,10 +31,10 @@ class MovieDetailViewController: UIViewController {
         super.viewDidLoad()
         
         // get the app delegate
-        appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        appDelegate = UIApplication.shared().delegate as! AppDelegate
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         
         super.viewWillAppear(animated)
         
@@ -52,11 +52,11 @@ class MovieDetailViewController: UIViewController {
             ]
             
             /* 2/3. Build the URL, Configure the request */
-            let request = NSMutableURLRequest(URL: appDelegate.tmdbURLFromParameters(methodParameters, withPathExtension: "/account/\(appDelegate.userID!)/favorite/movies"))
+            let request = NSMutableURLRequest(url: appDelegate.tmdbURLFromParameters(methodParameters, withPathExtension: "/account/\(appDelegate.userID!)/favorite/movies"))
             request.addValue("application/json", forHTTPHeaderField: "Accept")
             
             /* 4A. Make the request */
-            let task = appDelegate.sharedSession.dataTaskWithRequest(request) { (data, response, error) in
+            let task = appDelegate.sharedSession.dataTask(with: request as URLRequest) { (data, response, error) in
                 
                 /* GUARD: Was there an error? */
                 guard (error == nil) else {
@@ -65,7 +65,7 @@ class MovieDetailViewController: UIViewController {
                 }
                 
                 /* GUARD: Did we get a successful 2XX response? */
-                guard let statusCode = (response as? NSHTTPURLResponse)?.statusCode where statusCode >= 200 && statusCode <= 299 else {
+                guard let statusCode = (response as? HTTPURLResponse)?.statusCode where statusCode >= 200 && statusCode <= 299 else {
                     print("Your request returned a status code other than 2xx!")
                     return
                 }
@@ -79,7 +79,7 @@ class MovieDetailViewController: UIViewController {
                 /* 5A. Parse the data */
                 let parsedResult: AnyObject!
                 do {
-                    parsedResult = try NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments)
+                    parsedResult = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
                 } catch {
                     print("Could not parse the data as JSON: '\(data)'")
                     return
@@ -108,7 +108,7 @@ class MovieDetailViewController: UIViewController {
                 }
                 
                 performUIUpdatesOnMain {
-                    self.favoriteButton.tintColor = (self.isFavorite) ? nil : UIColor.blackColor()
+                    self.favoriteButton.tintColor = (self.isFavorite) ? nil : UIColor.black()
                 }
             }
             
@@ -122,14 +122,14 @@ class MovieDetailViewController: UIViewController {
                 // There are none...
                 
                 /* 2B. Build the URL */
-                let baseURL = NSURL(string: appDelegate.config.baseImageURLString)!
-                let url = baseURL.URLByAppendingPathComponent("w342").URLByAppendingPathComponent(posterPath)
+                let baseURL = URL(string: appDelegate.config.baseImageURLString)!
+                let url = try! baseURL.appendingPathComponent("w342").appendingPathComponent(posterPath)
                 
                 /* 3B. Configure the request */
-                let request = NSURLRequest(URL: url)
+                let request = URLRequest(url: url)
                 
                 /* 4B. Make the request */
-                let task = appDelegate.sharedSession.dataTaskWithRequest(request) { (data, response, error) in
+                let task = appDelegate.sharedSession.dataTask(with: request) { (data, response, error) in
                     
                     /* GUARD: Was there an error? */
                     guard (error == nil) else {
@@ -138,7 +138,7 @@ class MovieDetailViewController: UIViewController {
                     }
                     
                     /* GUARD: Did we get a successful 2XX response? */
-                    guard let statusCode = (response as? NSHTTPURLResponse)?.statusCode where statusCode >= 200 && statusCode <= 299 else {
+                    guard let statusCode = (response as? HTTPURLResponse)?.statusCode where statusCode >= 200 && statusCode <= 299 else {
                         print("Your request returned a status code other than 2xx!")
                         return
                     }
@@ -170,7 +170,7 @@ class MovieDetailViewController: UIViewController {
     
     // MARK: Favorite Actions
     
-    @IBAction func toggleFavorite(sender: AnyObject) {
+    @IBAction func toggleFavorite(_ sender: AnyObject) {
         
         // let shouldFavorite = !isFavorite
         

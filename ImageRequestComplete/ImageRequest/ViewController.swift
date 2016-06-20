@@ -22,10 +22,10 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
         // create url
-        let imageURL = NSURL(string: Constants.CatURL)!
+        let imageURL = URL(string: Constants.CatURL)!
         
         // create network request
-        let task = NSURLSession.sharedSession().dataTaskWithURL(imageURL) { (data, response, error) in
+        let task = URLSession.shared().dataTask(with: imageURL) { (data, response, error) in
             
             if error == nil {
                 

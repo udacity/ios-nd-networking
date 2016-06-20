@@ -20,16 +20,16 @@ class ViewController: UIViewController {
     
     // MARK: Actions
     
-    @IBAction func grabNewImage(sender: AnyObject) {
+    @IBAction func grabNewImage(_ sender: AnyObject) {
         setUIEnabled(false)
         getImageFromFlickr()
     }
     
     // MARK: Configure UI
     
-    private func setUIEnabled(enabled: Bool) {
-        photoTitleLabel.enabled = enabled
-        grabImageButton.enabled = enabled
+    private func setUIEnabled(_ enabled: Bool) {
+        photoTitleLabel.isEnabled = enabled
+        grabImageButton.isEnabled = enabled
         
         if enabled {
             grabImageButton.alpha = 1.0

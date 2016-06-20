@@ -26,10 +26,10 @@ class WatchlistViewController: UIViewController {
         super.viewDidLoad()
         
         // create and set the logout button
-        parentViewController!.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Reply, target: self, action: #selector(logout))
+        parent!.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .reply, target: self, action: #selector(logout))
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         TMDBClient.sharedInstance().getWatchlistMovies { (movies, error) in
@@ -47,7 +47,7 @@ class WatchlistViewController: UIViewController {
     // MARK: Logout
     
     func logout() {
-        dismissViewControllerAnimated(true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
 }
 
@@ -55,23 +55,23 @@ class WatchlistViewController: UIViewController {
 
 extension WatchlistViewController: UITableViewDelegate, UITableViewDataSource {
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         /* Get cell type */
         let cellReuseIdentifier = "WatchlistTableViewCell"
-        let movie = movies[indexPath.row]
-        let cell = tableView.dequeueReusableCellWithIdentifier(cellReuseIdentifier) as UITableViewCell!
+        let movie = movies[(indexPath as NSIndexPath).row]
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier) as UITableViewCell!
         
         /* Set cell defaults */
-        cell.textLabel!.text = movie.title
-        cell.imageView!.image = UIImage(named: "Film")
-        cell.imageView!.contentMode = UIViewContentMode.ScaleAspectFit
+        cell?.textLabel!.text = movie.title
+        cell?.imageView!.image = UIImage(named: "Film")
+        cell?.imageView!.contentMode = UIViewContentMode.scaleAspectFit
         
         if let posterPath = movie.posterPath {
-            TMDBClient.sharedInstance().taskForGETImage(TMDBClient.PosterSizes.RowPoster, filePath: posterPath, completionHandlerForImage: { (imageData, error) in
+            let _ = TMDBClient.sharedInstance().taskForGETImage(TMDBClient.PosterSizes.RowPoster, filePath: posterPath, completionHandlerForImage: { (imageData, error) in
                 if let image = UIImage(data: imageData!) {
                     performUIUpdatesOnMain {
-                        cell.imageView!.image = image
+                        cell?.imageView!.image = image
                     }
                 } else {
                     print(error)
@@ -79,20 +79,20 @@ extension WatchlistViewController: UITableViewDelegate, UITableViewDataSource {
             })
         }
         
-        return cell
+        return cell!
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return movies.count
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let controller = storyboard!.instantiateViewControllerWithIdentifier("MovieDetailViewController") as! MovieDetailViewController
-        controller.movie = movies[indexPath.row]
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let controller = storyboard!.instantiateViewController(withIdentifier: "MovieDetailViewController") as! MovieDetailViewController
+        controller.movie = movies[(indexPath as NSIndexPath).row]
         navigationController!.pushViewController(controller, animated: true)
     }
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 100
     }
 }

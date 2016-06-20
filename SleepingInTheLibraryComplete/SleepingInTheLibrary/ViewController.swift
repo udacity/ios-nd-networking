@@ -20,16 +20,16 @@ class ViewController: UIViewController {
     
     // MARK: Actions
     
-    @IBAction func grabNewImage(sender: AnyObject) {
+    @IBAction func grabNewImage(_ sender: AnyObject) {
         setUIEnabled(false)
         getImageFromFlickr()
     }
     
     // MARK: Configure UI
     
-    private func setUIEnabled(enabled: Bool) {
-        photoTitleLabel.enabled = enabled
-        grabImageButton.enabled = enabled
+    private func setUIEnabled(_ enabled: Bool) {
+        photoTitleLabel.isEnabled = enabled
+        grabImageButton.isEnabled = enabled
         
         if enabled {
             grabImageButton.alpha = 1.0
@@ -52,16 +52,16 @@ class ViewController: UIViewController {
         ]
         
         // create url and request
-        let session = NSURLSession.sharedSession()
+        let session = URLSession.shared()
         let urlString = Constants.Flickr.APIBaseURL + escapedParameters(methodParameters)
-        let url = NSURL(string: urlString)!
-        let request = NSURLRequest(URL: url)
+        let url = URL(string: urlString)!
+        let request = URLRequest(url: url)
         
         // create network request
-        let task = session.dataTaskWithRequest(request) { (data, response, error) in
+        let task = session.dataTask(with: request) { (data, response, error) in
             
             // if an error occurs, print it and re-enable the UI
-            func displayError(error: String) {
+            func displayError(_ error: String) {
                 print(error)
                 print("URL at time of error: \(url)")
                 performUIUpdatesOnMain {
@@ -76,7 +76,7 @@ class ViewController: UIViewController {
             }
             
             /* GUARD: Did we get a successful 2XX response? */
-            guard let statusCode = (response as? NSHTTPURLResponse)?.statusCode where statusCode >= 200 && statusCode <= 299 else {
+            guard let statusCode = (response as? HTTPURLResponse)?.statusCode where statusCode >= 200 && statusCode <= 299 else {
                 displayError("Your request returned a status code other than 2xx!")
                 return
             }
@@ -90,7 +90,7 @@ class ViewController: UIViewController {
             // parse the data
             let parsedResult: AnyObject!
             do {
-                parsedResult = try NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments)
+                parsedResult = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
             } catch {
                 displayError("Could not parse the data as JSON: '\(data)'")
                 return
@@ -121,8 +121,8 @@ class ViewController: UIViewController {
             }
             
             // if an image exists at the url, set the image and title
-            let imageURL = NSURL(string: imageUrlString)
-            if let imageData = NSData(contentsOfURL: imageURL!) {
+            let imageURL = URL(string: imageUrlString)
+            if let imageData = try? Data(contentsOf: imageURL!) {
                 performUIUpdatesOnMain {
                     self.setUIEnabled(true)
                     self.photoImageView.image = UIImage(data: imageData)
@@ -139,7 +139,7 @@ class ViewController: UIViewController {
     
     // MARK: Helper for Escaping Parameters in URL
     
-    private func escapedParameters(parameters: [String:AnyObject]) -> String {
+    private func escapedParameters(_ parameters: [String:AnyObject]) -> String {
         
         if parameters.isEmpty {
             return ""
@@ -152,14 +152,14 @@ class ViewController: UIViewController {
                 let stringValue = "\(value)"
                 
                 // escape it
-                let escapedValue = stringValue.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())
+                let escapedValue = stringValue.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)
                 
                 // append it
                 keyValuePairs.append(key + "=" + "\(escapedValue!)")
                 
             }
             
-            return "?\(keyValuePairs.joinWithSeparator("&"))"
+            return "?\(keyValuePairs.joined(separator: "&"))"
         }
     }
 }

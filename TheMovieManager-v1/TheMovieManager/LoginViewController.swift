@@ -30,14 +30,14 @@ class LoginViewController: UIViewController {
         configureBackground()
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         debugTextLabel.text = ""
     }
     
     // MARK: Actions
     
-    @IBAction func loginPressed(sender: AnyObject) {
+    @IBAction func loginPressed(_ sender: AnyObject) {
         
         // MARK: Authentication (GET) Methods
         /*
@@ -56,8 +56,8 @@ class LoginViewController: UIViewController {
     
     private func completeLogin() {
         debugTextLabel.text = ""
-        let controller = storyboard!.instantiateViewControllerWithIdentifier("ManagerNavigationController") as! UINavigationController
-        presentViewController(controller, animated: true, completion: nil)
+        let controller = storyboard!.instantiateViewController(withIdentifier: "ManagerNavigationController") as! UINavigationController
+        present(controller, animated: true, completion: nil)
     }
     
     // MARK: TheMovieDB
@@ -72,13 +72,13 @@ class LoginViewController: UIViewController {
         ]
         
         /* 2/3. Build the URL, Configure the request */
-        let request = NSURLRequest(URL: TMDBClient.tmdbURLFromParameters(methodParameters, withPathExtension: TMDBClient.Methods.AuthenticationTokenNew))
+        let request = URLRequest(url: TMDBClient.tmdbURLFromParameters(methodParameters, withPathExtension: TMDBClient.Methods.AuthenticationTokenNew))
         
         /* 4. Make the request */
-        let task = tmdbClient.session.dataTaskWithRequest(request) { (data, response, error) in
+        let task = tmdbClient.session.dataTask(with: request) { (data, response, error) in
             
             // if an error occurs, print it and re-enable the UI
-            func displayError(error: String) {
+            func displayError(_ error: String) {
                 print(error)
                 performUIUpdatesOnMain {
                     self.setUIEnabled(true)
@@ -93,7 +93,7 @@ class LoginViewController: UIViewController {
             }
             
             /* GUARD: Did we get a successful 2XX response? */
-            guard let statusCode = (response as? NSHTTPURLResponse)?.statusCode where statusCode >= 200 && statusCode <= 299 else {
+            guard let statusCode = (response as? HTTPURLResponse)?.statusCode where statusCode >= 200 && statusCode <= 299 else {
                 displayError("Your request returned a status code other than 2xx!")
                 return
             }
@@ -107,7 +107,7 @@ class LoginViewController: UIViewController {
             /* 5. Parse the data */
             let parsedResult: AnyObject!
             do {
-                parsedResult = try NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments)
+                parsedResult = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
             } catch {
                 displayError("Could not parse the data as JSON: '\(data)'")
                 return
@@ -134,11 +134,11 @@ class LoginViewController: UIViewController {
         task.resume()
     }
     
-    private func loginWithToken(requestToken: String) {
+    private func loginWithToken(_ requestToken: String) {
         
-        let authorizationURL = NSURL(string: "\(TMDBClient.Constants.AuthorizationURL)\(requestToken)")
-        let request = NSURLRequest(URL: authorizationURL!)
-        let webAuthViewController = storyboard!.instantiateViewControllerWithIdentifier("TMDBAuthViewController") as! TMDBAuthViewController
+        let authorizationURL = URL(string: "\(TMDBClient.Constants.AuthorizationURL)\(requestToken)")
+        let request = URLRequest(url: authorizationURL!)
+        let webAuthViewController = storyboard!.instantiateViewController(withIdentifier: "TMDBAuthViewController") as! TMDBAuthViewController
         webAuthViewController.urlRequest = request
         webAuthViewController.requestToken = requestToken
         webAuthViewController.completionHandlerForView = { (success, errorString) in
@@ -155,11 +155,11 @@ class LoginViewController: UIViewController {
         webAuthNavigationController.pushViewController(webAuthViewController, animated: false)
         
         performUIUpdatesOnMain {
-            self.presentViewController(webAuthNavigationController, animated: true, completion: nil)
+            self.present(webAuthNavigationController, animated: true, completion: nil)
         }
     }
     
-    private func getSessionID(requestToken: String) {
+    private func getSessionID(_ requestToken: String) {
         
         /* TASK: Get a session ID, then store it (appDelegate.sessionID) and get the user's id */
         
@@ -170,13 +170,13 @@ class LoginViewController: UIViewController {
         ]
         
         /* 2/3. Build the URL, Configure the request */
-        let request = NSURLRequest(URL: TMDBClient.tmdbURLFromParameters(methodParameters, withPathExtension: TMDBClient.Methods.AuthenticationSessionNew))
+        let request = URLRequest(url: TMDBClient.tmdbURLFromParameters(methodParameters, withPathExtension: TMDBClient.Methods.AuthenticationSessionNew))
         
         /* 4. Make the request */
-        let task = tmdbClient.session.dataTaskWithRequest(request) { (data, response, error) in
+        let task = tmdbClient.session.dataTask(with: request) { (data, response, error) in
             
             // if an error occurs, print it and re-enable the UI
-            func displayError(error: String, debugLabelText: String? = nil) {
+            func displayError(_ error: String, debugLabelText: String? = nil) {
                 print(error)
                 performUIUpdatesOnMain {
                     self.setUIEnabled(true)
@@ -191,7 +191,7 @@ class LoginViewController: UIViewController {
             }
             
             /* GUARD: Did we get a successful 2XX response? */
-            guard let statusCode = (response as? NSHTTPURLResponse)?.statusCode where statusCode >= 200 && statusCode <= 299 else {
+            guard let statusCode = (response as? HTTPURLResponse)?.statusCode where statusCode >= 200 && statusCode <= 299 else {
                 displayError("Your request returned a status code other than 2xx!")
                 return
             }
@@ -205,7 +205,7 @@ class LoginViewController: UIViewController {
             /* 5. Parse the data */
             let parsedResult: AnyObject!
             do {
-                parsedResult = try NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments)
+                parsedResult = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
             } catch {
                 displayError("Could not parse the data as JSON: '\(data)'")
                 return
@@ -232,7 +232,7 @@ class LoginViewController: UIViewController {
         task.resume()
     }
     
-    private func getUserID(sessionID: String) {
+    private func getUserID(_ sessionID: String) {
         
         /* TASK: Get the user's ID, then store it (appDelegate.userID) for future use and go to next view! */
         
@@ -243,13 +243,13 @@ class LoginViewController: UIViewController {
         ]
         
         /* 2/3. Build the URL, Configure the request */
-        let request = NSURLRequest(URL: TMDBClient.tmdbURLFromParameters(methodParameters, withPathExtension: TMDBClient.Methods.Account))
+        let request = URLRequest(url: TMDBClient.tmdbURLFromParameters(methodParameters, withPathExtension: TMDBClient.Methods.Account))
         
         /* 4. Make the request */
-        let task = tmdbClient.session.dataTaskWithRequest(request) { (data, response, error) in
+        let task = tmdbClient.session.dataTask(with: request) { (data, response, error) in
             
             // if an error occurs, print it and re-enable the UI
-            func displayError(error: String, debugLabelText: String? = nil) {
+            func displayError(_ error: String, debugLabelText: String? = nil) {
                 print(error)
                 performUIUpdatesOnMain {
                     self.setUIEnabled(true)
@@ -264,7 +264,7 @@ class LoginViewController: UIViewController {
             }
             
             /* GUARD: Did we get a successful 2XX response? */
-            guard let statusCode = (response as? NSHTTPURLResponse)?.statusCode where statusCode >= 200 && statusCode <= 299 else {
+            guard let statusCode = (response as? HTTPURLResponse)?.statusCode where statusCode >= 200 && statusCode <= 299 else {
                 displayError("Your request returned a status code other than 2xx!")
                 return
             }
@@ -278,7 +278,7 @@ class LoginViewController: UIViewController {
             /* 5. Parse the data */
             let parsedResult: AnyObject!
             do {
-                parsedResult = try NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments)
+                parsedResult = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
             } catch {
                 displayError("Could not parse the data as JSON: '\(data)'")
                 return
@@ -310,9 +310,9 @@ class LoginViewController: UIViewController {
 
 extension LoginViewController {
     
-    private func setUIEnabled(enabled: Bool) {
-        loginButton.enabled = enabled
-        debugTextLabel.enabled = enabled
+    private func setUIEnabled(_ enabled: Bool) {
+        loginButton.isEnabled = enabled
+        debugTextLabel.isEnabled = enabled
         
         // adjust login button alpha
         if enabled {
@@ -322,7 +322,7 @@ extension LoginViewController {
         }
     }
     
-    private func displayError(errorString: String?) {
+    private func displayError(_ errorString: String?) {
         if let errorString = errorString {
             debugTextLabel.text = errorString
         }
@@ -330,11 +330,11 @@ extension LoginViewController {
     
     private func configureBackground() {
         let backgroundGradient = CAGradientLayer()
-        let colorTop = UIColor(red: 0.345, green: 0.839, blue: 0.988, alpha: 1.0).CGColor
-        let colorBottom = UIColor(red: 0.023, green: 0.569, blue: 0.910, alpha: 1.0).CGColor
+        let colorTop = UIColor(red: 0.345, green: 0.839, blue: 0.988, alpha: 1.0).cgColor
+        let colorBottom = UIColor(red: 0.023, green: 0.569, blue: 0.910, alpha: 1.0).cgColor
         backgroundGradient.colors = [colorTop, colorBottom]
         backgroundGradient.locations = [0.0, 1.0]
         backgroundGradient.frame = view.frame
-        view.layer.insertSublayer(backgroundGradient, atIndex: 0)
+        view.layer.insertSublayer(backgroundGradient, at: 0)
     }
 }

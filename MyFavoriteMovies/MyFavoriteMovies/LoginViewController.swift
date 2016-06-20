@@ -31,24 +31,24 @@ class LoginViewController: UIViewController {
         super.viewDidLoad()
         
         // get the app delegate
-        appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate                        
+        appDelegate = UIApplication.shared().delegate as! AppDelegate                        
         
         configureUI()
         
-        subscribeToNotification(UIKeyboardWillShowNotification, selector: #selector(keyboardWillShow))
-        subscribeToNotification(UIKeyboardWillHideNotification, selector: #selector(keyboardWillHide))
-        subscribeToNotification(UIKeyboardDidShowNotification, selector: #selector(keyboardDidShow))
-        subscribeToNotification(UIKeyboardDidHideNotification, selector: #selector(keyboardDidHide))
+        subscribeToNotification(NSNotification.Name.UIKeyboardWillShow.rawValue, selector: #selector(keyboardWillShow))
+        subscribeToNotification(NSNotification.Name.UIKeyboardWillHide.rawValue, selector: #selector(keyboardWillHide))
+        subscribeToNotification(NSNotification.Name.UIKeyboardDidShow.rawValue, selector: #selector(keyboardDidShow))
+        subscribeToNotification(NSNotification.Name.UIKeyboardDidHide.rawValue, selector: #selector(keyboardDidHide))
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         unsubscribeFromAllNotifications()
     }
     
     // MARK: Login
     
-    @IBAction func loginPressed(sender: AnyObject) {
+    @IBAction func loginPressed(_ sender: AnyObject) {
         
         userDidTapView(self)
         
@@ -77,8 +77,8 @@ class LoginViewController: UIViewController {
         performUIUpdatesOnMain {
             self.debugTextLabel.text = ""
             self.setUIEnabled(true)
-            let controller = self.storyboard!.instantiateViewControllerWithIdentifier("MoviesTabBarController") as! UITabBarController
-            self.presentViewController(controller, animated: true, completion: nil)
+            let controller = self.storyboard!.instantiateViewController(withIdentifier: "MoviesTabBarController") as! UITabBarController
+            self.present(controller, animated: true, completion: nil)
         }
     }
     
@@ -94,10 +94,10 @@ class LoginViewController: UIViewController {
         ]
         
         /* 2/3. Build the URL, Configure the request */
-        let request = NSURLRequest(URL: appDelegate.tmdbURLFromParameters(methodParameters, withPathExtension: "/authentication/token/new"))
+        let request = URLRequest(url: appDelegate.tmdbURLFromParameters(methodParameters, withPathExtension: "/authentication/token/new"))
         
         /* 4. Make the request */
-        let task = appDelegate.sharedSession.dataTaskWithRequest(request) { (data, response, error) in
+        let task = appDelegate.sharedSession.dataTask(with: request) { (data, response, error) in
             
             /* 5. Parse the data */
             /* 6. Use the data! */
@@ -107,7 +107,7 @@ class LoginViewController: UIViewController {
         task.resume()
     }
     
-    private func loginWithToken(requestToken: String) {
+    private func loginWithToken(_ requestToken: String) {
         
         /* TASK: Login, then get a session id */
         
@@ -119,7 +119,7 @@ class LoginViewController: UIViewController {
         /* 7. Start the request */
     }
     
-    private func getSessionID(requestToken: String) {
+    private func getSessionID(_ requestToken: String) {
         
         /* TASK: Get a session ID, then store it (appDelegate.sessionID) and get the user's id */
         
@@ -131,7 +131,7 @@ class LoginViewController: UIViewController {
         /* 7. Start the request */
     }
     
-    private func getUserID(sessionID: String) {
+    private func getUserID(_ sessionID: String) {
         
         /* TASK: Get the user's ID, then store it (appDelegate.userID) for future use and go to next view! */
         
@@ -150,48 +150,48 @@ extension LoginViewController: UITextFieldDelegate {
     
     // MARK: UITextFieldDelegate
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
     }
     
     // MARK: Show/Hide Keyboard
     
-    func keyboardWillShow(notification: NSNotification) {
+    func keyboardWillShow(_ notification: Notification) {
         if !keyboardOnScreen {
             view.frame.origin.y -= keyboardHeight(notification)
-            movieImageView.hidden = true
+            movieImageView.isHidden = true
         }
     }
     
-    func keyboardWillHide(notification: NSNotification) {
+    func keyboardWillHide(_ notification: Notification) {
         if keyboardOnScreen {
             view.frame.origin.y += keyboardHeight(notification)
-            movieImageView.hidden = false
+            movieImageView.isHidden = false
         }
     }
     
-    func keyboardDidShow(notification: NSNotification) {
+    func keyboardDidShow(_ notification: Notification) {
         keyboardOnScreen = true
     }
     
-    func keyboardDidHide(notification: NSNotification) {
+    func keyboardDidHide(_ notification: Notification) {
         keyboardOnScreen = false
     }
     
-    private func keyboardHeight(notification: NSNotification) -> CGFloat {
-        let userInfo = notification.userInfo
+    private func keyboardHeight(_ notification: Notification) -> CGFloat {
+        let userInfo = (notification as NSNotification).userInfo
         let keyboardSize = userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue
-        return keyboardSize.CGRectValue().height
+        return keyboardSize.cgRectValue().height
     }
     
-    private func resignIfFirstResponder(textField: UITextField) {
+    private func resignIfFirstResponder(_ textField: UITextField) {
         if textField.isFirstResponder() {
             textField.resignFirstResponder()
         }
     }
     
-    @IBAction func userDidTapView(sender: AnyObject) {
+    @IBAction func userDidTapView(_ sender: AnyObject) {
         resignIfFirstResponder(usernameTextField)
         resignIfFirstResponder(passwordTextField)
     }
@@ -201,12 +201,12 @@ extension LoginViewController: UITextFieldDelegate {
 
 extension LoginViewController {
     
-    private func setUIEnabled(enabled: Bool) {
-        usernameTextField.enabled = enabled
-        passwordTextField.enabled = enabled
-        loginButton.enabled = enabled
+    private func setUIEnabled(_ enabled: Bool) {
+        usernameTextField.isEnabled = enabled
+        passwordTextField.isEnabled = enabled
+        loginButton.isEnabled = enabled
         debugTextLabel.text = ""
-        debugTextLabel.enabled = enabled
+        debugTextLabel.isEnabled = enabled
         
         // adjust login button alpha
         if enabled {
@@ -223,20 +223,20 @@ extension LoginViewController {
         backgroundGradient.colors = [Constants.UI.LoginColorTop, Constants.UI.LoginColorBottom]
         backgroundGradient.locations = [0.0, 1.0]
         backgroundGradient.frame = view.frame
-        view.layer.insertSublayer(backgroundGradient, atIndex: 0)
+        view.layer.insertSublayer(backgroundGradient, at: 0)
         
         configureTextField(usernameTextField)
         configureTextField(passwordTextField)
     }
     
-    private func configureTextField(textField: UITextField) {
-        let textFieldPaddingViewFrame = CGRectMake(0.0, 0.0, 13.0, 0.0)
+    private func configureTextField(_ textField: UITextField) {
+        let textFieldPaddingViewFrame = CGRect(x: 0.0, y: 0.0, width: 13.0, height: 0.0)
         let textFieldPaddingView = UIView(frame: textFieldPaddingViewFrame)
         textField.leftView = textFieldPaddingView
-        textField.leftViewMode = .Always
+        textField.leftViewMode = .always
         textField.backgroundColor = Constants.UI.GreyColor
         textField.textColor = Constants.UI.BlueColor
-        textField.attributedPlaceholder = NSAttributedString(string: textField.placeholder!, attributes: [NSForegroundColorAttributeName: UIColor.whiteColor()])
+        textField.attributedPlaceholder = AttributedString(string: textField.placeholder!, attributes: [NSForegroundColorAttributeName: UIColor.white()])
         textField.tintColor = Constants.UI.BlueColor
         textField.delegate = self
     }
@@ -246,11 +246,11 @@ extension LoginViewController {
 
 extension LoginViewController {
     
-    private func subscribeToNotification(notification: String, selector: Selector) {
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: selector, name: notification, object: nil)
+    private func subscribeToNotification(_ notification: String, selector: Selector) {
+        NotificationCenter.default().addObserver(self, selector: selector, name: notification, object: nil)
     }
     
     private func unsubscribeFromAllNotifications() {
-        NSNotificationCenter.defaultCenter().removeObserver(self)
+        NotificationCenter.default().removeObserver(self)
     }
 }

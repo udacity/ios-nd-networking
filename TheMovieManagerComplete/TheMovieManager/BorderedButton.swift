@@ -43,44 +43,44 @@ class BorderedButton: UIButton {
         highlightedBackingColor = darkerBlue
         backingColor = lighterBlue
         backgroundColor = lighterBlue
-        setTitleColor(UIColor.whiteColor(), forState: .Normal)
-        titleLabel?.font = UIFont.systemFontOfSize(titleLabelFontSize)
+        setTitleColor(UIColor.white(), for: UIControlState())
+        titleLabel?.font = UIFont.systemFont(ofSize: titleLabelFontSize)
     }
     
     // MARK: Setters
     
-    private func setBackingColor(newBackingColor: UIColor) {
+    private func setBackingColor(_ newBackingColor: UIColor) {
         if let _ = backingColor {
             backingColor = newBackingColor
             backgroundColor = newBackingColor
         }
     }
     
-    private func setHighlightedBackingColor(newHighlightedBackingColor: UIColor) {
+    private func setHighlightedBackingColor(_ newHighlightedBackingColor: UIColor) {
         highlightedBackingColor = newHighlightedBackingColor
         backingColor = highlightedBackingColor
     }
     
     // MARK: Tracking
     
-    override func beginTrackingWithTouch(touch: UITouch, withEvent: UIEvent?) -> Bool {
+    override func beginTracking(_ touch: UITouch, with withEvent: UIEvent?) -> Bool {
         backgroundColor = highlightedBackingColor
         return true
     }
     
-    override func endTrackingWithTouch(touch: UITouch?, withEvent event: UIEvent?) {
+    override func endTracking(_ touch: UITouch?, with event: UIEvent?) {
         backgroundColor = backingColor
     }
     
-    override func cancelTrackingWithEvent(event: UIEvent?) {
+    override func cancelTracking(with event: UIEvent?) {
         backgroundColor = backingColor
     }
     
     // MARK: Layout
     
-    override func sizeThatFits(size: CGSize) -> CGSize {
+    override func sizeThatFits(_ size: CGSize) -> CGSize {
         let extraButtonPadding : CGFloat = phoneBorderedButtonExtraPadding
-        var sizeThatFits = CGSizeZero
+        var sizeThatFits = CGSize.zero
         sizeThatFits.width = super.sizeThatFits(size).width + extraButtonPadding
         sizeThatFits.height = borderedButtonHeight
         return sizeThatFits
