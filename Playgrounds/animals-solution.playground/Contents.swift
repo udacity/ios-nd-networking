@@ -9,18 +9,18 @@
 import Foundation
 
 /* Path for JSON files bundled with the Playground */
-var pathForAnimalsJSON = NSBundle.mainBundle().pathForResource("animals", ofType: "json")
+var pathForAnimalsJSON = Bundle.main().pathForResource("animals", ofType: "json")
 
 /* Raw JSON data (...simliar to the format you might receive from the network) */
-var rawAnimalsJSON = NSData(contentsOfFile: pathForAnimalsJSON!)
+var rawAnimalsJSON = try? Data(contentsOf: URL(fileURLWithPath: pathForAnimalsJSON!))
 
 /* Error object */
 var parsingAnimalsError: NSError? = nil
 
 /* Parse the data into usable form */
-var parsedAnimalsJSON = try! NSJSONSerialization.JSONObjectWithData(rawAnimalsJSON!, options: .AllowFragments) as! NSDictionary
+var parsedAnimalsJSON = try! JSONSerialization.jsonObject(with: rawAnimalsJSON!, options: .allowFragments) as! NSDictionary
 
-func parseJSONAsDictionary(dictionary: NSDictionary) {
+func parseJSONAsDictionary(_ dictionary: NSDictionary) {
     
     guard let photosDictionary = parsedAnimalsJSON["photos"] as? NSDictionary else {
         print("Cannot find key 'photos' in \(parsedAnimalsJSON)")
@@ -40,7 +40,7 @@ func parseJSONAsDictionary(dictionary: NSDictionary) {
         return
     }
     
-    for (index, photo) in arrayOfPhotoDictionaries.enumerate() {
+    for (index, photo) in arrayOfPhotoDictionaries.enumerated() {
         
         guard let commentDictionary = photo["comment"] as? [String:AnyObject] else {
             print("Cannot find key 'comment' in \(photo)")
@@ -53,7 +53,7 @@ func parseJSONAsDictionary(dictionary: NSDictionary) {
         }
         
         /* What is the array index of the photo that has content containing the text "interrufftion"? */
-        if content.rangeOfString("interrufftion") != nil {
+        if content.range(of: "interrufftion") != nil {
             print(index)
         }
         

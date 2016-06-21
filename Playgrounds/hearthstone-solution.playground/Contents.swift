@@ -9,18 +9,18 @@
 import Foundation
 
 /* Path for JSON files bundled with the Playground */
-var pathForHearthstoneJSON = NSBundle.mainBundle().pathForResource("hearthstone", ofType: "json")
+var pathForHearthstoneJSON = Bundle.main().pathForResource("hearthstone", ofType: "json")
 
 /* Raw JSON data (...simliar to the format you might receive from the network) */
-var rawHearthstoneJSON = NSData(contentsOfFile: pathForHearthstoneJSON!)
+var rawHearthstoneJSON = try? Data(contentsOf: URL(fileURLWithPath: pathForHearthstoneJSON!))
 
 /* Error object */
 var parsingHearthstoneError: NSError? = nil
 
 /* Parse the data into usable form */
-var parsedHearthstoneJSON = try! NSJSONSerialization.JSONObjectWithData(rawHearthstoneJSON!, options: .AllowFragments) as! NSDictionary
+var parsedHearthstoneJSON = try! JSONSerialization.jsonObject(with: rawHearthstoneJSON!, options: .allowFragments) as! NSDictionary
 
-func parseJSONAsDictionary(dictionary: NSDictionary) {
+func parseJSONAsDictionary(_ dictionary: NSDictionary) {
     
     var numCostRatioItems = 0
     var sumCostRatio : Double = 0.0
@@ -90,7 +90,7 @@ func parseJSONAsDictionary(dictionary: NSDictionary) {
             sumCostForRarityDictionary[rarityForCard]! += manaCost
             
             /* How many minions have a "Battlecry" effect mentioned in their text? */
-            if let cardText = cardDictionary["text"] as? String where cardText.rangeOfString("Battlecry") != nil {
+            if let cardText = cardDictionary["text"] as? String where cardText.range(of: "Battlecry") != nil {
                     print("this minion has battlecry effect")
             }
         }

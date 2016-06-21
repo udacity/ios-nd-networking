@@ -9,18 +9,18 @@
 import Foundation
 
 /* Path for JSON files bundled with the Playground */
-var pathForAchievementsJSON = NSBundle.mainBundle().pathForResource("achievements", ofType: "json")
+var pathForAchievementsJSON = Bundle.main().pathForResource("achievements", ofType: "json")
 
 /* Raw JSON data (...simliar to the format you might receive from the network) */
-var rawAchievementsJSON = NSData(contentsOfFile: pathForAchievementsJSON!)
+var rawAchievementsJSON = try? Data(contentsOf: URL(fileURLWithPath: pathForAchievementsJSON!))
 
 /* Error object */
 var parsingAchivementsError: NSError? = nil
 
 /* Parse the data into usable form */
-var parsedAchievementsJSON = try! NSJSONSerialization.JSONObjectWithData(rawAchievementsJSON!, options: .AllowFragments) as! NSDictionary
+var parsedAchievementsJSON = try! JSONSerialization.jsonObject(with: rawAchievementsJSON!, options: .allowFragments) as! NSDictionary
 
-func parseJSONAsDictionary(dictionary: NSDictionary) {
+func parseJSONAsDictionary(_ dictionary: NSDictionary) {
     
     /* Get top level dictionaries for achievements and categories */
     guard let achievementDictionaries = parsedAchievementsJSON["achievements"] as? [NSDictionary] else {
