@@ -10,7 +10,6 @@
 		A9855BAD1BEC3EDB00000031 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9855BAC1BEC3EDB00000031 /* AppDelegate.swift */; };
 		A9855BB21BEC3EDB00000031 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A9855BB01BEC3EDB00000031 /* Main.storyboard */; };
 		A9855BB41BEC3EDB00000031 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A9855BB31BEC3EDB00000031 /* Assets.xcassets */; };
-		A9855BB71BEC3EDB00000031 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A9855BB51BEC3EDB00000031 /* LaunchScreen.storyboard */; };
 		A9855BC21BEC40C400000031 /* BorderedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9855BC01BEC40C400000031 /* BorderedButton.swift */; };
 		A9855BC51BEC411E00000031 /* TMDBConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9855BC41BEC411E00000031 /* TMDBConstants.swift */; };
 		A9855BC71BEC414700000031 /* TMDBClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9855BC61BEC414700000031 /* TMDBClient.swift */; };
@@ -24,6 +23,7 @@
 		A9855BDE1BEC4DEB00000031 /* MovieDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9855BDA1BEC4DEB00000031 /* MovieDetailViewController.swift */; };
 		A9855BDF1BEC4DEB00000031 /* MoviePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9855BDB1BEC4DEB00000031 /* MoviePickerViewController.swift */; };
 		A9855BE01BEC4DEB00000031 /* WatchlistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9855BDC1BEC4DEB00000031 /* WatchlistViewController.swift */; };
+		A9FA13561D1AB75100B5F46E /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = A9FA13541D1AB75100B5F46E /* LaunchScreen.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,7 +31,6 @@
 		A9855BAC1BEC3EDB00000031 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A9855BB11BEC3EDB00000031 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		A9855BB31BEC3EDB00000031 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		A9855BB61BEC3EDB00000031 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A9855BB81BEC3EDB00000031 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A9855BC01BEC40C400000031 /* BorderedButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BorderedButton.swift; sourceTree = "<group>"; };
 		A9855BC41BEC411E00000031 /* TMDBConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TMDBConstants.swift; sourceTree = "<group>"; };
@@ -46,6 +45,7 @@
 		A9855BDA1BEC4DEB00000031 /* MovieDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovieDetailViewController.swift; sourceTree = "<group>"; };
 		A9855BDB1BEC4DEB00000031 /* MoviePickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoviePickerViewController.swift; sourceTree = "<group>"; };
 		A9855BDC1BEC4DEB00000031 /* WatchlistViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WatchlistViewController.swift; sourceTree = "<group>"; };
+		A9FA13551D1AB75100B5F46E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,9 +92,9 @@
 		A9855BBE1BEC3EE300000031 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				A9FA13541D1AB75100B5F46E /* LaunchScreen.xib */,
 				A9855BB31BEC3EDB00000031 /* Assets.xcassets */,
 				A9855BB01BEC3EDB00000031 /* Main.storyboard */,
-				A9855BB51BEC3EDB00000031 /* LaunchScreen.storyboard */,
 			);
 			name = Assets;
 			sourceTree = "<group>";
@@ -215,8 +215,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A9855BB71BEC3EDB00000031 /* LaunchScreen.storyboard in Resources */,
 				A9855BB41BEC3EDB00000031 /* Assets.xcassets in Resources */,
+				A9FA13561D1AB75100B5F46E /* LaunchScreen.xib in Resources */,
 				A9855BB21BEC3EDB00000031 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -256,12 +256,12 @@
 			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
-		A9855BB51BEC3EDB00000031 /* LaunchScreen.storyboard */ = {
+		A9FA13541D1AB75100B5F46E /* LaunchScreen.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				A9855BB61BEC3EDB00000031 /* Base */,
+				A9FA13551D1AB75100B5F46E /* Base */,
 			);
-			name = LaunchScreen.storyboard;
+			name = LaunchScreen.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
