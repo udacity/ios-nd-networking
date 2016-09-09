@@ -9,7 +9,7 @@
 import Foundation
 
 /* Path for JSON files bundled with the Playground */
-var pathForAchievementsJSON = Bundle.main().pathForResource("achievements", ofType: "json")
+var pathForAchievementsJSON = Bundle.main.path(forResource: "achievements", ofType: "json")
 
 /* Raw JSON data (...simliar to the format you might receive from the network) */
 var rawAchievementsJSON = try? Data(contentsOf: URL(fileURLWithPath: pathForAchievementsJSON!))

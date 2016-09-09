@@ -9,7 +9,7 @@
 import Foundation
 
 /* Path for JSON files bundled with the Playground */
-var pathForAchievementsJSON = Bundle.main().pathForResource("achievements", ofType: "json")
+var pathForAchievementsJSON = Bundle.main.path(forResource: "achievements", ofType: "json")
 
 /* Raw JSON data (...simliar to the format you might receive from the network) */
 var rawAchievementsJSON = try? Data(contentsOf: URL(fileURLWithPath: pathForAchievementsJSON!))
@@ -44,7 +44,7 @@ func parseJSONAsDictionary(_ dictionary: NSDictionary) {
     /* Store all "Matchmaking" categories */
     for categoryDictionary in categoryDictionaries {
         
-        if let title = categoryDictionary["title"] as? String where title == "Matchmaking" {
+        if let title = categoryDictionary["title"] as? String, title == "Matchmaking" {
             
             guard let children = categoryDictionary["children"] as? [NSDictionary] else {
                 print("Cannot find key 'children' in \(categoryDictionary)")
@@ -81,8 +81,7 @@ func parseJSONAsDictionary(_ dictionary: NSDictionary) {
         
         /* Learn more about the "Cool Running" achievement */
         if let title = achievementDictionary["title"] as? String,
-            let description = achievementDictionary["description"] as? String
-            where title == "Cool Running" {		
+            let description = achievementDictionary["description"] as? String, title == "Cool Running" {
                 /* What mission must you complete... */
                 print(description)
         }

@@ -9,7 +9,7 @@
 import Foundation
 
 /* Path for JSON files bundled with the Playground */
-var pathForHearthstoneJSON = Bundle.main().pathForResource("hearthstone", ofType: "json")
+var pathForHearthstoneJSON = Bundle.main.path(forResource: "hearthstone", ofType: "json")
 
 /* Raw JSON data (...simliar to the format you might receive from the network) */
 var rawHearthstoneJSON = try? Data(contentsOf: URL(fileURLWithPath: pathForHearthstoneJSON!))
@@ -90,14 +90,14 @@ func parseJSONAsDictionary(_ dictionary: NSDictionary) {
             sumCostForRarityDictionary[rarityForCard]! += manaCost
             
             /* How many minions have a "Battlecry" effect mentioned in their text? */
-            if let cardText = cardDictionary["text"] as? String where cardText.range(of: "Battlecry") != nil {
+            if let cardText = cardDictionary["text"] as? String, cardText.range(of: "Battlecry") != nil {
                     print("this minion has battlecry effect")
             }
         }
         
         if cardType == "Weapon" {
             /* How many weapons have a durability of 2? */
-            if let durability = cardDictionary["durability"] as? Int where durability == 2  {
+            if let durability = cardDictionary["durability"] as? Int, durability == 2  {
                 print("found a weapon with 3 durability")
             }
         }

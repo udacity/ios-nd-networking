@@ -9,7 +9,7 @@
 import Foundation
 
 /* Path for JSON files bundled with the Playground */
-var pathForHearthstoneJSON = Bundle.main().pathForResource("hearthstone", ofType: "json")
+var pathForHearthstoneJSON = Bundle.main.path(forResource: "hearthstone", ofType: "json")
 
 /* Raw JSON data (...simliar to the format you might receive from the network) */
 var rawHearthstoneJSON = try? Data(contentsOf: URL(fileURLWithPath: pathForHearthstoneJSON!))

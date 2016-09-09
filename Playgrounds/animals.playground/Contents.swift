@@ -9,7 +9,7 @@
 import Foundation
 
 /* Path for JSON files bundled with the Playground */
-var pathForAnimalsJSON = Bundle.main().pathForResource("animals", ofType: "json")
+var pathForAnimalsJSON = Bundle.main.path(forResource: "animals", ofType: "json")
 
 /* Raw JSON data (...simliar to the format you might receive from the network) */
 var rawAnimalsJSON = try? Data(contentsOf: URL(fileURLWithPath: pathForAnimalsJSON!))
