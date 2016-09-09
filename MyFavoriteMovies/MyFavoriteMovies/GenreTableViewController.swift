@@ -24,7 +24,7 @@ class GenreTableViewController: UITableViewController {
         super.viewDidLoad()
         
         // get the app delegate
-        appDelegate = UIApplication.shared().delegate as! AppDelegate
+        appDelegate = UIApplication.shared.delegate as! AppDelegate
         
         // get the correct genre id
         genreID = genreIDFromItemTag(tabBarItem.tag)
@@ -45,7 +45,7 @@ class GenreTableViewController: UITableViewController {
         ]
         
         /* 2/3. Build the URL, Configure the request */
-        let request = NSMutableURLRequest(url: appDelegate.tmdbURLFromParameters(methodParameters, withPathExtension: "/genre/\(genreID!)/movies"))
+        let request = NSMutableURLRequest(url: appDelegate.tmdbURLFromParameters(methodParameters as [String:AnyObject], withPathExtension: "/genre/\(genreID!)/movies"))
         request.addValue("application/json", forHTTPHeaderField: "Accept")
         
         /* 4. Make the request */
@@ -58,7 +58,7 @@ class GenreTableViewController: UITableViewController {
             }
             
             /* GUARD: Did we get a successful 2XX response? */
-            guard let statusCode = (response as? HTTPURLResponse)?.statusCode where statusCode >= 200 && statusCode <= 299 else {
+            guard let statusCode = (response as? HTTPURLResponse)?.statusCode, statusCode >= 200 && statusCode <= 299 else {
                 print("Your request returned a status code other than 2xx!")
                 return
             }
@@ -70,9 +70,9 @@ class GenreTableViewController: UITableViewController {
             }
             
             /* 5. Parse the data */
-            let parsedResult: AnyObject!
+            let parsedResult: [String:AnyObject]!
             do {
-                parsedResult = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
+                parsedResult = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as! [String:AnyObject]
             } catch {
                 print("Could not parse the data as JSON: '\(data)'")
                 return
@@ -132,7 +132,7 @@ extension GenreTableViewController {
             
             /* 2. Build the URL */
             let baseURL = URL(string: appDelegate.config.baseImageURLString)!
-            let url = try! baseURL.appendingPathComponent("w154").appendingPathComponent(posterPath)
+            let url = baseURL.appendingPathComponent("w154").appendingPathComponent(posterPath)
             
             /* 3. Configure the request */
             let request = URLRequest(url: url)
@@ -147,7 +147,7 @@ extension GenreTableViewController {
                 }
                 
                 /* GUARD: Did we get a successful 2XX response? */
-                guard let statusCode = (response as? HTTPURLResponse)?.statusCode where statusCode >= 200 && statusCode <= 299 else {
+                guard let statusCode = (response as? HTTPURLResponse)?.statusCode, statusCode >= 200 && statusCode <= 299 else {
                     print("Your request returned a status code other than 2xx!")
                     return
                 }
@@ -189,15 +189,13 @@ extension GenreTableViewController {
         controller.movie = movies[(indexPath as NSIndexPath).row]
         navigationController!.pushViewController(controller, animated: true)
     }
-    
-    
 }
 
 // MARK: - GenreTableViewController (Genre Map)
 
-extension GenreTableViewController {
+private extension GenreTableViewController {
     
-    private func genreIDFromItemTag(_ itemTag: Int) -> Int {
+    func genreIDFromItemTag(_ itemTag: Int) -> Int {
         
         let genres: [String] = [
             "Sci-Fi",

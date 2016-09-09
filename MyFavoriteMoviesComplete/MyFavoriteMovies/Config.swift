@@ -19,8 +19,8 @@ import Foundation
 
 // MARK: - File Support
 
-private let _documentsDirectoryURL: URL = FileManager.default().urlsForDirectory(.documentDirectory, inDomains: .userDomainMask).first! as URL
-private let _fileURL: URL = try! _documentsDirectoryURL.appendingPathComponent("TheMovieDB-Context")
+private let _documentsDirectoryURL: URL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first! as URL
+private let _fileURL: URL = _documentsDirectoryURL.appendingPathComponent("TheMovieDB-Context")
 
 // MARK: - Config
 
@@ -72,7 +72,7 @@ class Config: NSObject, NSCoding {
     func updateIfDaysSinceUpdateExceeds(_ days: Int) {
         
         // if the config is up to date then return
-        if let daysSinceLastUpdate = daysSinceLastUpdate where daysSinceLastUpdate <= days {
+        if let daysSinceLastUpdate = daysSinceLastUpdate, daysSinceLastUpdate <= days {
             return
         } else {
             updateConfiguration()
@@ -84,7 +84,7 @@ class Config: NSObject, NSCoding {
         /* TASK: Get TheMovieDB configuration, and update the config */
         
         /* Grab the app delegate */
-        let appDelegate = UIApplication.shared().delegate as! AppDelegate
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
         
         /* 1. Set the parameters */
         let methodParameters = [
@@ -92,7 +92,7 @@ class Config: NSObject, NSCoding {
         ]
         
         /* 2/3. Build the URL, Configure the request */
-        let request = NSMutableURLRequest(url: appDelegate.tmdbURLFromParameters(methodParameters, withPathExtension: "/configuration"))
+        let request = NSMutableURLRequest(url: appDelegate.tmdbURLFromParameters(methodParameters as [String:AnyObject], withPathExtension: "/configuration"))
         request.addValue("application/json", forHTTPHeaderField: "Accept")
         
         /* 4. Make the request */
@@ -105,7 +105,7 @@ class Config: NSObject, NSCoding {
             }
             
             /* GUARD: Did we get a successful 2XX response? */
-            guard let statusCode = (response as? HTTPURLResponse)?.statusCode where statusCode >= 200 && statusCode <= 299 else {
+            guard let statusCode = (response as? HTTPURLResponse)?.statusCode, statusCode >= 200 && statusCode <= 299 else {
                 print("Your request returned a status code other than 2xx!")
                 return
             }
@@ -124,16 +124,16 @@ class Config: NSObject, NSCoding {
             }
             
             /* Parse the data! */
-            let parsedResult: AnyObject!
+            let parsedResult: [String:AnyObject]!
             do {
-                parsedResult = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
+                parsedResult = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as! [String:AnyObject]
             } catch {
                 print("Could not parse the data as JSON: '\(data)'")
                 return
             }
                     
             /* 6. Use the data! */
-            if let newConfig = Config(dictionary: parsedResult as! [String:AnyObject]) {
+            if let newConfig = Config(dictionary: parsedResult) {
                 appDelegate.config = newConfig
                 appDelegate.config.save()
             } else {
@@ -170,13 +170,13 @@ class Config: NSObject, NSCoding {
     }
     
     private func save() {
-        NSKeyedArchiver.archiveRootObject(self, toFile: _fileURL.path!)
+        NSKeyedArchiver.archiveRootObject(self, toFile: _fileURL.path)
     }
     
     class func unarchivedInstance() -> Config? {
         
-        if FileManager.default().fileExists(atPath: _fileURL.path!) {
-            return NSKeyedUnarchiver.unarchiveObject(withFile: _fileURL.path!) as? Config
+        if FileManager.default.fileExists(atPath: _fileURL.path) {
+            return NSKeyedUnarchiver.unarchiveObject(withFile: _fileURL.path) as? Config
         } else {
             return nil
         }

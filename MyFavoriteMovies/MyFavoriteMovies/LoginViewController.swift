@@ -31,14 +31,14 @@ class LoginViewController: UIViewController {
         super.viewDidLoad()
         
         // get the app delegate
-        appDelegate = UIApplication.shared().delegate as! AppDelegate                        
+        appDelegate = UIApplication.shared.delegate as! AppDelegate
         
         configureUI()
         
-        subscribeToNotification(NSNotification.Name.UIKeyboardWillShow.rawValue, selector: #selector(keyboardWillShow))
-        subscribeToNotification(NSNotification.Name.UIKeyboardWillHide.rawValue, selector: #selector(keyboardWillHide))
-        subscribeToNotification(NSNotification.Name.UIKeyboardDidShow.rawValue, selector: #selector(keyboardDidShow))
-        subscribeToNotification(NSNotification.Name.UIKeyboardDidHide.rawValue, selector: #selector(keyboardDidHide))
+        subscribeToNotification(.UIKeyboardWillShow, selector: #selector(keyboardWillShow))
+        subscribeToNotification(.UIKeyboardWillHide, selector: #selector(keyboardWillHide))
+        subscribeToNotification(.UIKeyboardDidShow, selector: #selector(keyboardDidShow))
+        subscribeToNotification(.UIKeyboardDidHide, selector: #selector(keyboardDidHide))
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -94,7 +94,7 @@ class LoginViewController: UIViewController {
         ]
         
         /* 2/3. Build the URL, Configure the request */
-        let request = URLRequest(url: appDelegate.tmdbURLFromParameters(methodParameters, withPathExtension: "/authentication/token/new"))
+        let request = URLRequest(url: appDelegate.tmdbURLFromParameters(methodParameters as [String:AnyObject], withPathExtension: "/authentication/token/new"))
         
         /* 4. Make the request */
         let task = appDelegate.sharedSession.dataTask(with: request) { (data, response, error) in
@@ -182,11 +182,11 @@ extension LoginViewController: UITextFieldDelegate {
     private func keyboardHeight(_ notification: Notification) -> CGFloat {
         let userInfo = (notification as NSNotification).userInfo
         let keyboardSize = userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue
-        return keyboardSize.cgRectValue().height
+        return keyboardSize.cgRectValue.height
     }
     
     private func resignIfFirstResponder(_ textField: UITextField) {
-        if textField.isFirstResponder() {
+        if textField.isFirstResponder {
             textField.resignFirstResponder()
         }
     }
@@ -199,9 +199,9 @@ extension LoginViewController: UITextFieldDelegate {
 
 // MARK: - LoginViewController (Configure UI)
 
-extension LoginViewController {
+private extension LoginViewController {
     
-    private func setUIEnabled(_ enabled: Bool) {
+    func setUIEnabled(_ enabled: Bool) {
         usernameTextField.isEnabled = enabled
         passwordTextField.isEnabled = enabled
         loginButton.isEnabled = enabled
@@ -216,7 +216,7 @@ extension LoginViewController {
         }
     }
     
-    private func configureUI() {
+    func configureUI() {
         
         // configure background gradient
         let backgroundGradient = CAGradientLayer()
@@ -229,14 +229,14 @@ extension LoginViewController {
         configureTextField(passwordTextField)
     }
     
-    private func configureTextField(_ textField: UITextField) {
+    func configureTextField(_ textField: UITextField) {
         let textFieldPaddingViewFrame = CGRect(x: 0.0, y: 0.0, width: 13.0, height: 0.0)
         let textFieldPaddingView = UIView(frame: textFieldPaddingViewFrame)
         textField.leftView = textFieldPaddingView
         textField.leftViewMode = .always
         textField.backgroundColor = Constants.UI.GreyColor
         textField.textColor = Constants.UI.BlueColor
-        textField.attributedPlaceholder = AttributedString(string: textField.placeholder!, attributes: [NSForegroundColorAttributeName: UIColor.white()])
+        textField.attributedPlaceholder = NSAttributedString(string: textField.placeholder!, attributes: [NSForegroundColorAttributeName: UIColor.white])
         textField.tintColor = Constants.UI.BlueColor
         textField.delegate = self
     }
@@ -244,13 +244,13 @@ extension LoginViewController {
 
 // MARK: - LoginViewController (Notifications)
 
-extension LoginViewController {
+private extension LoginViewController {
     
-    private func subscribeToNotification(_ notification: String, selector: Selector) {
-        NotificationCenter.default().addObserver(self, selector: selector, name: notification, object: nil)
+    func subscribeToNotification(_ notification: NSNotification.Name, selector: Selector) {
+        NotificationCenter.default.addObserver(self, selector: selector, name: notification, object: nil)
     }
     
-    private func unsubscribeFromAllNotifications() {
-        NotificationCenter.default().removeObserver(self)
+    func unsubscribeFromAllNotifications() {
+        NotificationCenter.default.removeObserver(self)
     }
 }

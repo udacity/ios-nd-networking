@@ -23,7 +23,7 @@ class FavoritesTableViewController: UITableViewController {
         super.viewDidLoad()
         
         // get the app delegate
-        appDelegate = UIApplication.shared().delegate as! AppDelegate
+        appDelegate = UIApplication.shared.delegate as! AppDelegate
         
         // create and set logout button
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .reply, target: self, action: #selector(logout))
@@ -42,7 +42,7 @@ class FavoritesTableViewController: UITableViewController {
         ]
         
         /* 2/3. Build the URL, Configure the request */
-        let request = NSMutableURLRequest(url: appDelegate.tmdbURLFromParameters(methodParameters, withPathExtension: "/account/\(appDelegate.userID!)/favorite/movies"))
+        let request = NSMutableURLRequest(url: appDelegate.tmdbURLFromParameters(methodParameters as [String:AnyObject], withPathExtension: "/account/\(appDelegate.userID!)/favorite/movies"))
         request.addValue("application/json", forHTTPHeaderField: "Accept")
         
         /* 4. Make the request */
@@ -55,7 +55,7 @@ class FavoritesTableViewController: UITableViewController {
             }
             
             /* GUARD: Did we get a successful 2XX response? */
-            guard let statusCode = (response as? HTTPURLResponse)?.statusCode where statusCode >= 200 && statusCode <= 299 else {
+            guard let statusCode = (response as? HTTPURLResponse)?.statusCode, statusCode >= 200 && statusCode <= 299 else {
                 print("Your request returned a status code other than 2xx!")
                 return
             }
@@ -67,9 +67,9 @@ class FavoritesTableViewController: UITableViewController {
             }
             
             /* 5. Parse the data */
-            let parsedResult: AnyObject!
+            let parsedResult: [String:AnyObject]!
             do {
-                parsedResult = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
+                parsedResult = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as! [String:AnyObject]
             } catch {
                 print("Could not parse the data as JSON: '\(data)'")
                 return
@@ -129,7 +129,7 @@ extension FavoritesTableViewController {
             
             /* 2. Build the URL */
             let baseURL = URL(string: appDelegate.config.baseImageURLString)!
-            let url = try! baseURL.appendingPathComponent("w154").appendingPathComponent(posterPath)
+            let url = baseURL.appendingPathComponent("w154").appendingPathComponent(posterPath)
             
             /* 3. Configure the request */
             let request = URLRequest(url: url)
@@ -144,7 +144,7 @@ extension FavoritesTableViewController {
                 }
                 
                 /* GUARD: Did we get a successful 2XX response? */
-                guard let statusCode = (response as? HTTPURLResponse)?.statusCode where statusCode >= 200 && statusCode <= 299 else {
+                guard let statusCode = (response as? HTTPURLResponse)?.statusCode, statusCode >= 200 && statusCode <= 299 else {
                     print("Your request returned a status code other than 2xx!")
                     return
                 }

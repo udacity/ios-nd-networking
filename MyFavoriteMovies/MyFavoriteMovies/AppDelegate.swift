@@ -17,7 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
     
-    var sharedSession = URLSession.shared()
+    var sharedSession = URLSession.shared
     var requestToken: String? = nil
     var sessionID: String? = nil
     var userID: Int? = nil
@@ -27,8 +27,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // MARK: UIApplicationDelegate
     
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
         // if necessary, update the configuration...
         config.updateIfDaysSinceUpdateExceeds(7)
         
