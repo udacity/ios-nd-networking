@@ -25,7 +25,7 @@ class ViewController: UIViewController {
         let imageURL = URL(string: Constants.CatURL)!
         
         // create network request
-        let task = URLSession.shared().dataTask(with: imageURL) { (data, response, error) in
+        let task = URLSession.shared.dataTask(with: imageURL) { (data, response, error) in
             
             if error == nil {
                 

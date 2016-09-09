@@ -33,11 +33,10 @@ class ViewController: UIViewController {
         phraseTextField.delegate = self
         latitudeTextField.delegate = self
         longitudeTextField.delegate = self
-        // FIX: As of Swift 2.2, using strings for selectors has been deprecated. Instead, #selector(methodName) should be used.
-        subscribeToNotification(NSNotification.Name.UIKeyboardWillShow.rawValue, selector: #selector(keyboardWillShow))
-        subscribeToNotification(NSNotification.Name.UIKeyboardWillHide.rawValue, selector: #selector(keyboardWillHide))
-        subscribeToNotification(NSNotification.Name.UIKeyboardDidShow.rawValue, selector: #selector(keyboardDidShow))
-        subscribeToNotification(NSNotification.Name.UIKeyboardDidHide.rawValue, selector: #selector(keyboardDidHide))
+        subscribeToNotification(.UIKeyboardWillShow, selector: #selector(keyboardWillShow))
+        subscribeToNotification(.UIKeyboardWillHide, selector: #selector(keyboardWillHide))
+        subscribeToNotification(.UIKeyboardDidShow, selector: #selector(keyboardDidShow))
+        subscribeToNotification(.UIKeyboardDidHide, selector: #selector(keyboardDidHide))
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -141,14 +140,14 @@ extension ViewController: UITextFieldDelegate {
         keyboardOnScreen = false
     }
     
-    private func keyboardHeight(_ notification: Notification) -> CGFloat {
+    func keyboardHeight(_ notification: Notification) -> CGFloat {
         let userInfo = (notification as NSNotification).userInfo
         let keyboardSize = userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue
-        return keyboardSize.cgRectValue().height
+        return keyboardSize.cgRectValue.height
     }
     
-    private func resignIfFirstResponder(_ textField: UITextField) {
-        if textField.isFirstResponder() {
+    func resignIfFirstResponder(_ textField: UITextField) {
+        if textField.isFirstResponder {
             textField.resignFirstResponder()
         }
     }
@@ -161,24 +160,24 @@ extension ViewController: UITextFieldDelegate {
     
     // MARK: TextField Validation
     
-    private func isTextFieldValid(_ textField: UITextField, forRange: (Double, Double)) -> Bool {
-        if let value = Double(textField.text!) where !textField.text!.isEmpty {
+    func isTextFieldValid(_ textField: UITextField, forRange: (Double, Double)) -> Bool {
+        if let value = Double(textField.text!), !textField.text!.isEmpty {
             return isValueInRange(value, min: forRange.0, max: forRange.1)
         } else {
             return false
         }
     }
     
-    private func isValueInRange(_ value: Double, min: Double, max: Double) -> Bool {
+    func isValueInRange(_ value: Double, min: Double, max: Double) -> Bool {
         return !(value < min || value > max)
     }
 }
 
 // MARK: - ViewController (Configure UI)
 
-extension ViewController {
+private extension ViewController {
     
-    private func setUIEnabled(_ enabled: Bool) {
+     func setUIEnabled(_ enabled: Bool) {
         photoTitleLabel.isEnabled = enabled
         phraseTextField.isEnabled = enabled
         latitudeTextField.isEnabled = enabled
@@ -199,13 +198,13 @@ extension ViewController {
 
 // MARK: - ViewController (Notifications)
 
-extension ViewController {
+private extension ViewController {
     
-    private func subscribeToNotification(_ notification: String, selector: Selector) {
-        NotificationCenter.default().addObserver(self, selector: selector, name: notification, object: nil)
+    func subscribeToNotification(_ notification: NSNotification.Name, selector: Selector) {
+        NotificationCenter.default.addObserver(self, selector: selector, name: notification, object: nil)
     }
     
-    private func unsubscribeFromAllNotifications() {
-        NotificationCenter.default().removeObserver(self)
+    func unsubscribeFromAllNotifications() {
+        NotificationCenter.default.removeObserver(self)
     }
 }
