@@ -56,9 +56,9 @@ class LoginViewController: UIViewController {
 
 // MARK: - LoginViewController (Configure UI)
 
-extension LoginViewController {
+private extension LoginViewController {
     
-    private func setUIEnabled(_ enabled: Bool) {
+     func setUIEnabled(_ enabled: Bool) {
         loginButton.isEnabled = enabled
         debugTextLabel.isEnabled = enabled
         
@@ -70,13 +70,13 @@ extension LoginViewController {
         }
     }
     
-    private func displayError(_ errorString: String?) {
+    func displayError(_ errorString: String?) {
         if let errorString = errorString {
             debugTextLabel.text = errorString
         }
     }
     
-    private func configureBackground() {
+    func configureBackground() {
         let backgroundGradient = CAGradientLayer()
         let colorTop = UIColor(red: 0.345, green: 0.839, blue: 0.988, alpha: 1.0).cgColor
         let colorBottom = UIColor(red: 0.023, green: 0.569, blue: 0.910, alpha: 1.0).cgColor

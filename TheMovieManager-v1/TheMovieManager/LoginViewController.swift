@@ -72,7 +72,7 @@ class LoginViewController: UIViewController {
         ]
         
         /* 2/3. Build the URL, Configure the request */
-        let request = URLRequest(url: TMDBClient.tmdbURLFromParameters(methodParameters, withPathExtension: TMDBClient.Methods.AuthenticationTokenNew))
+        let request = URLRequest(url: TMDBClient.tmdbURLFromParameters(methodParameters as [String:AnyObject], withPathExtension: TMDBClient.Methods.AuthenticationTokenNew))
         
         /* 4. Make the request */
         let task = tmdbClient.session.dataTask(with: request) { (data, response, error) in
@@ -93,7 +93,7 @@ class LoginViewController: UIViewController {
             }
             
             /* GUARD: Did we get a successful 2XX response? */
-            guard let statusCode = (response as? HTTPURLResponse)?.statusCode where statusCode >= 200 && statusCode <= 299 else {
+            guard let statusCode = (response as? HTTPURLResponse)?.statusCode, statusCode >= 200 && statusCode <= 299 else {
                 displayError("Your request returned a status code other than 2xx!")
                 return
             }
@@ -105,9 +105,9 @@ class LoginViewController: UIViewController {
             }
             
             /* 5. Parse the data */
-            let parsedResult: AnyObject!
+            let parsedResult: [String:AnyObject]!
             do {
-                parsedResult = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
+                parsedResult = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as! [String:AnyObject]
             } catch {
                 displayError("Could not parse the data as JSON: '\(data)'")
                 return
@@ -170,7 +170,7 @@ class LoginViewController: UIViewController {
         ]
         
         /* 2/3. Build the URL, Configure the request */
-        let request = URLRequest(url: TMDBClient.tmdbURLFromParameters(methodParameters, withPathExtension: TMDBClient.Methods.AuthenticationSessionNew))
+        let request = URLRequest(url: TMDBClient.tmdbURLFromParameters(methodParameters as [String:AnyObject], withPathExtension: TMDBClient.Methods.AuthenticationSessionNew))
         
         /* 4. Make the request */
         let task = tmdbClient.session.dataTask(with: request) { (data, response, error) in
@@ -191,7 +191,7 @@ class LoginViewController: UIViewController {
             }
             
             /* GUARD: Did we get a successful 2XX response? */
-            guard let statusCode = (response as? HTTPURLResponse)?.statusCode where statusCode >= 200 && statusCode <= 299 else {
+            guard let statusCode = (response as? HTTPURLResponse)?.statusCode, statusCode >= 200 && statusCode <= 299 else {
                 displayError("Your request returned a status code other than 2xx!")
                 return
             }
@@ -203,9 +203,9 @@ class LoginViewController: UIViewController {
             }
             
             /* 5. Parse the data */
-            let parsedResult: AnyObject!
+            let parsedResult: [String:AnyObject]!
             do {
-                parsedResult = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
+                parsedResult = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as! [String:AnyObject]
             } catch {
                 displayError("Could not parse the data as JSON: '\(data)'")
                 return
@@ -243,7 +243,7 @@ class LoginViewController: UIViewController {
         ]
         
         /* 2/3. Build the URL, Configure the request */
-        let request = URLRequest(url: TMDBClient.tmdbURLFromParameters(methodParameters, withPathExtension: TMDBClient.Methods.Account))
+        let request = URLRequest(url: TMDBClient.tmdbURLFromParameters(methodParameters as [String:AnyObject], withPathExtension: TMDBClient.Methods.Account))
         
         /* 4. Make the request */
         let task = tmdbClient.session.dataTask(with: request) { (data, response, error) in
@@ -264,7 +264,7 @@ class LoginViewController: UIViewController {
             }
             
             /* GUARD: Did we get a successful 2XX response? */
-            guard let statusCode = (response as? HTTPURLResponse)?.statusCode where statusCode >= 200 && statusCode <= 299 else {
+            guard let statusCode = (response as? HTTPURLResponse)?.statusCode, statusCode >= 200 && statusCode <= 299 else {
                 displayError("Your request returned a status code other than 2xx!")
                 return
             }
@@ -276,9 +276,9 @@ class LoginViewController: UIViewController {
             }
             
             /* 5. Parse the data */
-            let parsedResult: AnyObject!
+            let parsedResult: [String:AnyObject]!
             do {
-                parsedResult = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
+                parsedResult = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as! [String:AnyObject]
             } catch {
                 displayError("Could not parse the data as JSON: '\(data)'")
                 return
@@ -308,9 +308,9 @@ class LoginViewController: UIViewController {
 
 // MARK: - LoginViewController (Configure UI)
 
-extension LoginViewController {
+private extension LoginViewController {
     
-    private func setUIEnabled(_ enabled: Bool) {
+    func setUIEnabled(_ enabled: Bool) {
         loginButton.isEnabled = enabled
         debugTextLabel.isEnabled = enabled
         
@@ -322,13 +322,13 @@ extension LoginViewController {
         }
     }
     
-    private func displayError(_ errorString: String?) {
+    func displayError(_ errorString: String?) {
         if let errorString = errorString {
             debugTextLabel.text = errorString
         }
     }
     
-    private func configureBackground() {
+    func configureBackground() {
         let backgroundGradient = CAGradientLayer()
         let colorTop = UIColor(red: 0.345, green: 0.839, blue: 0.988, alpha: 1.0).cgColor
         let colorBottom = UIColor(red: 0.023, green: 0.569, blue: 0.910, alpha: 1.0).cgColor

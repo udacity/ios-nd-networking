@@ -43,7 +43,7 @@ class BorderedButton: UIButton {
         highlightedBackingColor = darkerBlue
         backingColor = lighterBlue
         backgroundColor = lighterBlue
-        setTitleColor(UIColor.white(), for: UIControlState())
+        setTitleColor(.white, for: UIControlState())
         titleLabel?.font = UIFont.systemFont(ofSize: titleLabelFontSize)
     }
     

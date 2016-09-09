@@ -16,7 +16,7 @@ class TMDBAuthViewController: UIViewController {
     
     var urlRequest: URLRequest? = nil
     var requestToken: String? = nil
-    var completionHandlerForView: ((success: Bool, errorString: String?) -> Void)? = nil
+    var completionHandlerForView: ((_ success: Bool, _ errorString: String?) -> Void)? = nil
     
     // MARK: Outlets
     

@@ -23,7 +23,7 @@ extension TMDBClient {
         Step 3: Create a session ID
         Bonus Step: Go ahead and get the user id 😄!
     */
-    func authenticateWithViewController(_ hostViewController: UIViewController, completionHandlerForAuth: (success: Bool, errorString: String?) -> Void) {
+    func authenticateWithViewController(_ hostViewController: UIViewController, completionHandlerForAuth: @escaping (_ success: Bool, _ errorString: String?) -> Void) {
         
         // chain completion handlers for each request so that they run one after the other
         getRequestToken() { (success, requestToken, errorString) in
@@ -55,23 +55,23 @@ extension TMDBClient {
                                         }
                                     }
                                     
-                                    completionHandlerForAuth(success: success, errorString: errorString)
+                                    completionHandlerForAuth(success, errorString)
                                 }
                             } else {
-                                completionHandlerForAuth(success: success, errorString: errorString)
+                                completionHandlerForAuth(success, errorString)
                             }
                         }
                     } else {
-                        completionHandlerForAuth(success: success, errorString: errorString)
+                        completionHandlerForAuth(success, errorString)
                     }
                 }
             } else {
-                completionHandlerForAuth(success: success, errorString: errorString)
+                completionHandlerForAuth(success, errorString)
             }
         }
     }
     
-    private func getRequestToken(_ completionHandlerForToken: (success: Bool, requestToken: String?, errorString: String?) -> Void) {
+    private func getRequestToken(_ completionHandlerForToken: @escaping (_ success: Bool, _ requestToken: String?, _ errorString: String?) -> Void) {
         
         /* 1. Specify parameters, the API method, and the HTTP body (if POST) */
         /* 2. Make the request */
@@ -86,7 +86,7 @@ extension TMDBClient {
         */
     }
     
-    private func loginWithToken(_ requestToken: String?, hostViewController: UIViewController, completionHandlerForLogin: (success: Bool, errorString: String?) -> Void) {
+    private func loginWithToken(_ requestToken: String?, hostViewController: UIViewController, completionHandlerForLogin: @escaping (_ success: Bool, _ errorString: String?) -> Void) {
         
         let authorizationURL = URL(string: "\(TMDBClient.Constants.AuthorizationURL)\(requestToken!)")
         let request = URLRequest(url: authorizationURL!)
@@ -103,7 +103,7 @@ extension TMDBClient {
         }
     }
     
-    private func getSessionID(_ requestToken: String?, completionHandlerForSession: (success: Bool, sessionID: String?, errorString: String?) -> Void) {
+    private func getSessionID(_ requestToken: String?, completionHandlerForSession: @escaping (_ success: Bool, _ sessionID: String?, _ errorString: String?) -> Void) {
         
         /* 1. Specify parameters, the API method, and the HTTP body (if POST) */
         /* 2. Make the request */
@@ -118,7 +118,7 @@ extension TMDBClient {
         */
     }
     
-    private func getUserID(_ completionHandlerForUserID: (success: Bool, userID: Int?, errorString: String?) -> Void) {
+    private func getUserID(_ completionHandlerForUserID: @escaping (_ success: Bool, _ userID: Int?, _ errorString: String?) -> Void) {
         
         /* 1. Specify parameters, the API method, and the HTTP body (if POST) */
         /* 2. Make the request */
@@ -135,7 +135,7 @@ extension TMDBClient {
     
     // MARK: GET Convenience Methods
     
-    func getFavoriteMovies(_ completionHandlerForFavMovies: (result: [TMDBMovie]?, error: NSError?) -> Void) {
+    func getFavoriteMovies(_ completionHandlerForFavMovies: @escaping (_ result: [TMDBMovie]?, _ error: NSError?) -> Void) {
         
         /* 1. Specify parameters, the API method, and the HTTP body (if POST) */
         /* 2. Make the request */
@@ -143,7 +143,7 @@ extension TMDBClient {
         
     }
     
-    func getWatchlistMovies(_ completionHandlerForWatchlist: (result: [TMDBMovie]?, error: NSError?) -> Void) {
+    func getWatchlistMovies(_ completionHandlerForWatchlist: @escaping (_ result: [TMDBMovie]?, _ error: NSError?) -> Void) {
         
         /* 1. Specify parameters, the API method, and the HTTP body (if POST) */
         /* 2. Make the request */
@@ -151,7 +151,7 @@ extension TMDBClient {
         
     }
     
-    func getMoviesForSearchString(_ searchString: String, completionHandlerForMovies: (result: [TMDBMovie]?, error: NSError?) -> Void) -> URLSessionDataTask? {
+    func getMoviesForSearchString(_ searchString: String, completionHandlerForMovies: @escaping (_ result: [TMDBMovie]?, _ error: NSError?) -> Void) -> URLSessionDataTask? {
         
         /* 1. Specify parameters, the API method, and the HTTP body (if POST) */
         /* 2. Make the request */
@@ -159,7 +159,7 @@ extension TMDBClient {
         return nil
     }
     
-    func getConfig(_ completionHandlerForConfig: (didSucceed: Bool, error: NSError?) -> Void) {
+    func getConfig(_ completionHandlerForConfig: @escaping (_ didSucceed: Bool, _ error: NSError?) -> Void) {
         
         /* 1. Specify parameters, the API method, and the HTTP body (if POST) */
         /* 2. Make the request */
@@ -169,7 +169,7 @@ extension TMDBClient {
     
     // MARK: POST Convenience Methods
     
-    func postToFavorites(_ movie: TMDBMovie, favorite: Bool, completionHandlerForFavorite: (result: Int?, error: NSError?) -> Void)  {
+    func postToFavorites(_ movie: TMDBMovie, favorite: Bool, completionHandlerForFavorite: @escaping (_ result: Int?, _ error: NSError?) -> Void)  {
         
         /* 1. Specify parameters, the API method, and the HTTP body (if POST) */
         /* 2. Make the request */
@@ -177,7 +177,7 @@ extension TMDBClient {
         
     }
     
-    func postToWatchlist(_ movie: TMDBMovie, watchlist: Bool, completionHandlerForWatchlist: (result: Int?, error: NSError?) -> Void) {
+    func postToWatchlist(_ movie: TMDBMovie, watchlist: Bool, completionHandlerForWatchlist: @escaping (_ result: Int?, _ error: NSError?) -> Void) {
         
         /* 1. Specify parameters, the API method, and the HTTP body (if POST) */
         /* 2. Make the request */

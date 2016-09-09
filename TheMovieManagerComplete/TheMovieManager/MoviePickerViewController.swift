@@ -66,7 +66,7 @@ class MoviePickerViewController: UIViewController {
 
 extension MoviePickerViewController: UIGestureRecognizerDelegate {
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
-        return movieSearchBar.isFirstResponder()
+        return movieSearchBar.isFirstResponder
     }
 }
 

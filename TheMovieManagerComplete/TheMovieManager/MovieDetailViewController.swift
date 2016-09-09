@@ -66,7 +66,7 @@ class MovieDetailViewController: UIViewController {
                         if self.isFavorite {
                             self.toggleFavoriteButton.tintColor = nil
                         } else {
-                            self.toggleFavoriteButton.tintColor = UIColor.black()
+                            self.toggleFavoriteButton.tintColor = .black
                         }
                     }
                 } else {
@@ -88,7 +88,7 @@ class MovieDetailViewController: UIViewController {
                         if self.isWatchlist {
                             self.toggleWatchlistButton.tintColor = nil
                         } else {
-                            self.toggleWatchlistButton.tintColor = UIColor.black()
+                            self.toggleWatchlistButton.tintColor = .black
                         }
                     }
                 } else {
@@ -127,7 +127,7 @@ class MovieDetailViewController: UIViewController {
                 if statusCode == 1 || statusCode == 12 || statusCode == 13 {
                     self.isFavorite = shouldFavorite
                     performUIUpdatesOnMain {
-                        self.toggleFavoriteButton.tintColor = (shouldFavorite) ? nil : UIColor.black()
+                        self.toggleFavoriteButton.tintColor = (shouldFavorite) ? nil : .black
                     }
                 } else {
                     print("Unexpected status code \(statusCode)")
@@ -147,7 +147,7 @@ class MovieDetailViewController: UIViewController {
                 if statusCode == 1 || statusCode == 12 || statusCode == 13 {
                     self.isWatchlist = shouldWatchlist
                     performUIUpdatesOnMain {
-                        self.toggleWatchlistButton.tintColor = (shouldWatchlist) ? nil : UIColor.black()
+                        self.toggleWatchlistButton.tintColor = (shouldWatchlist) ? nil : .black
                     }
                 } else {
                     print("Unexpected status code \(statusCode)")

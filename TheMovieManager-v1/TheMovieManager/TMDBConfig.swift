@@ -18,8 +18,8 @@ import Foundation
 
 // MARK: - File Support
 
-private let _documentsDirectoryURL: URL = FileManager.default().urlsForDirectory(.documentDirectory, inDomains: .userDomainMask).first as URL!
-private let _fileURL: URL = try! _documentsDirectoryURL.appendingPathComponent("TheMovieDB-Context")
+private let _documentsDirectoryURL: URL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first! as URL
+private let _fileURL: URL = _documentsDirectoryURL.appendingPathComponent("TheMovieDB-Context")
 
 // MARK: - TMDBConfig: NSObject, NSCoding
 
@@ -71,7 +71,7 @@ class TMDBConfig: NSObject, NSCoding {
     func updateIfDaysSinceUpdateExceeds(_ days: Int) {
         
         // if the config is up to date then return
-        if let daysSinceLastUpdate = daysSinceLastUpdate where daysSinceLastUpdate <= days {
+        if let daysSinceLastUpdate = daysSinceLastUpdate, daysSinceLastUpdate <= days {
             return
         } else {
             updateConfiguration()
@@ -107,12 +107,13 @@ class TMDBConfig: NSObject, NSCoding {
     }
     
     private func save() {
-        NSKeyedArchiver.archiveRootObject(self, toFile: _fileURL.path!)
+        NSKeyedArchiver.archiveRootObject(self, toFile: _fileURL.path)
     }
     
     class func unarchivedInstance() -> TMDBConfig? {
-        if FileManager.default().fileExists(atPath: _fileURL.path!) {
-            return NSKeyedUnarchiver.unarchiveObject(withFile: _fileURL.path!) as? TMDBConfig
+        
+        if FileManager.default.fileExists(atPath: _fileURL.path) {
+            return NSKeyedUnarchiver.unarchiveObject(withFile: _fileURL.path) as? TMDBConfig
         } else {
             return nil
         }

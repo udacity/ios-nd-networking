@@ -15,7 +15,7 @@ class TMDBClient : NSObject {
     // MARK: Properties
     
     // shared session
-    var session = URLSession.shared()
+    var session = URLSession.shared
     
     // configuration object
     var config = TMDBConfig()
@@ -41,14 +41,14 @@ class TMDBClient : NSObject {
     
     // MARK: GET Image
     
-    func taskForGETImage(_ size: String, filePath: String, completionHandlerForImage: (imageData: Data?, error: NSError?) -> Void) -> URLSessionTask {
+    func taskForGETImage(_ size: String, filePath: String, completionHandlerForImage: @escaping (_ imageData: Data?, _ error: NSError?) -> Void) -> URLSessionTask {
         
         /* 1. Set the parameters */
         // There are none...
         
         /* 2/3. Build the URL and configure the request */
         let baseURL = URL(string: config.baseImageURLString)!
-        let url = try! baseURL.appendingPathComponent(size).appendingPathComponent(filePath)
+        let url = baseURL.appendingPathComponent(size).appendingPathComponent(filePath)
         let request = URLRequest(url: url)
         
         /* 4. Make the request */
@@ -61,7 +61,7 @@ class TMDBClient : NSObject {
             }
             
             /* GUARD: Did we get a successful 2XX response? */
-            guard let statusCode = (response as? HTTPURLResponse)?.statusCode where statusCode >= 200 && statusCode <= 299 else {
+            guard let statusCode = (response as? HTTPURLResponse)?.statusCode, statusCode >= 200 && statusCode <= 299 else {
                 print("Your request returned a status code other than 2xx!")
                 return
             }
@@ -73,7 +73,7 @@ class TMDBClient : NSObject {
             }
             
             /* 5/6. Parse the data and use the data (happens in completion handler) */
-            completionHandlerForImage(imageData: data, error: nil)
+            completionHandlerForImage(data, nil)
         }
         
         /* 7. Start the request */
@@ -94,17 +94,17 @@ class TMDBClient : NSObject {
     }
     
     // given raw JSON, return a usable Foundation object
-    private func convertDataWithCompletionHandler(_ data: Data, completionHandlerForConvertData: (result: AnyObject?, error: NSError?) -> Void) {
+    private func convertDataWithCompletionHandler(_ data: Data, completionHandlerForConvertData: (_ result: AnyObject?, _ error: NSError?) -> Void) {
         
-        var parsedResult: AnyObject!
+        var parsedResult: AnyObject! = nil
         do {
-            parsedResult = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
+            parsedResult = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as AnyObject
         } catch {
             let userInfo = [NSLocalizedDescriptionKey : "Could not parse the data as JSON: '\(data)'"]
-            completionHandlerForConvertData(result: nil, error: NSError(domain: "convertDataWithCompletionHandler", code: 1, userInfo: userInfo))
+            completionHandlerForConvertData(nil, NSError(domain: "convertDataWithCompletionHandler", code: 1, userInfo: userInfo))
         }
         
-        completionHandlerForConvertData(result: parsedResult, error: nil)
+        completionHandlerForConvertData(parsedResult, nil)
     }
     
     // create a URL from parameters
