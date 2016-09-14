@@ -71,11 +71,11 @@
                                 <rect key="frame" x="0.0" y="86" width="375" height="99"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="kND-DR-VgO" id="cyK-rU-cVl">
-                                    <frame key="frameInset" width="375" height="98.5"/>
+                                    <frame key="frameInset" width="375" height="98"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="PkN-Rq-xkw">
-                                            <frame key="frameInset" minX="15" width="345" height="98.5"/>
+                                            <frame key="frameInset" minX="15" width="345" height="98"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -127,11 +127,11 @@
                                 <rect key="frame" x="0.0" y="86" width="375" height="99"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="aig-Mi-Gl1" id="Iom-TR-Iui">
-                                    <frame key="frameInset" width="375" height="98.5"/>
+                                    <frame key="frameInset" width="375" height="98"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="IFR-aw-5WT">
-                                            <frame key="frameInset" minX="15" width="345" height="98.5"/>
+                                            <frame key="frameInset" minX="15" width="345" height="98"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -151,7 +151,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xkj-OC-9BU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1914" y="1357"/>
+            <point key="canvasLocation" x="1940" y="1357"/>
         </scene>
         <!--Comedy Table View-->
         <scene sceneID="rev-iQ-TUo">
@@ -166,11 +166,11 @@
                                 <rect key="frame" x="0.0" y="86" width="375" height="99"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="oRx-zZ-4yD" id="YKL-ga-a2O">
-                                    <frame key="frameInset" width="375" height="98.5"/>
+                                    <frame key="frameInset" width="375" height="98"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="6MH-kQ-pCC">
-                                            <frame key="frameInset" minX="15" width="345" height="98.5"/>
+                                            <frame key="frameInset" minX="15" width="345" height="98"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -205,11 +205,11 @@
                                 <rect key="frame" x="0.0" y="86" width="375" height="99"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="tyZ-xO-x2K" id="iGM-wS-cSF">
-                                    <frame key="frameInset" width="375" height="98.5"/>
+                                    <frame key="frameInset" width="375" height="98"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="CdC-mL-CJp">
-                                            <frame key="frameInset" minX="15" width="345" height="98.5"/>
+                                            <frame key="frameInset" minX="15" width="345" height="98"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
