@@ -151,7 +151,7 @@ class ViewController: UIViewController {
                 let stringValue = "\(value)"
                 
                 // escape it
-                let escapedValue = stringValue.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)
+                let escapedValue = stringValue.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
                 
                 // append it
                 keyValuePairs.append(key + "=" + "\(escapedValue!)")
