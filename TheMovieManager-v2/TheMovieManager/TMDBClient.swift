@@ -53,7 +53,7 @@ class TMDBClient : NSObject {
             
             /* GUARD: Was there an error? */
             guard (error == nil) else {
-                sendError("There was an error with your request: \(error)")
+                sendError("There was an error with your request: \(error!)")
                 return
             }
             
@@ -105,7 +105,7 @@ class TMDBClient : NSObject {
             
             /* GUARD: Was there an error? */
             guard (error == nil) else {
-                sendError("There was an error with your request: \(error)")
+                sendError("There was an error with your request: \(error!)")
                 return
             }
             
@@ -154,7 +154,7 @@ class TMDBClient : NSObject {
             
             /* GUARD: Was there an error? */
             guard (error == nil) else {
-                sendError("There was an error with your request: \(error)")
+                sendError("There was an error with your request: \(error!)")
                 return
             }
             

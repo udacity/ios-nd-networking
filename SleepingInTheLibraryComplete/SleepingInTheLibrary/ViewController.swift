@@ -71,7 +71,7 @@ class ViewController: UIViewController {
             
             /* GUARD: Was there an error? */
             guard (error == nil) else {
-                displayError("There was an error with your request: \(error)")
+                displayError("There was an error with your request: \(error!)")
                 return
             }
             
@@ -128,7 +128,7 @@ class ViewController: UIViewController {
                     self.photoTitleLabel.text = photoTitle ?? "(Untitled)"
                 }
             } else {
-                displayError("Image does not exist at \(imageURL)")
+                displayError("Image does not exist at \(imageURL!)")
             }
         }
         

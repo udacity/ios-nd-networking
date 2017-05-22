@@ -70,7 +70,7 @@ class MovieDetailViewController: UIViewController {
                         }
                     }
                 } else {
-                    print(error)
+                    print(error ?? "empty error")
                 }
             }
             
@@ -92,7 +92,7 @@ class MovieDetailViewController: UIViewController {
                         }
                     }
                 } else {
-                    print(error)
+                    print(error ?? "empty error")
                 }
             }
             
@@ -130,7 +130,7 @@ class MovieDetailViewController: UIViewController {
                         self.toggleFavoriteButton.tintColor = (shouldFavorite) ? nil : .black
                     }
                 } else {
-                    print("Unexpected status code \(statusCode)")
+                    print("Unexpected status code \(statusCode!)")
                 }
             }
         }
@@ -150,7 +150,7 @@ class MovieDetailViewController: UIViewController {
                         self.toggleWatchlistButton.tintColor = (shouldWatchlist) ? nil : .black
                     }
                 } else {
-                    print("Unexpected status code \(statusCode)")
+                    print("Unexpected status code \(statusCode!)")
                 }
             }
         }

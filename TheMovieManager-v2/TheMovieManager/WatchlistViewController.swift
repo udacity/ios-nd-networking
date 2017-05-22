@@ -39,7 +39,7 @@ class WatchlistViewController: UIViewController {
                     self.moviesTableView.reloadData()
                 }
             } else {
-                print(error)
+                print(error ?? "empty error")
             }
         }
     }
@@ -74,7 +74,7 @@ extension WatchlistViewController: UITableViewDelegate, UITableViewDataSource {
                         cell?.imageView!.image = image
                     }
                 } else {
-                    print(error)
+                    print(error ?? "empty error")
                 }
             })
         }

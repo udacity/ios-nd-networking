@@ -31,7 +31,7 @@ extension TMDBClient {
             if success {
                 
                 // success! we have the requestToken!
-                print(requestToken)
+                print(requestToken!)
                 self.requestToken = requestToken
                 
                 self.loginWithToken(requestToken, hostViewController: hostViewController) { (success, errorString) in

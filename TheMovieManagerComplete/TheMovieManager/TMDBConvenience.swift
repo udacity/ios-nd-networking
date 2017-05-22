@@ -86,7 +86,7 @@ extension TMDBClient {
                 if let requestToken = results?[TMDBClient.JSONResponseKeys.RequestToken] as? String {
                     completionHandlerForToken(true, requestToken, nil)
                 } else {
-                    print("Could not find \(TMDBClient.JSONResponseKeys.RequestToken) in \(results)")
+                    print("Could not find \(TMDBClient.JSONResponseKeys.RequestToken) in \(results!)")
                     completionHandlerForToken(false, nil, "Login Failed (Request Token).")
                 }
             }
@@ -127,7 +127,7 @@ extension TMDBClient {
                 if let sessionID = results?[TMDBClient.JSONResponseKeys.SessionID] as? String {
                     completionHandlerForSession(true, sessionID, nil)
                 } else {
-                    print("Could not find \(TMDBClient.JSONResponseKeys.SessionID) in \(results)")
+                    print("Could not find \(TMDBClient.JSONResponseKeys.SessionID) in \(results!)")
                     completionHandlerForSession(false, nil, "Login Failed (Session ID).")
                 }
             }
@@ -150,7 +150,7 @@ extension TMDBClient {
                 if let userID = results?[TMDBClient.JSONResponseKeys.UserID] as? Int {
                     completionHandlerForUserID(true, userID, nil)
                 } else {
-                    print("Could not find \(TMDBClient.JSONResponseKeys.UserID) in \(results)")
+                    print("Could not find \(TMDBClient.JSONResponseKeys.UserID) in \(results!)")
                     completionHandlerForUserID(false, nil, "Login Failed (User ID).")
                 }
             }

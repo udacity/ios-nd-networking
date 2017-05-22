@@ -100,7 +100,7 @@ class Config: NSObject, NSCoding {
             
             /* GUARD: Was there an error? */
             guard (error == nil) else {
-                print("There was an error with your request: \(error)")
+                print("There was an error with your request: \(error!)")
                 return
             }
             
@@ -119,7 +119,7 @@ class Config: NSObject, NSCoding {
             
             /* GUARD: Was there an error? */
             guard (error == nil) else {
-                print("There was an error with your request: \(error)")
+                print("There was an error with your request: \(error!)")
                 return
             }
             

@@ -88,7 +88,7 @@ class LoginViewController: UIViewController {
             
             /* GUARD: Was there an error? */
             guard (error == nil) else {
-                displayError("There was an error with your request: \(error)")
+                displayError("There was an error with your request: \(error!)")
                 return
             }
             
@@ -186,7 +186,7 @@ class LoginViewController: UIViewController {
             
             /* GUARD: Was there an error? */
             guard (error == nil) else {
-                displayError("There was an error with your request: \(error)")
+                displayError("There was an error with your request: \(error!)")
                 return
             }
             
@@ -259,7 +259,7 @@ class LoginViewController: UIViewController {
             
             /* GUARD: Was there an error? */
             guard (error == nil) else {
-                displayError("There was an error with your request: \(error)")
+                displayError("There was an error with your request: \(error!)")
                 return
             }
             

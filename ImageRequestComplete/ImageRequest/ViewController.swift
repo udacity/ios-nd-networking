@@ -38,7 +38,7 @@ class ViewController: UIViewController {
                 }
                 
             } else {
-                print(error)
+                print(error!)
             }
         }
         

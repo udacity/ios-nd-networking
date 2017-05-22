@@ -56,7 +56,7 @@ class TMDBClient : NSObject {
             
             /* GUARD: Was there an error? */
             guard (error == nil) else {
-                print("There was an error with your request: \(error)")
+                print("There was an error with your request: \(error!)")
                 return
             }
             
