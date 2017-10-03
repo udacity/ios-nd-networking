@@ -12,39 +12,41 @@ import Foundation
 // MARK: - ImageDataSource: NSObject
 
 class ImageDataSource: NSObject {
-    
+
     // MARK: Properties
     
-    var image: Image
+    let imageJSONString = Constants.CatJSONString
     
-    // MARK: Initializer
-    
-    override init() {
-        image = Image(title: Constants.Cat.Title, url: URL(string: Constants.Cat.URL))
-        super.init()
+    // MARK: Load
+
+    func load(completionHandler: @escaping (UIImage, String) -> (), errorHandler: @escaping (String) -> ()) {
+        loadFromNetwork(completionHandler: completionHandler, errorHandler: errorHandler)
     }
     
-    // MARK: Data Source
-
-    func load(completion: @escaping (UIImage, String) -> (), error: @escaping (String) -> ()) {
-        guard let url = image.url else { return }
+    // MARK: Network
+    
+    private func loadFromNetwork(completionHandler: @escaping (UIImage, String) -> (), errorHandler: @escaping (String) -> ()) {
+        guard let preImage = imageJSONString.toPreImage(), let url = preImage.url else {
+            errorHandler("cannot create preimage for request")
+            return
+        }
         
         let fetch = ImageFetchOperation(url: url)
-        
+    
         let parse = ImageParseOperation()
         parse.addDependency(fetch)
         parse.completionBlock = {
             if let parsedImage = parse.parsedImage {
-                completion(parsedImage, self.image.title)
+                completionHandler(parsedImage, preImage.title)
             } else {
                 if let parsedError = parse.parsedError {
-                    error("Could not retrieve data: \(parsedError)")
+                    errorHandler("cannot parse image data - \(parsedError)")
                 } else {
-                    error("Could not retrieve data")
+                    errorHandler("cannot parse image data")
                 }
             }
         }
-        
+    
         // run operations on background queue
         let queue = OperationQueue()
         queue.addOperation(fetch)

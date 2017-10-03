@@ -7,6 +7,8 @@
 
 import Foundation
 
+// MARK: - GCDBlackBox
+
 func performUIUpdatesOnMain(_ updates: @escaping () -> Void) {
     DispatchQueue.main.async {
         updates()

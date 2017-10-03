@@ -23,7 +23,7 @@ class ImageParseOperation: BaseOperation {
     override func start() {
         state = .Executing
         
-        if let imageFetchOp = self.dependencies.first as? ImageFetchOperation {
+        if let imageFetchOp = dependencies.first as? ImageFetchOperation {
             if let data = imageFetchOp.fetchedImageData {
                 parsedImage = UIImage(data: data)
             }
@@ -32,6 +32,6 @@ class ImageParseOperation: BaseOperation {
             print("Unexpected operation dependency chain.")
         }
         
-        self.state = .Finished
+        state = .Finished
     }
 }

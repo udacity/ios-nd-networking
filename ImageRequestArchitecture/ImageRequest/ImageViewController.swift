@@ -26,7 +26,7 @@ class ImageViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        imageDataSource.load(completion: { (image, title) in
+        imageDataSource.load(completionHandler: { (image, title) in
             performUIUpdatesOnMain {
                 self.showImage(image, title: title)
             }
@@ -45,6 +45,6 @@ class ImageViewController: UIViewController {
     }
     
     func showError(_ error: String) {
-        titleLabel.text = error
+        titleLabel.text = "Error: \(error)"
     }
 }
