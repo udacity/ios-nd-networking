@@ -26,13 +26,16 @@ class ImageDataSource: NSObject {
     // MARK: Network
     
     private func loadFromNetwork(completionHandler: @escaping (UIImage, String) -> (), errorHandler: @escaping (String) -> ()) {
+        // use codable to construct preimage and url
         guard let preImage = imageJSONString.toPreImage(), let url = preImage.url else {
             errorHandler("cannot create preimage for request")
             return
         }
         
+        // create fetch
         let fetch = ImageFetchOperation(url: url)
     
+        // create parse (depends on fetch)
         let parse = ImageParseOperation()
         parse.addDependency(fetch)
         parse.completionBlock = {

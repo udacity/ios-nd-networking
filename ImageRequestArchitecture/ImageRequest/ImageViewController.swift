@@ -26,12 +26,13 @@ class ImageViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // get image
         imageDataSource.load(completionHandler: { (image, title) in
-            performUIUpdatesOnMain {
-                self.showImage(image, title: title)
+            DispatchQueue.main.async {
+                self.showImage(image, withTitle: title)
             }
         }) { (error) in
-            performUIUpdatesOnMain {
+            DispatchQueue.main.async {
                 self.showError(error)
             }
         }
@@ -39,7 +40,7 @@ class ImageViewController: UIViewController {
     
     // MARK: Handlers
     
-    func showImage(_ image: UIImage, title: String) {
+    func showImage(_ image: UIImage, withTitle title: String) {
         imageView.image = image
         titleLabel.text = title
     }

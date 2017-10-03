@@ -23,6 +23,7 @@ class ImageParseOperation: BaseOperation {
     override func start() {
         state = .Executing
         
+        // extract data from finished fetch operation
         if let imageFetchOp = dependencies.first as? ImageFetchOperation {
             if let data = imageFetchOp.fetchedImageData {
                 parsedImage = UIImage(data: data)

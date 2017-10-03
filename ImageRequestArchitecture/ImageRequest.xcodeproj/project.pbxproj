@@ -18,7 +18,6 @@
 		A9DB69431BE963C9005E6ADD /* ImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9DB69421BE963C9005E6ADD /* ImageViewController.swift */; };
 		A9DB69461BE963C9005E6ADD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A9DB69441BE963C9005E6ADD /* Main.storyboard */; };
 		A9DB69481BE963C9005E6ADD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A9DB69471BE963C9005E6ADD /* Assets.xcassets */; };
-		A9DB69551BE9696F005E6ADD /* GCDBlackBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9DB69541BE9696F005E6ADD /* GCDBlackBox.swift */; };
 		A9E265F31F83E0C70052B689 /* String+PreImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9E265F21F83E0C70052B689 /* String+PreImage.swift */; };
 		A9FA13441D1AB6B700B5F46E /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = A9FA13421D1AB6B700B5F46E /* LaunchScreen.xib */; };
 /* End PBXBuildFile section */
@@ -37,7 +36,6 @@
 		A9DB69451BE963C9005E6ADD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		A9DB69471BE963C9005E6ADD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A9DB694C1BE963C9005E6ADD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		A9DB69541BE9696F005E6ADD /* GCDBlackBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GCDBlackBox.swift; sourceTree = "<group>"; };
 		A9E265F21F83E0C70052B689 /* String+PreImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+PreImage.swift"; sourceTree = "<group>"; };
 		A9FA13431D1AB6B700B5F46E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -75,7 +73,6 @@
 			isa = PBXGroup;
 			children = (
 				A9A3A2211BEBD094009BE8E1 /* Constants.swift */,
-				A9DB69541BE9696F005E6ADD /* GCDBlackBox.swift */,
 				A9E265F21F83E0C70052B689 /* String+PreImage.swift */,
 			);
 			name = Utils;
@@ -232,7 +229,6 @@
 				A90CB9AE1F83A59200E16437 /* ImageDataSource.swift in Sources */,
 				A90CB9A71F83A17C00E16437 /* ImageFetchOperation.swift in Sources */,
 				A9DB69411BE963C9005E6ADD /* AppDelegate.swift in Sources */,
-				A9DB69551BE9696F005E6ADD /* GCDBlackBox.swift in Sources */,
 				A9A3A2221BEBD094009BE8E1 /* Constants.swift in Sources */,
 				A90CB99F1F839E6900E16437 /* PreImage.swift in Sources */,
 				A90CB9A31F83A15D00E16437 /* OperationState.swift in Sources */,

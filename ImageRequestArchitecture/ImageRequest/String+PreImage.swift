@@ -16,6 +16,7 @@ extension String {
         
         var image: PreImage?
         
+        // use codable to decode json string into preimage
         do {
             let decoder = JSONDecoder()
             if let data = self.data(using: .utf8) {

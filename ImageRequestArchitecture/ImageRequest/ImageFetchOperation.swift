@@ -29,7 +29,8 @@ class ImageFetchOperation: BaseOperation {
         setup()
     }
     
-    func setup() {        
+    func setup() {
+        // setup fetch
         task = URLSession.shared.dataTask(with: url) { (data, response, error) in
             self.fetchedImageData = data
             self.fetchedResponse = response
@@ -42,6 +43,7 @@ class ImageFetchOperation: BaseOperation {
     // MARK: Operation
     
     override func start() {
+        // start fetch
         state = .Executing
         task?.resume()
     }
