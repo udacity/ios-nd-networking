@@ -7,3 +7,10 @@
 //
 
 import Foundation
+
+// MARK: - Image
+
+struct Image {
+    let title: String
+    let url: URL?
+}
