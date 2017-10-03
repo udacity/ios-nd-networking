@@ -29,7 +29,7 @@ class ImageParseOperation: BaseOperation {
             }
             parsedError = imageFetchOp.fetchedError
         } else {
-            print("Unexpected operation dependency chain.")
+            print("unexpected operation dependency chain")
         }
         
         state = .Finished
