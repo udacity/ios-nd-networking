@@ -42,7 +42,8 @@ class FlickrFetchOperation: BaseOperation {
                 
         super.init()
         
-        state = .notReady
+        // operation queue will not execute this operation while it's pending
+        state = .pending
     }
     
     func makeReady(withPageNumber pageNumber: Int? = nil) {        
@@ -60,6 +61,7 @@ class FlickrFetchOperation: BaseOperation {
             }
         }
         
+        // operation queue can now execute this operation
         state = .ready
     }
     

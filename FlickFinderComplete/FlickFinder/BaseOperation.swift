@@ -14,7 +14,7 @@ class BaseOperation: Operation {
     
     // MARK: Properties
     
-    var state = OperationState.notReady {
+    var state = OperationState.pending {
         willSet {
             willChangeValue(forKey: newValue.keyPath())
             willChangeValue(forKey: state.keyPath())
