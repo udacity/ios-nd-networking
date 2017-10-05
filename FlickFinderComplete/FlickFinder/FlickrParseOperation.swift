@@ -1,5 +1,5 @@
 //
-//  ParseOperation.swift
+//  FlickrParseOperation.swift
 //  ImageRequest
 //
 //  Created by Jarrod Parkes on 10/3/17.
@@ -9,9 +9,9 @@
 import UIKit
 import Foundation
 
-// MARK: - ParseOperation: BaseOperation
+// MARK: - FlickrParseOperation: BaseOperation
 
-class ParseOperation: BaseOperation {
+class FlickrParseOperation: BaseOperation {
     
     // MARK: Properties
     
@@ -25,14 +25,15 @@ class ParseOperation: BaseOperation {
     init(searchType: SearchType) {
         self.searchType = searchType
         super.init()
+        state = .ready
     }
     
     // MARK: Operation
     
     override func start() {
-        state = .Executing
+        state = .executing
         
-        let fetchOp = dependencies.first as? FetchOperation
+        let fetchOp = dependencies.first as? FlickrFetchOperation
         if let error = fetchOp?.fetchedError {
             parsedError = error
         } else if let data = fetchOp?.fetchedData {
@@ -41,7 +42,7 @@ class ParseOperation: BaseOperation {
             print("unexpected operation dependency chain")
         }
         
-        state = .Finished
+        state = .finished
     }
     
     // MARK: Parse

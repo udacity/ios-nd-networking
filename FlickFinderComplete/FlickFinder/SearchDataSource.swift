@@ -15,29 +15,51 @@ class SearchDataSource: NSObject {
     
     // MARK: Properties
     
+    let flickr = FlickrAPI()
     var photoResponse: PhotoResponse?
     
     // MARK: Search
     
     func searchWithType(_ type: SearchType, completion: @escaping (UIImage, String) -> (), error: @escaping (String) -> ()) {
-        guard let request = FlickrAPI().search(withType: type) else {
-            error("cannot create url for request")
+        
+        guard type.isValid else {
+            error(type.invalidString)
             return
         }
         
-        let fetch = FetchOperation(request: request)
+        let fetchForPageNumber = FlickrFetchOperation(searchType: type)
+        fetchForPageNumber.makeReady()
         
-        // FIXME: get random photo
-        // FIXME: do the double search to get total number of pages...
-        let parse = ParseOperation(searchType: type)
-        parse.addDependency(fetch)
-        parse.completionBlock = {
-            if let photoResponse = parse.parsedResult as? PhotoResponse {
-                self.photoResponse = photoResponse
-                let photo = photoResponse.photos.photo[0]
-                completion(photo.image, photo.title)
+        let parseForPageNumber = FlickrParseOperation(searchType: type)
+        parseForPageNumber.addDependency(fetchForPageNumber)
+        
+        let fetchForPhoto = FlickrFetchOperation(searchType: type)
+        fetchForPhoto.addDependency(parseForPageNumber)
+        
+        let parseForPhoto = FlickrParseOperation(searchType: type)
+        parseForPhoto.addDependency(fetchForPhoto)
+        
+        parseForPageNumber.completionBlock = {
+            if let photoResponse = parseForPageNumber.parsedResult as? PhotoResponse {
+                let randomPage = photoResponse.photoList.randomPage()
+                fetchForPhoto.makeReady(withPageNumber: randomPage)
             } else {
-                if let parsedError = parse.parsedError {
+                if let parsedError = parseForPageNumber.parsedError {
+                    error("Could not retrieve data: \(parsedError)")
+                }
+                else {
+                    error("Could not retrieve data")
+                }
+            }
+        }
+        
+        parseForPhoto.completionBlock = {
+            if let photoResponse = parseForPageNumber.parsedResult as? PhotoResponse {
+                self.photoResponse = photoResponse
+                let randomPhoto = photoResponse.photoList.randomPhoto()
+                completion(randomPhoto.image, randomPhoto.title)
+            } else {
+                if let parsedError = parseForPageNumber.parsedError {
                     error("Could not retrieve data: \(parsedError)")
                 }
                 else {
@@ -47,8 +69,10 @@ class SearchDataSource: NSObject {
         }
         
         let queue = OperationQueue()
-        queue.addOperation(fetch)
-        queue.addOperation(parse)
+        queue.addOperation(fetchForPageNumber)
+        queue.addOperation(parseForPageNumber)
+        queue.addOperation(fetchForPhoto)
+        queue.addOperation(parseForPhoto)
     }
 }
 

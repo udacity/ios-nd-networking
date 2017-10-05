@@ -13,6 +13,37 @@ import Foundation
 enum SearchType {
     case location(Double, Double)
     case phrase(String)
+    
+    var isValid: Bool {
+        switch self {
+        case .location(let latitude, let longitude):
+            return latitude.inRange(FlickrAPI.searchLatRange) && longitude.inRange(FlickrAPI.searchLonRange)
+        case .phrase(let text):
+            return !text.isEmpty
+        }
+    }
+    
+    var invalidString: String {
+        switch self {
+        case .location(_, _):
+            return "Lat should be [-90, 90].\nLon should be [-180, 180]."
+        case .phrase(_):
+            return "Phrase is empty."
+        }
+    }
+    
+    var bboxString: String {
+        switch self {
+        case .location(let latitude, let longitude):
+            let minimumLon = max(longitude - FlickrAPI.searchBBoxHalfWidth, FlickrAPI.searchLonRange.0)
+            let minimumLat = max(latitude - FlickrAPI.searchBBoxHalfHeight, FlickrAPI.searchLatRange.0)
+            let maximumLon = min(longitude + FlickrAPI.searchBBoxHalfWidth, FlickrAPI.searchLonRange.1)
+            let maximumLat = min(latitude + FlickrAPI.searchBBoxHalfHeight, FlickrAPI.searchLatRange.1)
+            return "\(minimumLon),\(minimumLat),\(maximumLon),\(maximumLat)"
+        default:
+            return ""
+        }
+    }
 }
 
 // MARK: - FlickrAPI
@@ -43,48 +74,16 @@ struct FlickrAPI {
     
     struct Values {
         static let searchMethod = "flickr.photos.search"
-        static let apiKey = "bb90aa6f358ecb3404b6c9c1684d6aad"
+        static let apiKey = "API_KEY_HERE"
         static let responseFormat = "json"
         static let noJSONCallback = "1" /* 1 means "disable callback" */
         static let urls = "url_o,url_m"
         static let safeSearch = "1" /* 1 mean "use safe search" */
     }
     
-    // MARK: Search
+    // MARK: Helper
     
-    func search(withType type: SearchType) -> URLRequest? {
-        
-        var queryItems: [String:Any] = [
-            FlickrAPI.Keys.searchMethod: FlickrAPI.Values.searchMethod,
-            FlickrAPI.Keys.apiKey: FlickrAPI.Values.apiKey,
-            FlickrAPI.Keys.safeSearch: FlickrAPI.Values.safeSearch,
-            FlickrAPI.Keys.extras: FlickrAPI.Values.urls,
-            FlickrAPI.Keys.responseFormat: FlickrAPI.Values.responseFormat,
-            FlickrAPI.Keys.noJSONCallback: FlickrAPI.Values.noJSONCallback
-        ]
-        
-        switch type {
-        case .location(let latitude, let longitude):
-            queryItems[Constants.FlickrParameterKeys.BoundingBox] = bboxString(latitude: latitude, longitude: longitude)
-        case .phrase(let text):
-            queryItems[Constants.FlickrParameterKeys.Text] = text
-        }
-        
-        guard let url = urlWithQueryItems(queryItems) else { return nil }
-        return URLRequest(url: url)        
-    }
-    
-    // MARK: Helpers
-    
-    private func bboxString(latitude: Double, longitude: Double) -> String {
-        let minimumLon = max(longitude - FlickrAPI.searchBBoxHalfWidth, FlickrAPI.searchLonRange.0)
-        let minimumLat = max(latitude - FlickrAPI.searchBBoxHalfHeight, FlickrAPI.searchLatRange.0)
-        let maximumLon = min(longitude + FlickrAPI.searchBBoxHalfWidth, FlickrAPI.searchLonRange.1)
-        let maximumLat = min(latitude + FlickrAPI.searchBBoxHalfHeight, FlickrAPI.searchLatRange.1)
-        return "\(minimumLon),\(minimumLat),\(maximumLon),\(maximumLat)"
-    }
-    
-    private func urlWithQueryItems(_ items: [String:Any]) -> URL? {
+    func urlWithQueryItems(_ items: [String:Any]) -> URL? {
         var components = URLComponents()
         components.scheme = FlickrAPI.scheme
         components.host = FlickrAPI.host
@@ -98,19 +97,4 @@ struct FlickrAPI {
         
         return components.url
     }
-    
-    // isTextFieldValid(latitudeTextField, forRange: Constants.Flickr.SearchLatRange) && isTextFieldValid(longitudeTextField, forRange: Constants.Flickr.SearchLonRange)
-    
-//    func isTextFieldValid(_ textField: UITextField, forRange: (Double, Double)) -> Bool {
-//        if let value = Double(textField.text!), !textField.text!.isEmpty {
-//            return isValueInRange(value, min: forRange.0, max: forRange.1)
-//        } else {
-//            return false
-//        }
-//    }
-//
-//    func isValueInRange(_ value: Double, min: Double, max: Double) -> Bool {
-//        return !(value < min || value > max)
-//    }
 }
-

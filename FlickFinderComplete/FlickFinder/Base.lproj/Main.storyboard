@@ -81,7 +81,7 @@
                                                 </constraints>
                                                 <state key="normal" image="SearchIcon"/>
                                                 <connections>
-                                                    <action selector="searchByLatLon:" destination="BYZ-38-t0r" eventType="touchUpInside" id="wq6-ta-0yD"/>
+                                                    <action selector="searchByLocation:" destination="BYZ-38-t0r" eventType="touchUpInside" id="HPq-cZ-P6x"/>
                                                 </connections>
                                             </button>
                                         </subviews>

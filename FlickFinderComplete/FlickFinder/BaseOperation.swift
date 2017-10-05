@@ -14,7 +14,7 @@ class BaseOperation: Operation {
     
     // MARK: Properties
     
-    var state = OperationState.Ready {
+    var state = OperationState.notReady {
         willSet {
             willChangeValue(forKey: newValue.keyPath())
             willChangeValue(forKey: state.keyPath())
@@ -26,15 +26,15 @@ class BaseOperation: Operation {
     }
     
     override var isReady: Bool {
-        return super.isReady && state == .Ready
+        return super.isReady && state == .ready
     }
     
     override var isExecuting: Bool {
-        return state == .Executing
+        return state == .executing
     }
     
     override var isFinished: Bool {
-        return state == .Finished
+        return state == .finished
     }
     
     override var isAsynchronous: Bool {

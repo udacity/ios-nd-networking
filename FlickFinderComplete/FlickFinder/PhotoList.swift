@@ -16,17 +16,29 @@ struct PhotoList: Codable {
     
     let page: Int
     let pages: Int
-    let perPage: Int
+    let photosPerPage: Int
     let total: String
-    let photo: [Photo]
+    let photos: [Photo]
     
     // MARK: Keys
     
     enum CodingKeys : String, CodingKey {
         case page
         case pages
-        case perPage = "perpage"
+        case photosPerPage = "perpage"
         case total
-        case photo
+        case photos = "photo"
+    }
+    
+    // MARK: Helpers
+    
+    func randomPage() -> Int {
+        let pageLimit = min(pages, 40)
+        return Int(arc4random_uniform(UInt32(pageLimit))) + 1
+    }
+    
+    func randomPhoto() -> Photo {
+        let randomPhotoIndex = Int(arc4random_uniform(UInt32(photos.count)))
+        return photos[randomPhotoIndex]
     }
 }

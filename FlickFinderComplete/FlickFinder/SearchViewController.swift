@@ -71,7 +71,7 @@ class SearchViewController: UIViewController {
         }
     }
     
-    @IBAction func searchByLatLon(_ sender: AnyObject) {
+    @IBAction func searchByLocation(_ sender: AnyObject) {
 
         userDidTapView(self)
         

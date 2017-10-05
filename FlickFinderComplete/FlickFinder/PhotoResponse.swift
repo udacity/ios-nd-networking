@@ -12,6 +12,13 @@ struct PhotoResponse: Codable {
     
     // MARK: Properites
     
-    let photos: PhotoList
-    let stat: String        
+    let photoList: PhotoList
+    let stat: String
+    
+    // MARK: Keys
+    
+    enum CodingKeys : String, CodingKey {
+        case photoList = "photos"
+        case stat
+    }
 }
