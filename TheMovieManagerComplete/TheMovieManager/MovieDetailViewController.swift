@@ -14,7 +14,7 @@ class MovieDetailViewController: UIViewController {
     
     // MARK: Properties
     
-    var movie: TMDBMovie?
+    var movie: Movie?
     var isFavorite = false
     var isWatchlist = false
     
@@ -42,11 +42,7 @@ class MovieDetailViewController: UIViewController {
         if let movie = movie {
             
             // set the title
-            if let releaseYear = movie.releaseYear {
-                navigationItem.title = "\(movie.title) (\(releaseYear))"
-            } else {
-                navigationItem.title = "\(movie.title)"
-            }
+            navigationItem.title = "\(movie.title) (\(movie.releaseYear))"
             
             // setting some default UI ...
             posterImageView.image = UIImage(named: "MissingPoster")

@@ -70,7 +70,7 @@ class TMDBClient : NSObject {
             }
             
             /* 5/6. Parse the data and use the data (happens in completion handler) */
-            self.convertDataWithCompletionHandler(data, completionHandlerForConvertData: completionHandlerForGET)
+            self.convertDataWithCompletionHandler(data, method: method, completionHandlerForConvertData: completionHandlerForGET)
         }
         
         /* 7. Start the request */
@@ -169,7 +169,7 @@ class TMDBClient : NSObject {
             }
             
             /* 5/6. Parse the data and use the data (happens in completion handler) */
-            self.convertDataWithCompletionHandler(data, completionHandlerForConvertData: completionHandlerForPOST)
+            self.convertDataWithCompletionHandler(data, method: method, completionHandlerForConvertData: completionHandlerForPOST)
         }
         
         /* 7. Start the request */
@@ -190,17 +190,23 @@ class TMDBClient : NSObject {
     }
     
     // given raw JSON, return a usable Foundation object
-    private func convertDataWithCompletionHandler(_ data: Data, completionHandlerForConvertData: (_ result: AnyObject?, _ error: NSError?) -> Void) {
+    private func convertDataWithCompletionHandler(_ data: Data, method: String, completionHandlerForConvertData: (_ result: AnyObject?, _ error: NSError?) -> Void) {
         
-        var parsedResult: AnyObject! = nil
-        do {
-            parsedResult = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as AnyObject
-        } catch {
-            let userInfo = [NSLocalizedDescriptionKey : "Could not parse the data as JSON: '\(data)'"]
-            completionHandlerForConvertData(nil, NSError(domain: "convertDataWithCompletionHandler", code: 1, userInfo: userInfo))
+        if method.contains("/favorite/movies") {
+            let jsonDecoder = JSONDecoder()
+            let movieResults = try! jsonDecoder.decode(MovieResults.self, from: data)            
+            completionHandlerForConvertData(movieResults as AnyObject, nil)
+        } else {
+            var parsedResult: AnyObject! = nil
+            do {
+                parsedResult = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as AnyObject
+            } catch {
+                let userInfo = [NSLocalizedDescriptionKey : "Could not parse the data as JSON: '\(data)'"]
+                completionHandlerForConvertData(nil, NSError(domain: "convertDataWithCompletionHandler", code: 1, userInfo: userInfo))
+            }
+            
+            completionHandlerForConvertData(parsedResult, nil)
         }
-        
-        completionHandlerForConvertData(parsedResult, nil)
     }
     
     // create a URL from parameters

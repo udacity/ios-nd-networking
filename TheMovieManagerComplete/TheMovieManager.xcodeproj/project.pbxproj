@@ -16,13 +16,14 @@
 		A9855BC91BEC415F00000031 /* TMDBConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9855BC81BEC415F00000031 /* TMDBConfig.swift */; };
 		A9855BCD1BEC41A800000031 /* TMDBAuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9855BCA1BEC41A800000031 /* TMDBAuthViewController.swift */; };
 		A9855BCE1BEC41A800000031 /* TMDBConvenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9855BCB1BEC41A800000031 /* TMDBConvenience.swift */; };
-		A9855BCF1BEC41A800000031 /* TMDBMovie.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9855BCC1BEC41A800000031 /* TMDBMovie.swift */; };
+		A9855BCF1BEC41A800000031 /* Movie.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9855BCC1BEC41A800000031 /* Movie.swift */; };
 		A9855BD11BEC41F500000031 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9855BD01BEC41F500000031 /* LoginViewController.swift */; };
 		A9855BD61BEC42A200000031 /* GCDBlackBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9855BD51BEC42A200000031 /* GCDBlackBox.swift */; };
 		A9855BDD1BEC4DEB00000031 /* FavoritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9855BD91BEC4DEB00000031 /* FavoritesViewController.swift */; };
 		A9855BDE1BEC4DEB00000031 /* MovieDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9855BDA1BEC4DEB00000031 /* MovieDetailViewController.swift */; };
 		A9855BDF1BEC4DEB00000031 /* MoviePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9855BDB1BEC4DEB00000031 /* MoviePickerViewController.swift */; };
 		A9855BE01BEC4DEB00000031 /* WatchlistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9855BDC1BEC4DEB00000031 /* WatchlistViewController.swift */; };
+		A99306B91F87A2A200BB7680 /* MovieResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = A99306B81F87A2A200BB7680 /* MovieResults.swift */; };
 		A9FA13591D1AB76500B5F46E /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = A9FA13571D1AB76500B5F46E /* LaunchScreen.xib */; };
 /* End PBXBuildFile section */
 
@@ -38,13 +39,14 @@
 		A9855BC81BEC415F00000031 /* TMDBConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TMDBConfig.swift; sourceTree = "<group>"; };
 		A9855BCA1BEC41A800000031 /* TMDBAuthViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TMDBAuthViewController.swift; sourceTree = "<group>"; };
 		A9855BCB1BEC41A800000031 /* TMDBConvenience.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TMDBConvenience.swift; sourceTree = "<group>"; };
-		A9855BCC1BEC41A800000031 /* TMDBMovie.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TMDBMovie.swift; sourceTree = "<group>"; };
+		A9855BCC1BEC41A800000031 /* Movie.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Movie.swift; sourceTree = "<group>"; };
 		A9855BD01BEC41F500000031 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		A9855BD51BEC42A200000031 /* GCDBlackBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GCDBlackBox.swift; sourceTree = "<group>"; };
 		A9855BD91BEC4DEB00000031 /* FavoritesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoritesViewController.swift; sourceTree = "<group>"; };
 		A9855BDA1BEC4DEB00000031 /* MovieDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovieDetailViewController.swift; sourceTree = "<group>"; };
 		A9855BDB1BEC4DEB00000031 /* MoviePickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoviePickerViewController.swift; sourceTree = "<group>"; };
 		A9855BDC1BEC4DEB00000031 /* WatchlistViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WatchlistViewController.swift; sourceTree = "<group>"; };
+		A99306B81F87A2A200BB7680 /* MovieResults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieResults.swift; sourceTree = "<group>"; };
 		A9FA13581D1AB76500B5F46E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -151,7 +153,8 @@
 				A9855BC61BEC414700000031 /* TMDBClient.swift */,
 				A9855BC41BEC411E00000031 /* TMDBConstants.swift */,
 				A9855BC81BEC415F00000031 /* TMDBConfig.swift */,
-				A9855BCC1BEC41A800000031 /* TMDBMovie.swift */,
+				A9855BCC1BEC41A800000031 /* Movie.swift */,
+				A99306B81F87A2A200BB7680 /* MovieResults.swift */,
 			);
 			name = TMDB;
 			sourceTree = "<group>";
@@ -229,12 +232,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				A9855BAD1BEC3EDB00000031 /* AppDelegate.swift in Sources */,
-				A9855BCF1BEC41A800000031 /* TMDBMovie.swift in Sources */,
+				A9855BCF1BEC41A800000031 /* Movie.swift in Sources */,
 				A9855BC91BEC415F00000031 /* TMDBConfig.swift in Sources */,
 				A9855BCE1BEC41A800000031 /* TMDBConvenience.swift in Sources */,
 				A9855BDE1BEC4DEB00000031 /* MovieDetailViewController.swift in Sources */,
 				A9855BD61BEC42A200000031 /* GCDBlackBox.swift in Sources */,
 				A9855BC71BEC414700000031 /* TMDBClient.swift in Sources */,
+				A99306B91F87A2A200BB7680 /* MovieResults.swift in Sources */,
 				A9855BDD1BEC4DEB00000031 /* FavoritesViewController.swift in Sources */,
 				A9855BC51BEC411E00000031 /* TMDBConstants.swift in Sources */,
 				A9855BC21BEC40C400000031 /* BorderedButton.swift in Sources */,

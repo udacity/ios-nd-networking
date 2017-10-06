@@ -159,7 +159,7 @@ extension TMDBClient {
     
     // MARK: GET Convenience Methods
     
-    func getFavoriteMovies(_ completionHandlerForFavMovies: @escaping (_ result: [TMDBMovie]?, _ error: NSError?) -> Void) {
+    func getFavoriteMovies(_ completionHandlerForFavMovies: @escaping (_ result: [Movie]?, _ error: NSError?) -> Void) {
         
         /* 1. Specify parameters, method (if has {key}), and HTTP body (if POST) */
         let parameters = [TMDBClient.ParameterKeys.SessionID: TMDBClient.sharedInstance().sessionID!]
@@ -174,10 +174,8 @@ extension TMDBClient {
                 completionHandlerForFavMovies(nil, error)
             } else {
                 
-                if let results = results?[TMDBClient.JSONResponseKeys.MovieResults] as? [[String:AnyObject]] {
-                    
-                    let movies = TMDBMovie.moviesFromResults(results)
-                    completionHandlerForFavMovies(movies, nil)
+                if let movieResults = results as? MovieResults {
+                    completionHandlerForFavMovies(movieResults.movies, nil)
                 } else {
                     completionHandlerForFavMovies(nil, NSError(domain: "getFavoriteMovies parsing", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse getFavoriteMovies"]))
                 }
@@ -185,7 +183,7 @@ extension TMDBClient {
         }
     }
 
-    func getWatchlistMovies(_ completionHandlerForWatchlist: @escaping (_ result: [TMDBMovie]?, _ error: NSError?) -> Void) {
+    func getWatchlistMovies(_ completionHandlerForWatchlist: @escaping (_ result: [Movie]?, _ error: NSError?) -> Void) {
         
         /* 1. Specify parameters, method (if has {key}), and HTTP body (if POST) */
         let parameters = [TMDBClient.ParameterKeys.SessionID: TMDBClient.sharedInstance().sessionID!]
@@ -200,18 +198,16 @@ extension TMDBClient {
                 completionHandlerForWatchlist(nil, error)
             } else {
                 
-                if let results = results?[TMDBClient.JSONResponseKeys.MovieResults] as? [[String:AnyObject]] {
-                    
-                    let movies = TMDBMovie.moviesFromResults(results)
-                    completionHandlerForWatchlist(movies, nil)
+                if let movieResults = results as? MovieResults {
+                    completionHandlerForWatchlist(movieResults.movies, nil)
                 } else {
-                    completionHandlerForWatchlist(nil, NSError(domain: "getWatchlistMovies parsing", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse getWatchlistMovies"]))
+                    completionHandlerForWatchlist(nil, NSError(domain: "getFavoriteMovies parsing", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse getFavoriteMovies"]))
                 }
             }
         }
     }
     
-    func getMoviesForSearchString(_ searchString: String, completionHandlerForMovies: @escaping (_ result: [TMDBMovie]?, _ error: NSError?) -> Void) -> URLSessionDataTask? {
+    func getMoviesForSearchString(_ searchString: String, completionHandlerForMovies: @escaping (_ result: [Movie]?, _ error: NSError?) -> Void) -> URLSessionDataTask? {
         
         /* 1. Specify parameters, method (if has {key}), and HTTP body (if POST) */
         let parameters = [TMDBClient.ParameterKeys.Query: searchString]
@@ -224,12 +220,10 @@ extension TMDBClient {
                 completionHandlerForMovies(nil, error)
             } else {
                 
-                if let results = results?[TMDBClient.JSONResponseKeys.MovieResults] as? [[String:AnyObject]] {
-                    
-                    let movies = TMDBMovie.moviesFromResults(results)
-                    completionHandlerForMovies(movies, nil)
+                if let movieResults = results as? MovieResults {
+                    completionHandlerForMovies(movieResults.movies, nil)
                 } else {
-                    completionHandlerForMovies(nil, NSError(domain: "getMoviesForSearchString parsing", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse getMoviesForSearchString"]))
+                    completionHandlerForMovies(nil, NSError(domain: "getFavoriteMovies parsing", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse getFavoriteMovies"]))
                 }
             }
         }
@@ -259,7 +253,7 @@ extension TMDBClient {
     
     // MARK: POST Convenience Methods
     
-    func postToFavorites(_ movie: TMDBMovie, favorite: Bool, completionHandlerForFavorite: @escaping (_ result: Int?, _ error: NSError?) -> Void) {
+    func postToFavorites(_ movie: Movie, favorite: Bool, completionHandlerForFavorite: @escaping (_ result: Int?, _ error: NSError?) -> Void) {
         
         /* 1. Specify parameters, method (if has {key}), and HTTP body (if POST) */
         let parameters = [TMDBClient.ParameterKeys.SessionID : TMDBClient.sharedInstance().sessionID!]
@@ -283,7 +277,7 @@ extension TMDBClient {
         }
     }
     
-    func postToWatchlist(_ movie: TMDBMovie, watchlist: Bool, completionHandlerForWatchlist: @escaping (_ result: Int?, _ error: NSError?) -> Void) {
+    func postToWatchlist(_ movie: Movie, watchlist: Bool, completionHandlerForWatchlist: @escaping (_ result: Int?, _ error: NSError?) -> Void) {
         
         /* 1. Specify parameters, method (if has {key}), and HTTP body (if POST) */
         let parameters = [TMDBClient.ParameterKeys.SessionID : TMDBClient.sharedInstance().sessionID!]

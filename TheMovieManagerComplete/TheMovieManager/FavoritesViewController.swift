@@ -14,7 +14,7 @@ class FavoritesViewController: UIViewController {
     
     // MARK: Properties
     
-    var movies: [TMDBMovie] = [TMDBMovie]()
+    var movies: [Movie] = [Movie]()
     
     // MARK: Outlets
     
