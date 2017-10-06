@@ -49,33 +49,6 @@ struct Movie: Codable {
         case voteAverage = "vote_average"
         case voteCount = "vote_count"
     }
-    
-    // MARK: Initializers
-    
-    // construct a Movie from a dictionary
-//    init(dictionary: [String:AnyObject]) {
-//        title = dictionary[TMDBClient.JSONResponseKeys.MovieTitle] as! String
-//        id = dictionary[TMDBClient.JSONResponseKeys.MovieID] as! Int
-//        posterPath = dictionary[TMDBClient.JSONResponseKeys.MoviePosterPath] as? String
-//
-////        if let releaseDateString = dictionary[TMDBClient.JSONResponseKeys.MovieReleaseDate] as? String, releaseDateString.isEmpty == false {
-////            //releaseYear = String(releaseDateString.prefix(4))
-////        } else {
-////            //releaseYear = ""
-////        }
-//    }
-    
-//    static func moviesFromResults(_ results: [[String:AnyObject]]) -> [Movie] {
-//
-//        var movies = [Movie]()
-//
-//        // iterate through array of dictionaries, each Movie is a dictionary
-//        for result in results {
-//            movies.append(Movie(dictionary: result))
-//        }
-//
-//        return movies
-//    }
 }
 
 // MARK: - Movie: Equatable

@@ -24,6 +24,13 @@
 		A9855BDF1BEC4DEB00000031 /* MoviePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9855BDB1BEC4DEB00000031 /* MoviePickerViewController.swift */; };
 		A9855BE01BEC4DEB00000031 /* WatchlistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9855BDC1BEC4DEB00000031 /* WatchlistViewController.swift */; };
 		A99306B91F87A2A200BB7680 /* MovieResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = A99306B81F87A2A200BB7680 /* MovieResults.swift */; };
+		A99306BB1F87AB2700BB7680 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = A99306BA1F87AB2700BB7680 /* Config.swift */; };
+		A99306BD1F87AD2E00BB7680 /* TMDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = A99306BC1F87AD2E00BB7680 /* TMDB.swift */; };
+		A99306BF1F87B06A00BB7680 /* MarkMedia.swift in Sources */ = {isa = PBXBuildFile; fileRef = A99306BE1F87B06A00BB7680 /* MarkMedia.swift */; };
+		A99306C11F87B11200BB7680 /* Status.swift in Sources */ = {isa = PBXBuildFile; fileRef = A99306C01F87B11200BB7680 /* Status.swift */; };
+		A99306C31F87B18900BB7680 /* RequestToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = A99306C21F87B18900BB7680 /* RequestToken.swift */; };
+		A99306C51F87B1A100BB7680 /* SessionID.swift in Sources */ = {isa = PBXBuildFile; fileRef = A99306C41F87B1A100BB7680 /* SessionID.swift */; };
+		A99306C71F87B27F00BB7680 /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = A99306C61F87B27F00BB7680 /* Account.swift */; };
 		A9FA13591D1AB76500B5F46E /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = A9FA13571D1AB76500B5F46E /* LaunchScreen.xib */; };
 /* End PBXBuildFile section */
 
@@ -47,6 +54,13 @@
 		A9855BDB1BEC4DEB00000031 /* MoviePickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoviePickerViewController.swift; sourceTree = "<group>"; };
 		A9855BDC1BEC4DEB00000031 /* WatchlistViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WatchlistViewController.swift; sourceTree = "<group>"; };
 		A99306B81F87A2A200BB7680 /* MovieResults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieResults.swift; sourceTree = "<group>"; };
+		A99306BA1F87AB2700BB7680 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
+		A99306BC1F87AD2E00BB7680 /* TMDB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMDB.swift; sourceTree = "<group>"; };
+		A99306BE1F87B06A00BB7680 /* MarkMedia.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkMedia.swift; sourceTree = "<group>"; };
+		A99306C01F87B11200BB7680 /* Status.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Status.swift; sourceTree = "<group>"; };
+		A99306C21F87B18900BB7680 /* RequestToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestToken.swift; sourceTree = "<group>"; };
+		A99306C41F87B1A100BB7680 /* SessionID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionID.swift; sourceTree = "<group>"; };
+		A99306C61F87B27F00BB7680 /* Account.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
 		A9FA13581D1AB76500B5F46E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -112,6 +126,17 @@
 		A9855BD21BEC425F00000031 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				A9855BCC1BEC41A800000031 /* Movie.swift */,
+				A99306B81F87A2A200BB7680 /* MovieResults.swift */,
+				A99306BA1F87AB2700BB7680 /* Config.swift */,
+				A99306BE1F87B06A00BB7680 /* MarkMedia.swift */,
+				A99306C01F87B11200BB7680 /* Status.swift */,
+				A99306C21F87B18900BB7680 /* RequestToken.swift */,
+				A99306C41F87B1A100BB7680 /* SessionID.swift */,
+				A99306C61F87B27F00BB7680 /* Account.swift */,
+				A99306C81F87B3E200BB7680 /* API */,
+				A99306C91F87B3EF00BB7680 /* Operations */,
+				A99306CA1F87B3F900BB7680 /* DataSources */,
 				A9855BD71BEC430C00000031 /* Clients */,
 			);
 			name = Model;
@@ -153,10 +178,30 @@
 				A9855BC61BEC414700000031 /* TMDBClient.swift */,
 				A9855BC41BEC411E00000031 /* TMDBConstants.swift */,
 				A9855BC81BEC415F00000031 /* TMDBConfig.swift */,
-				A9855BCC1BEC41A800000031 /* Movie.swift */,
-				A99306B81F87A2A200BB7680 /* MovieResults.swift */,
 			);
 			name = TMDB;
+			sourceTree = "<group>";
+		};
+		A99306C81F87B3E200BB7680 /* API */ = {
+			isa = PBXGroup;
+			children = (
+				A99306BC1F87AD2E00BB7680 /* TMDB.swift */,
+			);
+			name = API;
+			sourceTree = "<group>";
+		};
+		A99306C91F87B3EF00BB7680 /* Operations */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Operations;
+			sourceTree = "<group>";
+		};
+		A99306CA1F87B3F900BB7680 /* DataSources */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = DataSources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -232,8 +277,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				A9855BAD1BEC3EDB00000031 /* AppDelegate.swift in Sources */,
+				A99306C71F87B27F00BB7680 /* Account.swift in Sources */,
 				A9855BCF1BEC41A800000031 /* Movie.swift in Sources */,
+				A99306BF1F87B06A00BB7680 /* MarkMedia.swift in Sources */,
+				A99306C31F87B18900BB7680 /* RequestToken.swift in Sources */,
 				A9855BC91BEC415F00000031 /* TMDBConfig.swift in Sources */,
+				A99306BD1F87AD2E00BB7680 /* TMDB.swift in Sources */,
 				A9855BCE1BEC41A800000031 /* TMDBConvenience.swift in Sources */,
 				A9855BDE1BEC4DEB00000031 /* MovieDetailViewController.swift in Sources */,
 				A9855BD61BEC42A200000031 /* GCDBlackBox.swift in Sources */,
@@ -244,7 +293,10 @@
 				A9855BC21BEC40C400000031 /* BorderedButton.swift in Sources */,
 				A9855BE01BEC4DEB00000031 /* WatchlistViewController.swift in Sources */,
 				A9855BDF1BEC4DEB00000031 /* MoviePickerViewController.swift in Sources */,
+				A99306BB1F87AB2700BB7680 /* Config.swift in Sources */,
 				A9855BD11BEC41F500000031 /* LoginViewController.swift in Sources */,
+				A99306C51F87B1A100BB7680 /* SessionID.swift in Sources */,
+				A99306C11F87B11200BB7680 /* Status.swift in Sources */,
 				A9855BCD1BEC41A800000031 /* TMDBAuthViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
