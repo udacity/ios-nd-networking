@@ -22,7 +22,7 @@ class MoviesDataSource: NSObject {
     // MARK: Properties
     
     let cellType: MovieCellType
-    var movies: [Movie] = []
+    var movies = [Movie]()
     
     // MARK: Initializer
     
@@ -33,8 +33,11 @@ class MoviesDataSource: NSObject {
     // MARK: Load
     
     func loadDataWithRequest(_ request: TMDBRequest, completion: @escaping () -> (), error: @escaping (String) -> ()) -> OperationQueue {
-        let fetch = FetchOperation(urlComponents: request.components)
+        let queue = OperationQueue()
         
+        guard let urlRequest = request.urlRequest else { return queue }
+        
+        let fetch = FetchOperation(request: urlRequest)
         let parse = TMDBParseOperation(type: MovieResults.self)
         parse.addDependency(fetch)
         parse.completionBlock = {            
@@ -51,11 +54,9 @@ class MoviesDataSource: NSObject {
                 }
             }
         }
-
-        let queue = OperationQueue()
-        queue.addOperation(fetch)
-        queue.addOperation(parse)
         
+        queue.addOperation(fetch)
+        queue.addOperation(parse)        
         return queue
     }
 }
@@ -87,7 +88,7 @@ extension MoviesDataSource: UITableViewDataSource {
                 TMDB.shared.getImageOfType(.poster(.small), path: posterPath, completion: { (image) in
                     cell.imageView!.image = image
                 }, error: { (errorString) in
-                    print(errorString)
+                    return
                 })
             }
 

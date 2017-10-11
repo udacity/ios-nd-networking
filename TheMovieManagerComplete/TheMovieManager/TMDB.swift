@@ -15,7 +15,7 @@ class TMDB {
     
     // MARK: Constants
     
-    static let apiKey = "ADD_API_KEY"
+    static let apiKey = "API_KEY_HERE"
     static let scheme = "https"
     static let host = "api.themoviedb.org"    
     static let path = "/3"
@@ -45,9 +45,9 @@ class TMDB {
     }
     
     private func createRequestToken(_ hostViewController: UIViewController, completion: @escaping () -> (), error: @escaping (String) -> ()) {
-        let request = TMDBRequest.createToken
+        guard let request = TMDBRequest.createToken.urlRequest else { return }
         
-        let fetch = FetchOperation(urlComponents: request.components)
+        let fetch = FetchOperation(request: request)
         let parse = TMDBParseOperation(type: RequestToken.self)
         parse.addDependency(fetch)
         parse.completionBlock = {
@@ -68,10 +68,17 @@ class TMDB {
         queue.addOperation(parse)
     }
     
+    // FIXME: simplify requests
+    
+    private func makeRequest<T: Decodable>(request: TMDBRequest, type: T.Type, completion: (() -> (Void))?) {
+        // create the operations
+        // add them to the queue...                
+    }
+    
     private func createSessionID(withToken token: String, completion: @escaping () -> (), error: @escaping (String) -> ()) {
-        let request = TMDBRequest.createSession(token)
+        guard let request = TMDBRequest.createSession(token).urlRequest else { return }
         
-        let fetch = FetchOperation(urlComponents: request.components)
+        let fetch = FetchOperation(request: request)
         let parse = TMDBParseOperation(type: SessionID.self)
         parse.addDependency(fetch)
         parse.completionBlock = {
@@ -90,9 +97,9 @@ class TMDB {
     }
     
     private func getAccount(completion: @escaping () -> (), error: @escaping (String) -> ()) {
-        let request = TMDBRequest.getAccount
+        guard let request = TMDBRequest.getAccount.urlRequest else { return }
         
-        let fetch = FetchOperation(urlComponents: request.components)
+        let fetch = FetchOperation(request: request)
         let parse = TMDBParseOperation(type: Account.self)
         parse.addDependency(fetch)
         parse.completionBlock = {
@@ -130,9 +137,9 @@ class TMDB {
     // MARK: Config
     
     func getConfig() {
-        let request = TMDBRequest.getConfig
+        guard let request = TMDBRequest.getConfig.urlRequest else { return }
         
-        let fetch = FetchOperation(urlComponents: request.components)
+        let fetch = FetchOperation(request: request)
         let parse = TMDBParseOperation(type: Config.self)
         parse.addDependency(fetch)
         parse.completionBlock = {
@@ -150,11 +157,9 @@ class TMDB {
     // MARK: Images
     
     func getImageOfType(_ type: ImageType, path: String, completion: @escaping (UIImage) -> (), error: @escaping (String) -> ()) {
-        if let size = config?.images.sizeForImageType(type) {
-            let request = TMDBRequest.getImage(size, path)
-            
-            let fetch = FetchOperation(urlComponents: request.components)
-            let parse = ImageParseOperation()
+        if let size = config?.images.sizeForImageType(type), let request = TMDBRequest.getImage(size, path).urlRequest {
+            let fetch = FetchOperation(request: request)
+            let parse = ParseImageOperation()
             parse.addDependency(fetch)
             parse.completionBlock = {
                 DispatchQueue.main.async {

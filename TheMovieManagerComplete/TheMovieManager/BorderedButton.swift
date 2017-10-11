@@ -20,8 +20,8 @@ class BorderedButton: UIButton {
     let borderedButtonHeight: CGFloat = 44.0
     let borderedButtonCornerRadius: CGFloat = 4.0
     let phoneBorderedButtonExtraPadding: CGFloat = 14.0    
-    var backingColor: UIColor? = nil
-    var highlightedBackingColor: UIColor? = nil
+    var backingColor: UIColor?
+    var highlightedBackingColor: UIColor?
     
     // MARK: Initialization
     

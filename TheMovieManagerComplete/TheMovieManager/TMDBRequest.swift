@@ -23,6 +23,51 @@ enum TMDBRequest {
     case movieState(Int)
     case searchMovies(String)
     
+    // MARK: URL Request
+    
+    var urlRequest: URLRequest? {
+        var request: URLRequest?
+        
+        if let url = components.url {
+            var urlRequest = URLRequest(url: url)
+            
+            // add method
+            urlRequest.httpMethod = method.rawValue
+            
+            // add headers
+            for (key, value) in headers { urlRequest.addValue(value, forHTTPHeaderField: key) }
+            
+            // add http body
+            if let httpBody = httpBody { urlRequest.httpBody = httpBody }
+            
+            request = urlRequest
+        }
+        
+        return request
+    }
+    
+    // MARK: HTTP Method
+    
+    var method: HTTPMethod {
+        switch self {
+        case .markFavorite(_), .markWatchlist(_):
+            return .post
+        default:
+            return .get
+        }
+    }
+    
+    // MARK: Headers
+    
+    var headers: [String: String] {
+        switch self {
+        case .markFavorite(_), .markWatchlist(_):
+            return ["Content-Type": "application/json;charset=utf-8"]
+        default:
+            return [:]
+        }
+    }
+    
     // MARK: Host and Path
     
     private var hostAndPath: (String, String) {
@@ -84,7 +129,7 @@ enum TMDBRequest {
     // MARK: Query Items
     
     var queryItems: [URLQueryItem] {
-        var items: [URLQueryItem] = []
+        var items = [URLQueryItem]()
         
         // most requests need the api key
         switch self {
@@ -112,17 +157,6 @@ enum TMDBRequest {
         return items
     }
     
-    // MARK: HTTP Method
-    
-    var method: HTTPMethod {
-        switch self {
-        case .markFavorite(_), .markWatchlist(_):
-            return .post
-        default:
-            return .get
-        }
-    }
-    
     // MARK: JSON Body
     
     var httpBody: Data? {
@@ -139,3 +173,14 @@ enum TMDBRequest {
         }
     }
 }
+
+// MARK: - HTTPMethod: String
+
+enum HTTPMethod: String {
+    case get = "GET"
+    case post = "POST"
+    case put = "PUT"
+    case update = "UPDATE"
+    case delete = "DELETE"
+}
+

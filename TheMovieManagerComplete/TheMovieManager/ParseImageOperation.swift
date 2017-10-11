@@ -1,5 +1,5 @@
 //
-//  ImageParseOperation.swift
+//  ParseImageOperation.swift
 //  TheMovieManager
 //
 //  Created by Jarrod Parkes on 10/10/17.
@@ -9,35 +9,28 @@
 import UIKit
 import Foundation
 
-// MARK: - ImageParseOperation: BaseOperation
+// MARK: - ParseImageOperation: BaseOperation
 
-class ImageParseOperation: BaseOperation {
+class ParseImageOperation: BaseOperation {
     
     // MARK: Properties
     
     var parsedImage: UIImage?
     var parsedError: Error?
     
-    // MARK: Initialize
-    
-    override init() {
-        super.init()
-        state = .ready
-    }
-    
     // MARK: Operation
     
     override func start() {
+        guard !isCancelled else { return }
+        
         state = .executing
         
-        // extract data from finished fetch operation
+        // get image from finished fetch operation
         if let imageFetchOp = dependencies.first as? FetchOperation {
             if let data = imageFetchOp.fetchedData {
                 parsedImage = UIImage(data: data)
             }
             parsedError = imageFetchOp.fetchedError
-        } else {
-            print("unexpected operation dependency chain")
         }
         
         state = .finished

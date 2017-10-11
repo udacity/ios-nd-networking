@@ -16,37 +16,33 @@ class ParseOperation<T: Decodable>: BaseOperation {
     
     var parsedResult: AnyObject?
     var parsedResponse: URLResponse?
-    var parsedError: Error?
-    
+    var parsedError: Error?    
     let type: T.Type
     
     // MARK: Initialize
     
     init(type: T.Type) {
         self.type = type
-        super.init()
-        state = .ready
+        super.init()        
     }
     
     // MARK: Operation
     
     override func start() {
-        guard !isCancelled else {
-            return
-        }
+        guard !isCancelled else { return }
         
         state = .executing
         
-        // grab (and parse) the results from fetch operation
-        let fetchOp = dependencies.first as? FetchOperation
-        parsedResponse = fetchOp?.fetchedResponse
-        if let error = fetchOp?.fetchedError {
-            parsedError = error
-        } else if let data = fetchOp?.fetchedData {
-            parse(data: data)
-        } else {
-            print("unexpected operation dependency chain")
-        }
+        if let fetchOp = dependencies.first as? FetchOperation {
+            // capture response and error
+            parsedResponse = fetchOp.fetchedResponse
+            parsedError = fetchOp.fetchedError
+            
+            // decode data from finished fetch operation
+            if let data = fetchOp.fetchedData {
+                parse(data: data)
+            }
+        }        
         
         state = .finished
     }

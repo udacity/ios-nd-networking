@@ -14,10 +14,10 @@ class TMDBAuthViewController: UIViewController {
 
     // MARK: Properties
     
-    var urlRequest: URLRequest? = nil
-    var requestToken: String? = nil
-    var completion: (() -> ())? = nil
-    var error:  ((String) -> ())? = nil
+    var urlRequest: URLRequest?
+    var requestToken: String?
+    var completion: (() -> ())?
+    var error:  ((String) -> ())?
     
     // MARK: Outlets
     

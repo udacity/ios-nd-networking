@@ -8,15 +8,9 @@
 
 import Foundation
 
-// MARK: - TMDBParseOperation<T: Decodable>: ParseOperation
+// MARK: - TMDBParseOperation<T: Decodable>: ParseOperation<T>
 
 class TMDBParseOperation<T: Decodable>: ParseOperation<T> {
-    
-    // MARK: Initialize
-    
-    override init(type: T.Type) {
-        super.init(type: type)
-    }
     
     // MARK: Parse
     

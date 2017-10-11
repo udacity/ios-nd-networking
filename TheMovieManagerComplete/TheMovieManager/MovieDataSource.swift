@@ -42,10 +42,9 @@ class MovieDataSource: NSObject {
         let config = TMDB.shared.config
         
         // get poster image
-        if let posterPath = movie.posterPath, let imageConfig = config?.images, let size = imageConfig.sizeForImageType(.poster(.large)) {
-            let request = TMDBRequest.getImage(size, posterPath)
-            let fetch = FetchOperation(urlComponents: request.components)
-            let parse = ImageParseOperation()
+        if let posterPath = movie.posterPath, let imageConfig = config?.images, let size = imageConfig.sizeForImageType(.poster(.large)), let request = TMDBRequest.getImage(size, posterPath).urlRequest {
+            let fetch = FetchOperation(request: request)
+            let parse = ParseImageOperation()
             parse.addDependency(fetch)
             parse.completionBlock = {
                 self.posterImage = parse.parsedImage
@@ -57,18 +56,23 @@ class MovieDataSource: NSObject {
         }
         
         // get movie state
-        let requestMovieState = TMDBRequest.movieState(movie.id)
-        let fetch = FetchOperation(urlComponents: requestMovieState.components)
-        let parse = TMDBParseOperation(type: MovieState.self)
-        parse.addDependency(fetch)
-        parse.completionBlock = {
-            if let state = parse.parsedResult as? MovieState {
-                self.state = state
+        if let request = TMDBRequest.movieState(movie.id).urlRequest {
+            let fetch = FetchOperation(request: request)
+            let parse = TMDBParseOperation(type: MovieState.self)
+            parse.addDependency(fetch)
+            parse.completionBlock = {
+                if let state = parse.parsedResult as? MovieState {
+                    self.state = state
+                }
             }
+            
+            finish.addDependency(parse)
+            queue.addOperation(fetch)
+            queue.addOperation(parse)
         }
         
+        
         // specify finish behavior
-        finish.addDependency(parse)
         finish.completionBlock = {
             DispatchQueue.main.async {
                 if let _ = self.state, let _ = self.posterImage, finish.dependencies.count == 2 {
@@ -82,8 +86,6 @@ class MovieDataSource: NSObject {
         }
         
         queue.addOperation(finish)
-        queue.addOperation(fetch)
-        queue.addOperation(parse)
     }
     
     // MARK: Post
@@ -105,9 +107,10 @@ class MovieDataSource: NSObject {
     }
     
     private func markMovieWithRequest(_ request: TMDBRequest, value: Bool, completion: @escaping () -> (), error: @escaping (String) -> ()) {
+        // FIXME: should return an error message for all of these
+        guard let urlRequest = request.urlRequest else { return }
         
-        let fetch = FetchOperation(urlComponents: request.components, httpBody: request.httpBody)
-
+        let fetch = FetchOperation(request: urlRequest)
         let parse = TMDBParseOperation(type: Status.self)
         parse.addDependency(fetch)
         parse.completionBlock = {
