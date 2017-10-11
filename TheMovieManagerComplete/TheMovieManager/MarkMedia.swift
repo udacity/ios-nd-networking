@@ -12,17 +12,23 @@ struct MarkMedia: Codable {
     
     // MARK: Properties
     
-    let mediaType: String
-    let mediaID: Int
-    let favorite: Bool?
-    let watchlist: Bool?
+    let type: MediaType
+    let id: Int
+    var favorite: Bool?
+    var watchlist: Bool?
     
     // MARK: Keys
     
     enum CodingKeys: String, CodingKey {
-        case mediaType = "media_type"
-        case mediaID = "media_id"
+        case type = "media_type"
+        case id = "media_id"
         case favorite
         case watchlist
     }
+}
+
+// MARK: - MediaType: String, Codable
+
+enum MediaType: String, Codable {
+    case movie, tv
 }

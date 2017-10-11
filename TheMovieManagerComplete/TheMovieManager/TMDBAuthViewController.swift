@@ -3,7 +3,7 @@
 //  TheMovieManager
 //
 //  Created by Jarrod Parkes on 2/11/15.
-//  Copyright (c) 2015 Jarrod Parkes. All rights reserved.
+//  Copyright © 2015 Jarrod Parkes. All rights reserved.
 //
 
 import UIKit
@@ -16,7 +16,8 @@ class TMDBAuthViewController: UIViewController {
     
     var urlRequest: URLRequest? = nil
     var requestToken: String? = nil
-    var completionHandlerForView: ((_ success: Bool, _ errorString: String?) -> Void)? = nil
+    var completion: (() -> ())? = nil
+    var error:  ((String) -> ())? = nil
     
     // MARK: Outlets
     
@@ -54,17 +55,16 @@ extension TMDBAuthViewController: UIWebViewDelegate {
     
     func webViewDidFinishLoad(_ webView: UIWebView) {
         
+        // FIXME: make a guard statement
         // if user has to login, this will redirect them back to the authorization url
-        if webView.request!.url!.absoluteString.contains(TMDBClient.Constants.AccountURL) {
-            if let urlRequest = urlRequest {
-                webView.loadRequest(urlRequest)
-            }
+        if let urlRequest = urlRequest, webView.request!.url!.absoluteString.contains(TMDB.accountURL) {
+            webView.loadRequest(urlRequest)
         }
         
-        if webView.request!.url!.absoluteString == "\(TMDBClient.Constants.AuthorizationURL)\(requestToken!)/allow" {
+        if webView.request!.url!.absoluteString == "\(TMDB.authorizationURL)\(requestToken!)/allow" {
             
             dismiss(animated: true) {
-                self.completionHandlerForView!(true, nil)
+                self.completion?()
             }
         }
     }

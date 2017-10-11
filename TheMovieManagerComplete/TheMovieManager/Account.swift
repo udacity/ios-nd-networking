@@ -13,7 +13,7 @@ struct Account: Codable {
     // MARK: Properties
     
     let avatar: Avatar
-    let id: String
+    let id: Int
     let languageCode: String
     let countryCode: String
     let name: String
@@ -31,15 +31,22 @@ struct Account: Codable {
         case includeAdult = "include_adult"
         case username
     }
+}
+
+// MARK: - Avatar: Codable
+
+struct Avatar: Codable {
+ 
+    // MARK: Properties
     
-    // MARK: - Avatar: Codable
+    let gravatar: Gravatar
+}
+
+// MARK: - Gravatar: Codable
+
+struct Gravatar: Codable {
     
-    struct Avatar: Codable {
-        
-        let gravatar: Gravatar
-        
-        struct Gravatar: Codable {
-            let hash: String
-        }
-    }
+    // MARK: Properties
+    
+    let hash: String
 }

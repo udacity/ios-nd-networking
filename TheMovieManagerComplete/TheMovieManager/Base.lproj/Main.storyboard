@@ -1,8 +1,11 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="72f-zb-tFC">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="72f-zb-tFC">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -12,7 +15,7 @@
             <objects>
                 <navigationController storyboardIdentifier="ManagerNavigationController" id="kU7-ZA-CTN" userLabel="Manager Navigation" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="tOf-JB-2gq">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -36,6 +39,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="t9i-xb-ieq">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </webView>
                         </subviews>
@@ -58,7 +62,7 @@
         <!--Movie Detail-->
         <scene sceneID="Geg-H8-Vtp">
             <objects>
-                <viewController storyboardIdentifier="MovieDetailViewController" id="ZVa-CJ-SjC" userLabel="Movie Detail" customClass="MovieDetailViewController" customModule="TheMovieManager" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MovieDetailViewController" id="ZVa-CJ-SjC" userLabel="Movie Detail" customClass="MovieViewController" customModule="TheMovieManager" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="pqN-bU-5MP"/>
                         <viewControllerLayoutGuide type="bottom" id="n2O-so-rG9"/>
@@ -67,7 +71,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="d3z-LX-ckt">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MissingPoster" translatesAutoresizingMaskIntoConstraints="NO" id="d3z-LX-ckt">
+                                <rect key="frame" x="0.0" y="20" width="375" height="603"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="556" id="6pv-j8-krM"/>
                                 </constraints>
@@ -78,6 +83,7 @@
                                 </variation>
                             </imageView>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6VR-33-08e">
+                                <rect key="frame" x="0.0" y="623" width="375" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="rKr-OC-Snd"/>
                                 </constraints>
@@ -85,18 +91,20 @@
                                     <barButtonItem image="Favorite" style="plain" id="afS-qH-AhS" userLabel="Toggle Favorite">
                                         <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <connections>
-                                            <action selector="toggleFavorite:" destination="ZVa-CJ-SjC" id="wce-NO-HW8"/>
+                                            <action selector="mark:" destination="ZVa-CJ-SjC" id="48S-qG-iZ1"/>
                                         </connections>
                                     </barButtonItem>
-                                    <barButtonItem image="List" style="plain" id="0UD-zu-Qep" userLabel="Toggle Watchlist">
+                                    <barButtonItem tag="1" image="List" style="plain" id="0UD-zu-Qep" userLabel="Toggle Watchlist">
                                         <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <connections>
-                                            <action selector="toggleWatchlist:" destination="ZVa-CJ-SjC" id="O2h-Gg-dZy"/>
+                                            <action selector="mark:" destination="ZVa-CJ-SjC" id="c8G-ek-4i8"/>
                                         </connections>
                                     </barButtonItem>
                                 </items>
                             </toolbar>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="2Vf-UK-Evl"/>
+                            <activityIndicatorView opaque="NO" alpha="0.0" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="2Vf-UK-Evl">
+                                <rect key="frame" x="177.5" y="311.5" width="20" height="20"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -127,23 +135,24 @@
         <!--Watchlist-->
         <scene sceneID="tKN-ki-6Gu">
             <objects>
-                <viewController automaticallyAdjustsScrollViewInsets="NO" id="Tb6-sk-v10" userLabel="Watchlist" customClass="WatchlistViewController" customModule="TheMovieManager" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="Tb6-sk-v10" userLabel="Watchlist" customClass="MoviesViewController" customModule="TheMovieManager" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="qNB-dz-lSk"/>
                         <viewControllerLayoutGuide type="bottom" id="frY-Ma-0oY"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="LWu-V5-2xV">
+                    <view key="view" tag="1" contentMode="scaleToFill" id="LWu-V5-2xV">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="1" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="nlH-w1-wIP">
+                                <rect key="frame" x="0.0" y="64" width="375" height="554"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="WatchlistTableViewCell" id="8bL-ip-8xb">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="MovieTableViewCell" id="8bL-ip-8xb">
                                         <rect key="frame" x="0.0" y="1" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="8bL-ip-8xb" id="Tw3-hP-hF3">
-                                            <frame key="frameInset" width="375" height="43"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -174,7 +183,7 @@
         <!--Favorites-->
         <scene sceneID="WkE-iS-JbY">
             <objects>
-                <viewController automaticallyAdjustsScrollViewInsets="NO" id="nyU-rg-wox" customClass="FavoritesViewController" customModule="TheMovieManager" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="nyU-rg-wox" customClass="MoviesViewController" customModule="TheMovieManager" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="LCC-j3-O1k"/>
                         <viewControllerLayoutGuide type="bottom" id="kcV-Tp-oSj"/>
@@ -184,13 +193,14 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="1" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="uYu-ek-mHH">
+                                <rect key="frame" x="0.0" y="64" width="375" height="554"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="FavoriteTableViewCell" id="0P4-Bz-ncf">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="MovieTableViewCell" id="0P4-Bz-ncf">
                                         <rect key="frame" x="0.0" y="1" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="0P4-Bz-ncf" id="hh2-rb-Thj">
-                                            <frame key="frameInset" width="375" height="43"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -239,10 +249,10 @@
             </objects>
             <point key="canvasLocation" x="1634" y="475"/>
         </scene>
-        <!--Movie Picker-->
+        <!--Movie Search-->
         <scene sceneID="ef8-sV-IQ7">
             <objects>
-                <viewController automaticallyAdjustsScrollViewInsets="NO" id="JCr-W7-R9O" userLabel="Movie Picker" customClass="MoviePickerViewController" customModule="TheMovieManager" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="JCr-W7-R9O" userLabel="Movie Search" customClass="MovieSearchViewController" customModule="TheMovieManager" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="nXG-ab-qmZ"/>
                         <viewControllerLayoutGuide type="bottom" id="Lfj-rp-eCm"/>
@@ -252,19 +262,21 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="OV1-u7-N3U">
+                                <rect key="frame" x="0.0" y="64" width="375" height="56"/>
                                 <textInputTraits key="textInputTraits"/>
                                 <connections>
                                     <outlet property="delegate" destination="JCr-W7-R9O" id="c47-8h-t7V"/>
                                 </connections>
                             </searchBar>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="OJJ-hL-Fmw">
+                                <rect key="frame" x="0.0" y="120" width="375" height="498"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="MovieSearchCell" id="VAa-UV-18v">
                                         <rect key="frame" x="0.0" y="22" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="VAa-UV-18v" id="xrP-g2-xSe">
-                                            <frame key="frameInset" width="375" height="43"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -288,8 +300,8 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="Movies" image="Genre" id="jkb-3U-uCD"/>
                     <connections>
-                        <outlet property="movieSearchBar" destination="OV1-u7-N3U" id="Uoe-2a-WbK"/>
-                        <outlet property="movieTableView" destination="OJJ-hL-Fmw" id="s1v-zX-Odn"/>
+                        <outlet property="moviesSearchBar" destination="OV1-u7-N3U" id="TCJ-7f-AmH"/>
+                        <outlet property="moviesTableView" destination="OJJ-hL-Fmw" id="qmn-dI-J8y"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mfn-mq-dkd" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -309,13 +321,16 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Qpz-rr-ekX">
+                                <rect key="frame" x="16" y="55" width="343" height="594"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Camera" translatesAutoresizingMaskIntoConstraints="NO" id="SgR-8a-OFB">
+                                        <rect key="frame" x="0.0" y="0.0" width="343" height="100"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="100" id="Fyy-fD-6ZT"/>
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="248" text="The Movie Manager" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fqC-Zd-KDg">
+                                        <rect key="frame" x="0.0" y="110" width="343" height="40"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="a6V-o4-Ynj"/>
                                         </constraints>
@@ -324,6 +339,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PGO-lE-WFI" customClass="BorderedButton" customModule="TheMovieManager" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="160" width="343" height="44"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="44" id="1ZV-L9-WJK"/>
                                         </constraints>
@@ -331,14 +347,12 @@
                                             <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                         <connections>
-                                            <action selector="loginPressed:" destination="72f-zb-tFC" eventType="touchUpInside" id="V0h-Am-6k2"/>
+                                            <action selector="login:" destination="72f-zb-tFC" eventType="touchUpInside" id="Ctg-n8-XI1"/>
                                         </connections>
                                     </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Np-P3-PqF">
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ghS-sj-SxP">
+                                        <rect key="frame" x="0.0" y="214" width="343" height="380"/>
+                                    </view>
                                 </subviews>
                             </stackView>
                         </subviews>
@@ -355,7 +369,6 @@
                         </connections>
                     </view>
                     <connections>
-                        <outlet property="debugTextLabel" destination="1Np-P3-PqF" id="o6s-Ix-2ud"/>
                         <outlet property="loginButton" destination="PGO-lE-WFI" id="cde-06-1ax"/>
                     </connections>
                 </viewController>
@@ -370,5 +383,6 @@
         <image name="Favorite" width="32" height="32"/>
         <image name="Genre" width="30" height="30"/>
         <image name="List" width="32" height="32"/>
+        <image name="MissingPoster" width="256" height="256"/>
     </resources>
 </document>

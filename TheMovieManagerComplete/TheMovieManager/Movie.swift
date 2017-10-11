@@ -16,7 +16,6 @@ struct Movie: Codable {
     let genres: [Int]
     let hasVideo: Bool
     let id: Int
-    let isAdultFilm: Bool
     let originalLanguage: String
     let originalTitle: String
     let overview: String
@@ -26,10 +25,9 @@ struct Movie: Codable {
     let title: String
     let voteAverage: Double
     let voteCount: Int
-    
-    var releaseYear: String {
-        return String(releaseDate.prefix(4))
-    }
+
+    var releaseYear: String { return String(releaseDate.prefix(4)) }
+    var detailedTitle: String { return "\(title) (\(releaseYear))" }
     
     // MARK: Keys
     
@@ -38,7 +36,6 @@ struct Movie: Codable {
         case genres = "genre_ids"
         case hasVideo = "video"
         case id
-        case isAdultFilm = "adult"
         case originalLanguage = "original_language"
         case originalTitle = "original_title"
         case overview
@@ -49,12 +46,4 @@ struct Movie: Codable {
         case voteAverage = "vote_average"
         case voteCount = "vote_count"
     }
-}
-
-// MARK: - Movie: Equatable
-
-extension Movie: Equatable {}
-
-func ==(lhs: Movie, rhs: Movie) -> Bool {
-    return lhs.id == rhs.id
 }

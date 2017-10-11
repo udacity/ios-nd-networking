@@ -1,29 +1,29 @@
 //
-//  FlickrParseOperation.swift
-//  FlickFinder
+//  ParseOperation.swift
+//  TheMovieManager
 //
 //  Created by Jarrod Parkes on 10/3/17.
 //  Copyright © 2017 Udacity. All rights reserved.
 //
 
-import UIKit
 import Foundation
 
-// MARK: - FlickrParseOperation: BaseOperation
+// MARK: - ParseOperation<T: Decodable>: BaseOperation
 
-class FlickrParseOperation: BaseOperation {
+class ParseOperation<T: Decodable>: BaseOperation {
     
     // MARK: Properties
     
     var parsedResult: AnyObject?
+    var parsedResponse: URLResponse?
     var parsedError: Error?
     
-    let searchType: SearchType
+    let type: T.Type
     
     // MARK: Initialize
     
-    init(searchType: SearchType) {
-        self.searchType = searchType
+    init(type: T.Type) {
+        self.type = type
         super.init()
         state = .ready
     }
@@ -31,9 +31,15 @@ class FlickrParseOperation: BaseOperation {
     // MARK: Operation
     
     override func start() {
+        guard !isCancelled else {
+            return
+        }
+        
         state = .executing
         
-        let fetchOp = dependencies.first as? FlickrFetchOperation
+        // grab (and parse) the results from fetch operation
+        let fetchOp = dependencies.first as? FetchOperation
+        parsedResponse = fetchOp?.fetchedResponse
         if let error = fetchOp?.fetchedError {
             parsedError = error
         } else if let data = fetchOp?.fetchedData {
@@ -50,11 +56,8 @@ class FlickrParseOperation: BaseOperation {
     func parse(data: Data) {
         do {
             let decoder = JSONDecoder()
-            switch searchType {
-            case .location(_, _), .phrase(_):            
-                let result = try decoder.decode(PhotoResponse.self, from: data)
-                parsedResult = result as AnyObject
-            }
+            let result = try decoder.decode(type, from: data)
+            parsedResult = result as AnyObject
         } catch let error {
             parsedError = error
         }

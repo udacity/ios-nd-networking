@@ -1,6 +1,6 @@
 //
 //  BaseOperation.swift
-//  FlickFinder
+//  TheMovieManager
 //
 //  Created by Jarrod Parkes on 10/3/17.
 //  Copyright © 2017 Udacity. All rights reserved.
@@ -14,7 +14,7 @@ class BaseOperation: Operation {
     
     // MARK: Properties
     
-    var state = OperationState.pending {
+    var state = OperationState.ready {
         willSet {
             willChangeValue(forKey: newValue.keyPath())
             willChangeValue(forKey: state.keyPath())
