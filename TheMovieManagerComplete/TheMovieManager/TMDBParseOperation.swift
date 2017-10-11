@@ -12,6 +12,18 @@ import Foundation
 
 class TMDBParseOperation<T: Decodable>: ParseOperation<T> {
     
+    // MARK: Properties
+    
+    var errorString: String {
+        if let errorResults = parsedResult as? ErrorResults {
+            return "\(errorResults)"
+        } else if let status = parsedResult as? Status {
+            return "\(status)"
+        } else {
+            return "\(parsedError?.localizedDescription ?? "")"
+        }
+    }
+    
     // MARK: Parse
     
     override func parse(data: Data) {

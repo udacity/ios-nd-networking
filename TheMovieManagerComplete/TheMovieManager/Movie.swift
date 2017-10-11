@@ -9,7 +9,7 @@
 // MARK: - Movie: Codable
 
 struct Movie: Codable {
-
+    
     // MARK: Properties
     
     let backdropPath: String?

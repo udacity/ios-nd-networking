@@ -9,13 +9,6 @@
 import UIKit
 import Foundation
 
-// FIXME: move somewhere else? (same place as HTTPMethod)
-// FIXME: rename the load method to make sense
-
-enum ListType {
-    case favorite, watchlist
-}
-
 // MARK: - MovieDataSource: NSObject
 
 class MovieDataSource: NSObject {
@@ -36,7 +29,7 @@ class MovieDataSource: NSObject {
     
     // MARK: Load
     
-    func load(completion: @escaping () -> (), error: @escaping (String) -> ()) {
+    func loadData(completion: @escaping () -> (), error: @escaping (String) -> ()) {
         let queue = OperationQueue()
         let finish = Operation()
         let config = TMDB.shared.config
@@ -70,8 +63,7 @@ class MovieDataSource: NSObject {
             queue.addOperation(fetch)
             queue.addOperation(parse)
         }
-        
-        
+                
         // specify finish behavior
         finish.completionBlock = {
             DispatchQueue.main.async {
@@ -80,7 +72,7 @@ class MovieDataSource: NSObject {
                 } else if let _ = self.state {
                     completion()
                 } else {
-                    error("didn't work")
+                    error("could not load data")
                 }
             }
         }
@@ -107,8 +99,10 @@ class MovieDataSource: NSObject {
     }
     
     private func markMovieWithRequest(_ request: TMDBRequest, value: Bool, completion: @escaping () -> (), error: @escaping (String) -> ()) {
-        // FIXME: should return an error message for all of these
-        guard let urlRequest = request.urlRequest else { return }
+        guard let urlRequest = request.urlRequest else {
+            error("could not create request")
+            return
+        }
         
         let fetch = FetchOperation(request: urlRequest)
         let parse = TMDBParseOperation(type: Status.self)
@@ -128,10 +122,10 @@ class MovieDataSource: NSObject {
                         }
                         completion()
                     } else {
-                        error("unexpected status code: \(statusCode)")
+                        error("unexpected status code \(statusCode)")
                     }
                 } else {
-                    TMDB.shared.handle(parse.parsedResult, parsedError: parse.parsedError, error: error)
+                    error(parse.errorString)
                 }
             }
         }
@@ -140,4 +134,10 @@ class MovieDataSource: NSObject {
         queue.addOperation(fetch)
         queue.addOperation(parse)
     }
+}
+
+// MARK: - ListType
+
+enum ListType {
+    case favorite, watchlist
 }

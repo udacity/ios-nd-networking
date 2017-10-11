@@ -54,15 +54,18 @@ class TMDBAuthViewController: UIViewController {
 extension TMDBAuthViewController: UIWebViewDelegate {
     
     func webViewDidFinishLoad(_ webView: UIWebView) {
+        guard let urlString = webView.request?.url?.absoluteString else { return }
         
-        // FIXME: make a guard statement
-        // if user has to login, this will redirect them back to the authorization url
-        if let urlRequest = urlRequest, webView.request!.url!.absoluteString.contains(TMDB.accountURL) {
-            webView.loadRequest(urlRequest)
+        // redirect url if it isn't an account url
+        guard !urlString.contains(TMDB.accountURL) else {
+            if let urlRequest = urlRequest {
+                webView.loadRequest(urlRequest)
+            }
+            return
         }
         
-        if webView.request!.url!.absoluteString == "\(TMDB.authorizationURL)\(requestToken!)/allow" {
-            
+        // user has authorized the token
+        if urlString == "\(TMDB.authorizationURL)\(requestToken!)/allow" {
             dismiss(animated: true) {
                 self.completion?()
             }

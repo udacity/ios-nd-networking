@@ -37,6 +37,13 @@ class TMDB {
     var config: Config?
     let queue = OperationQueue()
     
+    // FIXME: simplify requests
+    
+    private func makeRequest<T: Decodable>(request: TMDBRequest, type: T.Type, completion: (() -> (Void))?) {
+        // create the operations
+        // add them to a centralized queue...
+    }
+    
     // MARK: Login
     
     func loginWithHostViewController(_ hostViewController: UIViewController, completion: @escaping () -> (), error: @escaping (String) -> ()) {
@@ -45,7 +52,10 @@ class TMDB {
     }
     
     private func createRequestToken(_ hostViewController: UIViewController, completion: @escaping () -> (), error: @escaping (String) -> ()) {
-        guard let request = TMDBRequest.createToken.urlRequest else { return }
+        guard let request = TMDBRequest.createToken.urlRequest else {
+            error("could not create request")
+            return
+        }
         
         let fetch = FetchOperation(request: request)
         let parse = TMDBParseOperation(type: RequestToken.self)
@@ -60,7 +70,7 @@ class TMDB {
                     })
                 }
             } else {
-                self.handle(parse.parsedResult, parsedError: parse.parsedError, error: error)
+                error(parse.errorString)
             }
         }
         
@@ -68,15 +78,11 @@ class TMDB {
         queue.addOperation(parse)
     }
     
-    // FIXME: simplify requests
-    
-    private func makeRequest<T: Decodable>(request: TMDBRequest, type: T.Type, completion: (() -> (Void))?) {
-        // create the operations
-        // add them to the queue...                
-    }
-    
     private func createSessionID(withToken token: String, completion: @escaping () -> (), error: @escaping (String) -> ()) {
-        guard let request = TMDBRequest.createSession(token).urlRequest else { return }
+        guard let request = TMDBRequest.createSession(token).urlRequest else {
+            error("could not create request")
+            return
+        }
         
         let fetch = FetchOperation(request: request)
         let parse = TMDBParseOperation(type: SessionID.self)
@@ -87,7 +93,7 @@ class TMDB {
                     self.sessionID = sessionID.id
                     self.getAccount(completion: completion, error: error)
                 } else {
-                    self.handle(parse.parsedResult, parsedError: parse.parsedError, error: error)
+                    error(parse.errorString)
                 }
             }            
         }
@@ -97,7 +103,10 @@ class TMDB {
     }
     
     private func getAccount(completion: @escaping () -> (), error: @escaping (String) -> ()) {
-        guard let request = TMDBRequest.getAccount.urlRequest else { return }
+        guard let request = TMDBRequest.getAccount.urlRequest else {
+            error("could not create request")
+            return
+        }
         
         let fetch = FetchOperation(request: request)
         let parse = TMDBParseOperation(type: Account.self)
@@ -108,7 +117,7 @@ class TMDB {
                     self.account = account
                     completion()
                 } else {
-                    self.handle(parse.parsedResult, parsedError: parse.parsedError, error: error)
+                    error(parse.errorString)
                 }
             }
         }
@@ -145,8 +154,6 @@ class TMDB {
         parse.completionBlock = {
             if let config = parse.parsedResult as? Config {
                 self.config = config
-            } else {
-                self.handle(parse.parsedResult, parsedError: parse.parsedError, error: nil)
             }
         }
         
@@ -156,7 +163,7 @@ class TMDB {
     
     // MARK: Images
     
-    func getImageOfType(_ type: ImageType, path: String, completion: @escaping (UIImage) -> (), error: @escaping (String) -> ()) {
+    func getImageOfType(_ type: ImageType, path: String, completion: @escaping (UIImage) -> ()) {
         if let size = config?.images.sizeForImageType(type), let request = TMDBRequest.getImage(size, path).urlRequest {
             let fetch = FetchOperation(request: request)
             let parse = ParseImageOperation()
@@ -165,30 +172,12 @@ class TMDB {
                 DispatchQueue.main.async {
                     if let parsedImage = parse.parsedImage {
                         completion(parsedImage)
-                    } else {
-                        error("cannot parse image data \(parse.parsedError?.localizedDescription ?? "")")
                     }
                 }
             }
             
             queue.addOperation(fetch)
             queue.addOperation(parse)
-        } else {
-            // FIXME: change naming of error
-            error("could get imageTypePath")
-        }
-    }
-    
-    // MARK: Error Handling
-    
-    // FIXME: rename this
-    func handle(_ parsedObject: AnyObject?, parsedError: Error?, error: ((String) -> Void)?) {
-        if let errorResults = parsedObject as? ErrorResults {
-            error?("\(errorResults)")
-        } else if let status = parsedObject as? Status {
-            error?("\(status)")
-        } else {
-            error?("could not retrieve data \(parsedError?.localizedDescription ?? "")")
         }
     }
         

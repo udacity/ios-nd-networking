@@ -38,7 +38,7 @@ class MovieViewController: UIViewController {
         
         // load movie state and image
         setActivityIndicatorEnabled(true)
-        movieDataSource.load(completion: {
+        movieDataSource.loadData(completion: {
             self.setUIEnabled(true)
             self.setActivityIndicatorEnabled(false)
         }, error: { (errorString) in

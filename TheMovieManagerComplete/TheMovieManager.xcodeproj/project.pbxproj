@@ -179,6 +179,7 @@
 				A9855BDB1BEC4DEB00000031 /* MovieSearchViewController.swift */,
 				A9855BD91BEC4DEB00000031 /* MoviesViewController.swift */,
 				A9855BDA1BEC4DEB00000031 /* MovieViewController.swift */,
+				A9855BCA1BEC41A800000031 /* TMDBAuthViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -196,8 +197,6 @@
 			children = (
 				A99306BC1F87AD2E00BB7680 /* TMDB.swift */,
 				A939B17F1F8BAD5D00291CDA /* TMDBRequest.swift */,
-				A9590C631F88289C00980854 /* TMDBParseOperation.swift */,
-				A9855BCA1BEC41A800000031 /* TMDBAuthViewController.swift */,
 			);
 			name = API;
 			sourceTree = "<group>";
@@ -210,6 +209,7 @@
 				A9590C5B1F87EF5400980854 /* FetchOperation.swift */,
 				A93296601F87C04800D6C6C6 /* ParseOperation.swift */,
 				A97DE19C1F8D3CAC00DA5E31 /* ParseImageOperation.swift */,
+				A9590C631F88289C00980854 /* TMDBParseOperation.swift */,
 			);
 			name = Operations;
 			sourceTree = "<group>";

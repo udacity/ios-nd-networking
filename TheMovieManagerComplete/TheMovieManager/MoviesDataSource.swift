@@ -35,22 +35,23 @@ class MoviesDataSource: NSObject {
     func loadDataWithRequest(_ request: TMDBRequest, completion: @escaping () -> (), error: @escaping (String) -> ()) -> OperationQueue {
         let queue = OperationQueue()
         
-        guard let urlRequest = request.urlRequest else { return queue }
+        guard let urlRequest = request.urlRequest else {
+            error("could not create request")
+            return queue
+        }
         
         let fetch = FetchOperation(request: urlRequest)
         let parse = TMDBParseOperation(type: MovieResults.self)
         parse.addDependency(fetch)
         parse.completionBlock = {            
-            guard !parse.isCancelled else {
-                return
-            }
+            guard !parse.isCancelled else { return }
             
             DispatchQueue.main.async {
                 if let movieResults = parse.parsedResult as? MovieResults {
                     self.movies = movieResults.movies
                     completion()
                 } else {
-                    TMDB.shared.handle(parse.parsedResult, parsedError: parse.parsedError, error: error)
+                    error(parse.errorString)
                 }
             }
         }
@@ -85,15 +86,12 @@ extension MoviesDataSource: UITableViewDataSource {
             cell.imageView!.contentMode = UIViewContentMode.scaleAspectFit
             
             if let posterPath = movie.posterPath {
-                TMDB.shared.getImageOfType(.poster(.small), path: posterPath, completion: { (image) in
+                TMDB.shared.getImageOfType(.poster(.small), path: posterPath) { (image) in
                     cell.imageView!.image = image
-                }, error: { (errorString) in
-                    return
-                })
+                }
             }
 
             return cell
         }
     }        
 }
-
