@@ -39,7 +39,7 @@ class MoviesViewController: UIViewController {
         super.viewWillAppear(animated)
         
         // load movies
-        moviesDataSource.fetchListWithRequest(loadRequest)
+        moviesDataSource.fetchList(withRequest: loadRequest)
     }
     
     // MARK: Actions
@@ -57,7 +57,7 @@ extension MoviesViewController: MoviesDataSourceDelegate {
     }
     
     func moviesDataSource(_ moviesDataSource: MoviesDataSource, didFailWithError error: Error) {
-        presentAlertForError(error, dismiss: nil)
+        presentAlert(forError: error, dismiss: nil)
     }
 }
 

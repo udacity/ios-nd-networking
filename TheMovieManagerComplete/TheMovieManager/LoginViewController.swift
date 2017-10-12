@@ -33,10 +33,10 @@ class LoginViewController: UIViewController {
     @IBAction func login(_ sender: AnyObject) {
         setUIEnabled(false)
         
-        TMDB.shared.loginWithHostViewController(self, completion: {
+        TMDB.shared.login(withHostViewController: self, completion: {
             self.completeLogin()
         }, error: { (error) in
-            self.presentAlertForError(error) { alert in
+            self.presentAlert(forError: error) { alert in
                 self.setUIEnabled(true)
             }
         })

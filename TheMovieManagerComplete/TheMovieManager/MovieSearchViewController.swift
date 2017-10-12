@@ -69,7 +69,7 @@ extension MovieSearchViewController: UISearchBarDelegate {
         moviesDataSource.cancelSearch()
         
         // start new search
-        moviesDataSource.fetchListWithRequest(.searchMovies(query: searchText))
+        moviesDataSource.fetchList(withRequest: .searchMovies(query: searchText))
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
@@ -85,7 +85,7 @@ extension MovieSearchViewController: MoviesDataSourceDelegate {
     }
     
     func moviesDataSource(_ moviesDataSource: MoviesDataSource, didFailWithError error: Error) {
-        presentAlertForError(error, dismiss: nil)
+        presentAlert(forError: error, dismiss: nil)
     }
 }
 

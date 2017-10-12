@@ -46,15 +46,15 @@ class TMDB {
             
     // MARK: Login
     
-    func loginWithHostViewController(_ hostViewController: UIViewController, completion: @escaping () -> (), error: @escaping (Error) -> ()) {
+    func login(withHostViewController hostViewController: UIViewController, completion: @escaping () -> (), error: @escaping (Error) -> ()) {
         // get configuration (needed for image paths)
         getConfig()
         
         // start authentication flow
-        createRequestToken(hostViewController, completion: completion, error: error)
+        createRequestToken(withHostViewController: hostViewController, completion: completion, error: error)
     }
     
-    func makeRequest<T>(request: TMDBRequest, type: T.Type, completion: ((TMDBParseOperation<T>) -> (Void))?) {
+    func makeRequest<T>(_ request: TMDBRequest, type: T.Type, completion: ((TMDBParseOperation<T>) -> (Void))?) {
         guard let urlRequest = request.urlRequest else {
             return
         }
@@ -78,10 +78,10 @@ class TMDB {
         }
     }
             
-    private func createRequestToken(_ hostViewController: UIViewController, completion: @escaping () -> (), error: @escaping (Error) -> ()) {
-        makeRequest(request: .createToken, type: RequestToken.self) { (parse) in
+    private func createRequestToken(withHostViewController: UIViewController, completion: @escaping () -> (), error: @escaping (Error) -> ()) {
+        makeRequest(.createToken, type: RequestToken.self) { (parse) in
             if let requestToken = parse.parsedResult as? RequestToken {
-                self.authorizeToken(requestToken.token, hostViewController: hostViewController, completion: {
+                self.authorizeToken(requestToken.token, hostViewController: withHostViewController, completion: {
                     self.createSessionID(withToken: requestToken.token, completion: completion, error: error)
                 }, error: { (errorString) in
                     error(errorString)
@@ -93,7 +93,7 @@ class TMDB {
     }
     
     private func createSessionID(withToken token: String, completion: @escaping () -> (), error: @escaping (Error) -> ()) {
-        makeRequest(request: .createSession(token: token), type: SessionID.self) { (parse) in
+        makeRequest(.createSession(token: token), type: SessionID.self) { (parse) in
             if let sessionID = parse.parsedResult as? SessionID {
                 self.sessionID = sessionID.id
                 self.getAccount(completion: completion, error: error)
@@ -104,7 +104,7 @@ class TMDB {
     }
     
     private func getAccount(completion: @escaping () -> (), error: @escaping (Error) -> ()) {
-        makeRequest(request: .getAccount, type: Account.self) { (parse) in
+        makeRequest(.getAccount, type: Account.self) { (parse) in
             if let account = parse.parsedResult as? Account {
                 self.account = account
                 completion()
@@ -136,7 +136,7 @@ class TMDB {
     // MARK: Config
     
     func getConfig() {
-        makeRequest(request: .getConfig, type: Config.self) { (parse) in
+        makeRequest(.getConfig, type: Config.self) { (parse) in
             if let config = parse.parsedResult as? Config {
                 self.config = config
             }
@@ -145,12 +145,12 @@ class TMDB {
     
     // MARK: Images
     
-    func getImageOfType(_ type: ImageType, path: String, completion: @escaping (UIImage?) -> ()) {
-        guard let size = config?.images.sizeForImageType(type), let request = TMDBRequest.getImage(size: size, path: path).urlRequest, let url = request.url else {
+    func getImage(ofType type: ImageType, path: String, completion: @escaping (UIImage?) -> ()) {
+        guard let size = config?.images.size(forImageType: type), let request = TMDBRequest.getImage(size: size, path: path).urlRequest, let url = request.url else {
             return
         }
         
-        ImageCache.shared.loadImageWithURL(url) { (image) in
+        ImageCache.shared.loadImage(withURL: url) { (image) in
             completion(image)
         }
     }

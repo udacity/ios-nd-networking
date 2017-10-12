@@ -40,8 +40,8 @@ class MoviesDataSource: NSObject {
     
     // MARK: Get
     
-    func fetchListWithRequest(_ request: TMDBRequest) {        
-        TMDB.shared.makeRequest(request: request, type: MovieResults.self) { (parse) in
+    func fetchList(withRequest request: TMDBRequest) {        
+        TMDB.shared.makeRequest(request, type: MovieResults.self) { (parse) in
             guard !parse.isCancelled else { return }
             
             if let movieResults = parse.parsedResult as? MovieResults {
@@ -84,7 +84,7 @@ extension MoviesDataSource: UITableViewDataSource {
             cell.imageView?.contentMode = UIViewContentMode.scaleAspectFit
             
             if let posterPath = movie.posterPath {
-                TMDB.shared.getImageOfType(.poster(size: .small), path: posterPath) { (image) in
+                TMDB.shared.getImage(ofType: .poster(size: .small), path: posterPath) { (image) in
                     cell.imageView?.image = image
                 }
             }

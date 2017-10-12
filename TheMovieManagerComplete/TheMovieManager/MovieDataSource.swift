@@ -44,7 +44,7 @@ class MovieDataSource: NSObject {
     // MARK: Get
     
     func fetchState() {
-        TMDB.shared.makeRequest(request: .movieState(id: movie.id), type: MovieState.self) { (parse) in
+        TMDB.shared.makeRequest(.movieState(id: movie.id), type: MovieState.self) { (parse) in
             if let state = parse.parsedResult as? MovieState {
                 self.state = state
                 self.delegate?.movieDataSourceDidFetchMovieState(movieDataSource: self)
@@ -56,7 +56,7 @@ class MovieDataSource: NSObject {
     
     func fetchPoster() {
         if let posterPath = movie.posterPath {
-            TMDB.shared.getImageOfType(.poster(size: .large), path: posterPath, completion: { (image) in
+            TMDB.shared.getImage(ofType: .poster(size: .large), path: posterPath, completion: { (image) in
                 self.posterImage = image
                 self.delegate?.movieDataSourceDidFetchPoster(movieDataSource: self)
             })
@@ -65,7 +65,7 @@ class MovieDataSource: NSObject {
     
     // MARK: Post
     
-    func markMovieForList(_ listType: ListType, toValue value: Bool) {
+    func markMovie(forListType listType: ListType, value: Bool) {
         var markMedia = MarkMedia(type: .movie, id: movie.id, favorite: nil, watchlist: nil)
         let request: TMDBRequest?
         
@@ -79,12 +79,12 @@ class MovieDataSource: NSObject {
         }
         
         if let request = request {
-            markMovieWithRequest(request, value: value)
+            markMovie(withRequest: request, value: value)
         }
     }
     
-    func markMovieWithRequest(_ request: TMDBRequest, value: Bool) {
-        TMDB.shared.makeRequest(request: request, type: Status.self) { (parse) in
+    private func markMovie(withRequest request: TMDBRequest, value: Bool) {
+        TMDB.shared.makeRequest(request, type: Status.self) { (parse) in
             if let status = parse.parsedResult as? Status {
                 let statusCode = status.code
                 if statusCode == 1 || statusCode == 12 || statusCode == 13 {

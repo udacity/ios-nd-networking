@@ -52,16 +52,16 @@ class MovieViewController: UIViewController {
         guard let tag = sender.tag else { return }
         
         // prepare values
-        let listValue = valueForTag(tag)
-        let listType = listTypeForTag(tag)
+        let newValue = value(forTag: tag)
+        let type = listType(forTag: tag)
         
         // mark movie
-        movieDataSource.markMovieForList(listType, toValue: listValue)
+        movieDataSource.markMovie(forListType: type, value: newValue)
     }
     
     // MARK: Helpers
     
-    private func valueForTag(_ tag: Int) -> Bool {
+    private func value(forTag tag: Int) -> Bool {
         guard let state = movieDataSource.state else {
             return false
         }
@@ -69,7 +69,7 @@ class MovieViewController: UIViewController {
         return tag == 0 ? !state.isFavorite : !state.isWatchlist
     }
 
-    private func listTypeForTag(_ tag: Int) -> ListType {
+    private func listType(forTag tag: Int) -> ListType {
         return tag == 0 ? .favorite : .watchlist
     }
 }
@@ -107,7 +107,7 @@ extension MovieViewController: MovieDataSourceDelegate {
     
     func movieDataSource(_ movieDataSource: MovieDataSource, didFailWithError error: Error) {
         setActivityIndicatorEnabled(false)
-        presentAlertForError(error, dismiss: nil)
+        presentAlert(forError: error, dismiss: nil)
     }
 }
 

@@ -26,7 +26,7 @@ class TMDBParseOperation<T: Decodable>: ParseOperation<T> {
     
     // MARK: Parse
     
-    override func parse(data: Data) {
+    override func parseData(_ data: Data) {
         do {
             let decoder = JSONDecoder()            
             if let parsedResponse = parsedResponse as? HTTPURLResponse {

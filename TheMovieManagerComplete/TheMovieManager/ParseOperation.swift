@@ -40,7 +40,7 @@ class ParseOperation<T: Decodable>: BaseOperation {
             
             // decode data from finished fetch operation
             if let data = fetchOp.fetchedData {
-                parse(data: data)
+                parseData(data)
             }
         }        
         
@@ -49,7 +49,7 @@ class ParseOperation<T: Decodable>: BaseOperation {
     
     // MARK: Parse
     
-    func parse(data: Data) {
+    func parseData(_ data: Data) {
         do {
             let decoder = JSONDecoder()
             let result = try decoder.decode(type, from: data)

@@ -17,7 +17,7 @@ class ImageCache {
     
     // MARK: Load Image
     
-    func loadImageWithURL(_ url: URL, completion: @escaping (UIImage?) -> ()) {
+    func loadImage(withURL url: URL, completion: @escaping (UIImage?) -> ()) {
         guard let path = url.relativePath.removingPercentEncoding else {
             completion(nil)
             return

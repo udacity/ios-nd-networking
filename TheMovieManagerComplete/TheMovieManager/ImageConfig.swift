@@ -34,7 +34,7 @@ struct ImageConfig: Codable {
     
     // MARK: Size
     
-    func sizeForImageType(_ imageType: ImageType) -> String? {
+    func size(forImageType imageType: ImageType) -> String? {
         switch imageType {
         case .backdrop(let type):
             return backdropSizes[type.rawValue]
