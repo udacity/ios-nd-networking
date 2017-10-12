@@ -14,7 +14,7 @@ class MovieViewController: UIViewController {
     
     // MARK: Properties
     
-    var movieDataSource: MovieDataSourceX!
+    var movieDataSource: MovieDataSource!
     
     // MARK: Outlets
     
@@ -27,7 +27,9 @@ class MovieViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         navigationController?.navigationBar.isTranslucent = false
+        movieDataSource.delegate = self
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -36,21 +38,12 @@ class MovieViewController: UIViewController {
         let movie = movieDataSource.movie
         navigationItem.title = movie.detailedTitle
         
-        // load movie state
-        movieDataSource.loadData(completion: {
-            self.setUIEnabled(true)
-            self.setActivityIndicatorEnabled(false)
-        }, error: { (error) in
-            self.setUIEnabled(false)
-            self.presentAlertForError(error, dismiss: nil)
-        })
+        // load state
+        movieDataSource.fetchState()
         
-        // load poster
+        // load post
         setActivityIndicatorEnabled(true)
-        movieDataSource.loadPoster {
-            self.setActivityIndicatorEnabled(false)
-            self.posterImageView.image = self.movieDataSource.posterImage
-        }
+        movieDataSource.fetchPoster()
     }
     
     // MARK: Actions
@@ -60,29 +53,61 @@ class MovieViewController: UIViewController {
         
         // prepare values
         let listValue = valueForTag(tag)
-        let listButton = buttonForTag(tag)
         let listType = listTypeForTag(tag)
         
         // mark movie
-        movieDataSource.markForList(listType, toValue: listValue, completion: {
-            listButton.tintColor = listValue ? nil : .black
-        }) { (error) in
-            self.presentAlertForError(error, dismiss: nil)
-        }
+        movieDataSource.markMovieForList(listType, toValue: listValue)
     }
     
     // MARK: Helpers
     
     private func valueForTag(_ tag: Int) -> Bool {
-        return tag == 0 ? !movieDataSource.isFavorite : !movieDataSource.isWatchlist
+        guard let state = movieDataSource.state else {
+            return false
+        }
+        
+        return tag == 0 ? !state.isFavorite : !state.isWatchlist
     }
-    
-    private func buttonForTag(_ tag: Int) -> UIBarButtonItem {
-        return tag == 0 ? toggleFavoriteButton : toggleWatchlistButton
-    }
-    
+
     private func listTypeForTag(_ tag: Int) -> ListType {
         return tag == 0 ? .favorite : .watchlist
+    }
+}
+
+// MARK: - MovieViewController: MovieDataSourceDelegate
+
+extension MovieViewController: MovieDataSourceDelegate {
+    
+    func movieDataSourceDidFetchMovieState(movieDataSource: MovieDataSource) {
+        guard let state = movieDataSource.state else { return }
+        
+        setUIEnabled(true)
+        toggleFavoriteButton.tintColor = state.isFavorite ? nil : .black
+        toggleWatchlistButton.tintColor = state.isWatchlist ? nil : .black
+    }
+    
+    func movieDataSourceDidFetchPoster(movieDataSource: MovieDataSource) {
+        setActivityIndicatorEnabled(false)
+        
+        if let posterImage = movieDataSource.posterImage {
+            posterImageView.image = posterImage
+        }
+    }
+    
+    func movieDataSource(_ movieDataSource: MovieDataSource, didMarkMovieOnList listType: ListType) {
+        guard let state = movieDataSource.state else { return }
+        
+        switch listType {
+        case .favorite:
+            toggleFavoriteButton.tintColor = state.isFavorite ? nil : .black
+        case .watchlist:
+            toggleWatchlistButton.tintColor = state.isWatchlist ? nil : .black
+        }
+    }
+    
+    func movieDataSource(_ movieDataSource: MovieDataSource, didFailWithError error: Error) {
+        setActivityIndicatorEnabled(false)
+        presentAlertForError(error, dismiss: nil)
     }
 }
 
@@ -90,12 +115,9 @@ class MovieViewController: UIViewController {
 
 extension MovieViewController {
     
-    private func setUIEnabled(_ enabled: Bool, withImage image: UIImage? = nil) {
+    private func setUIEnabled(_ enabled: Bool) {
         toggleFavoriteButton.isEnabled = enabled
         toggleWatchlistButton.isEnabled = enabled
-        
-        toggleFavoriteButton.tintColor = (movieDataSource.isFavorite && enabled) ? nil : .black
-        toggleWatchlistButton.tintColor = (movieDataSource.isWatchlist && enabled) ? nil : .black
     }
     
     private func setActivityIndicatorEnabled(_ enabled: Bool) {

@@ -29,6 +29,8 @@ class MovieSearchViewController: UIViewController {
         moviesTableView.delegate = self
         moviesTableView.dataSource = moviesDataSource
         
+        moviesDataSource.delegate = self
+        
         // logout button
         parent?.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .reply, target: self, action: #selector(logout))
         
@@ -58,7 +60,7 @@ extension MovieSearchViewController: UISearchBarDelegate {
         
         // if query is empty, then we are done
         if searchText == "" {            
-            moviesDataSource.clearList()            
+            moviesDataSource.movies = []
             moviesTableView?.reloadData()
             return
         }
@@ -67,15 +69,23 @@ extension MovieSearchViewController: UISearchBarDelegate {
         moviesDataSource.cancelSearch()
         
         // start new search
-        moviesDataSource.loadDataWithRequest(.searchMovies(query: searchText), completion: {            
-            self.moviesTableView.reloadData()
-        }) { (error) in
-            self.presentAlertForError(error, dismiss: nil)
-        }
+        moviesDataSource.fetchListWithRequest(.searchMovies(query: searchText))
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
+    }
+}
+
+// MARK: - MovieSearchViewController: MoviesDataSourceDelegate
+
+extension MovieSearchViewController: MoviesDataSourceDelegate {
+    func moviesDataSourceDidFetchMovies(moviesDataSource: MoviesDataSource) {
+        moviesTableView.reloadData()
+    }
+    
+    func moviesDataSource(_ moviesDataSource: MoviesDataSource, didFailWithError error: Error) {
+        presentAlertForError(error, dismiss: nil)
     }
 }
 
@@ -93,8 +103,8 @@ extension MovieSearchViewController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let controller = storyboard?.instantiateViewController(withIdentifier: "MovieDetailViewController") as? MovieViewController {
-            let movie = moviesDataSource.movieAtIndex(indexPath.row)
-            controller.movieDataSource = MovieDataSourceX(movie: movie)
+            let movie = moviesDataSource.movies[indexPath.row]
+            controller.movieDataSource = MovieDataSource(movie: movie)
             navigationController?.pushViewController(controller, animated: true)
         }
     }

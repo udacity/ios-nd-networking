@@ -25,9 +25,11 @@ class MoviesViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        moviesTableView.dataSource = moviesDataSource
+        
         moviesTableView.delegate = self
+        moviesTableView.dataSource = moviesDataSource
+        
+        moviesDataSource.delegate = self
         
         // logout
         parent?.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .reply, target: self, action: #selector(logout))
@@ -37,11 +39,7 @@ class MoviesViewController: UIViewController {
         super.viewWillAppear(animated)
         
         // load movies
-        let _ = moviesDataSource.loadDataWithRequest(loadRequest, completion: {
-            self.moviesTableView.reloadData()
-        }) { (error) in
-            self.presentAlertForError(error, dismiss: nil)            
-        }
+        moviesDataSource.fetchListWithRequest(loadRequest)
     }
     
     // MARK: Actions
@@ -51,14 +49,26 @@ class MoviesViewController: UIViewController {
     }
 }
 
+// MARK: - MoviesViewController: MoviesDataSourceDelegate
+
+extension MoviesViewController: MoviesDataSourceDelegate {
+    func moviesDataSourceDidFetchMovies(moviesDataSource: MoviesDataSource) {
+        moviesTableView.reloadData()
+    }
+    
+    func moviesDataSource(_ moviesDataSource: MoviesDataSource, didFailWithError error: Error) {
+        presentAlertForError(error, dismiss: nil)
+    }
+}
+
 // MARK: - MoviesViewController: UITableViewDelegate
 
 extension MoviesViewController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {        
         if let controller = storyboard?.instantiateViewController(withIdentifier: "MovieDetailViewController") as? MovieViewController {
-            let movie = moviesDataSource.movieAtIndex(indexPath.row)
-            controller.movieDataSource = MovieDataSourceX(movie: movie)
+            let movie = moviesDataSource.movies[indexPath.row]
+            controller.movieDataSource = MovieDataSource(movie: movie)
             navigationController?.pushViewController(controller, animated: true)
         }
     }

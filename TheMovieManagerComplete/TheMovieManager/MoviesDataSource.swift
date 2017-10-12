@@ -15,14 +15,22 @@ enum MovieCellType {
     case list, search
 }
 
+// MARK: - MoviesDataSourceDelegate
+
+protocol MoviesDataSourceDelegate {
+    func moviesDataSourceDidFetchMovies(moviesDataSource: MoviesDataSource)
+    func moviesDataSource(_ moviesDataSource: MoviesDataSource, didFailWithError error: Error)
+}
+
 // MARK: - MoviesDataSource: NSObject
 
 class MoviesDataSource: NSObject {
     
     // MARK: Properties
     
-    private let cellType: MovieCellType
-    private var movies = [Movie]()
+    let cellType: MovieCellType
+    var movies = [Movie]()
+    var delegate: MoviesDataSourceDelegate?
     
     // MARK: Initializer
     
@@ -30,33 +38,25 @@ class MoviesDataSource: NSObject {
         self.cellType = cellType
     }
     
-    // MARK: Load
+    // MARK: Get
     
-    func loadDataWithRequest(_ request: TMDBRequest, completion: @escaping () -> (), error: @escaping (Error) -> ()) {        
+    func fetchListWithRequest(_ request: TMDBRequest) {        
         TMDB.shared.makeRequest(request: request, type: MovieResults.self) { (parse) in
             guard !parse.isCancelled else { return }
             
             if let movieResults = parse.parsedResult as? MovieResults {
                 self.movies = movieResults.movies
-                completion()
+                self.delegate?.moviesDataSourceDidFetchMovies(moviesDataSource: self)
             } else {
-                error(parse.error)
+                self.delegate?.moviesDataSource(self, didFailWithError: parse.error)                
             }
         }
     }
     
-    // MARK: Cancel Search
+    // MARK: Helpers
     
     func cancelSearch() {
         TMDB.shared.cancelSearch()
-    }
-    
-    func clearList() {
-        movies = []
-    }
-    
-    func movieAtIndex(_ index: Int) -> Movie {
-        return movies[index]
     }
 }
 
