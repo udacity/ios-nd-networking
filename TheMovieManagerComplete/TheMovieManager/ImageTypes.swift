@@ -9,11 +9,11 @@
 // MARK: - ImageType
 
 enum ImageType {
-    case backdrop(BackdropImage)
-    case logo(LogoImage)
-    case poster(PosterImage)
-    case profile(ProfileImage)
-    case still(StillImage)
+    case backdrop(size: BackdropImage)
+    case logo(size: LogoImage)
+    case poster(size: PosterImage)
+    case profile(size: ProfileImage)
+    case still(size: StillImage)
 }
 
 // MARK: - BackdropImage: Int

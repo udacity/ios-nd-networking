@@ -14,7 +14,7 @@ class MovieViewController: UIViewController {
     
     // MARK: Properties
     
-    var movieDataSource: MovieDataSource!
+    var movieDataSource: MovieDataSourceX!
     
     // MARK: Outlets
     
@@ -36,16 +36,21 @@ class MovieViewController: UIViewController {
         let movie = movieDataSource.movie
         navigationItem.title = movie.detailedTitle
         
-        // load movie state and image
-        setActivityIndicatorEnabled(true)
+        // load movie state
         movieDataSource.loadData(completion: {
             self.setUIEnabled(true)
             self.setActivityIndicatorEnabled(false)
-        }, error: { (errorString) in
+        }, error: { (error) in
             self.setUIEnabled(false)
-            self.setActivityIndicatorEnabled(false)
-            self.alertError(errorString, handler: nil)
+            self.presentAlertForError(error, dismiss: nil)
         })
+        
+        // load poster
+        setActivityIndicatorEnabled(true)
+        movieDataSource.loadPoster {
+            self.setActivityIndicatorEnabled(false)
+            self.posterImageView.image = self.movieDataSource.posterImage
+        }
     }
     
     // MARK: Actions
@@ -61,8 +66,8 @@ class MovieViewController: UIViewController {
         // mark movie
         movieDataSource.markForList(listType, toValue: listValue, completion: {
             listButton.tintColor = listValue ? nil : .black
-        }) { (errorString) in
-            self.alertError(errorString, handler: nil)            
+        }) { (error) in
+            self.presentAlertForError(error, dismiss: nil)
         }
     }
     
@@ -91,8 +96,6 @@ extension MovieViewController {
         
         toggleFavoriteButton.tintColor = (movieDataSource.isFavorite && enabled) ? nil : .black
         toggleWatchlistButton.tintColor = (movieDataSource.isWatchlist && enabled) ? nil : .black
-        
-        if let image = movieDataSource.posterImage { posterImageView.image = image }
     }
     
     private func setActivityIndicatorEnabled(_ enabled: Bool) {

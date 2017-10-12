@@ -9,9 +9,39 @@
 import UIKit
 import Foundation
 
-// MARK: - MovieDataSource: NSObject
+/* REMAINING WORK */
+// FIXME: rename urlRequest that belongs to the TMDBRequest object? or rename object?
+// FIXME: data sources should not expose that they are using the network...
+// FIXME: move login methods in TMDB to a login data source?
 
-class MovieDataSource: NSObject {
+// MARK: - MovieDataSourceDelegate
+
+protocol MovieDataSourceDelegate {
+    func didFetchMovieState()
+    func didFetchPoster()
+    func didAddMovieToFavorites()
+    func didAddMovieToWatchlist()
+    func didFailWithError(_ error: Error)
+}
+
+// MARK: - MovieDataSource
+
+protocol MovieDataSource {
+    var delegate: MovieDataSourceDelegate? { get set }
+    
+    func fetch()
+    func markMovieForList(_ listType: ListType, toValue value: Bool)
+}
+
+// MARK: - ListType
+
+enum ListType {
+    case favorite, watchlist
+}
+
+// MARK: - MovieDataSourceX: NSObject
+
+class MovieDataSourceX: NSObject {
     
     // MARK: Properties
     
@@ -29,115 +59,66 @@ class MovieDataSource: NSObject {
     
     // MARK: Load
     
-    func loadData(completion: @escaping () -> (), error: @escaping (String) -> ()) {
-        let queue = OperationQueue()
-        let finish = Operation()
-        let config = TMDB.shared.config
-        
-        // get poster image
-        if let posterPath = movie.posterPath, let imageConfig = config?.images, let size = imageConfig.sizeForImageType(.poster(.large)), let request = TMDBRequest.getImage(size, posterPath).urlRequest {
-            let fetch = FetchOperation(request: request)
-            let parse = ParseImageOperation()
-            parse.addDependency(fetch)
-            parse.completionBlock = {
-                self.posterImage = parse.parsedImage
-            }
-            
-            finish.addDependency(parse)
-            queue.addOperation(fetch)
-            queue.addOperation(parse)
-        }
-        
-        // get movie state
-        if let request = TMDBRequest.movieState(movie.id).urlRequest {
-            let fetch = FetchOperation(request: request)
-            let parse = TMDBParseOperation(type: MovieState.self)
-            parse.addDependency(fetch)
-            parse.completionBlock = {
-                if let state = parse.parsedResult as? MovieState {
-                    self.state = state
-                }
-            }
-            
-            finish.addDependency(parse)
-            queue.addOperation(fetch)
-            queue.addOperation(parse)
-        }
-                
-        // specify finish behavior
-        finish.completionBlock = {
-            DispatchQueue.main.async {
-                if let _ = self.state, let _ = self.posterImage, finish.dependencies.count == 2 {
-                    completion()
-                } else if let _ = self.state {
-                    completion()
-                } else {
-                    error("could not load data")
-                }
+    func loadData(completion: @escaping () -> (), error: @escaping (Error) -> ()) {
+        TMDB.shared.makeRequest(request: .movieState(id: movie.id), type: MovieState.self) { (parse) in
+            if let state = parse.parsedResult as? MovieState {
+                self.state = state
+                completion()
+            } else {
+                error(parse.error)
             }
         }
-        
-        queue.addOperation(finish)
+    }
+    
+    func loadPoster(completion: @escaping () -> ()) {        
+        if let posterPath = movie.posterPath {
+            TMDB.shared.getImageOfType(.poster(size: .large), path: posterPath, completion: { (image) in
+                self.posterImage = image
+                completion()
+            })
+        }
     }
     
     // MARK: Post
     
-    func markForList(_ listType: ListType, toValue value: Bool, completion: @escaping () -> (), error: @escaping (String) -> ()) {
+    func markForList(_ listType: ListType, toValue value: Bool, completion: @escaping () -> (), error: @escaping (Error) -> ()) {
         var markMedia = MarkMedia(type: .movie, id: movie.id, favorite: nil, watchlist: nil)
-        let request: TMDBRequest!
+        let request: TMDBRequest?
         
         switch listType {
         case .favorite:
             markMedia.favorite = value
-            request = TMDBRequest.markFavorite(markMedia)
+            request = .markFavorite(mark: markMedia)
         case .watchlist:
             markMedia.watchlist = value
-            request = TMDBRequest.markWatchlist(markMedia)
+            request = .markWatchlist(mark: markMedia)
         }
         
-        markMovieWithRequest(request, value: value, completion: completion, error: error)
+        if let request = request {
+            markMovieWithRequest(request, value: value, completion: completion, error: error)
+        }
     }
     
-    private func markMovieWithRequest(_ request: TMDBRequest, value: Bool, completion: @escaping () -> (), error: @escaping (String) -> ()) {
-        guard let urlRequest = request.urlRequest else {
-            error("could not create request")
-            return
-        }
-        
-        let fetch = FetchOperation(request: urlRequest)
-        let parse = TMDBParseOperation(type: Status.self)
-        parse.addDependency(fetch)
-        parse.completionBlock = {
-            DispatchQueue.main.async {
-                if let status = parse.parsedResult as? Status {
-                    let statusCode = status.code
-                    if statusCode == 1 || statusCode == 12 || statusCode == 13 {
-                        switch request {
-                        case .markFavorite(_):
-                            self.state?.isFavorite = value
-                        case .markWatchlist(_):
-                            self.state?.isWatchlist = value
-                        default:
-                            break
-                        }
-                        completion()
-                    } else {
-                        error("unexpected status code \(statusCode)")
+    private func markMovieWithRequest(_ request: TMDBRequest, value: Bool, completion: @escaping () -> (), error: @escaping (Error) -> ()) {
+        TMDB.shared.makeRequest(request: request, type: Status.self) { (parse) in
+            if let status = parse.parsedResult as? Status {
+                let statusCode = status.code
+                if statusCode == 1 || statusCode == 12 || statusCode == 13 {
+                    switch request {
+                    case .markFavorite:
+                        self.state?.isFavorite = value
+                    case .markWatchlist:
+                        self.state?.isWatchlist = value
+                    default:
+                        break
                     }
+                    completion()
                 } else {
-                    error(parse.errorString)
+                    error(TMDBError.basic(description: "unexpected status code \(statusCode)"))
                 }
+            } else {
+                error(parse.error)
             }
         }
-
-        let queue = OperationQueue()
-        queue.addOperation(fetch)
-        queue.addOperation(parse)
     }
-}
-
-// MARK: - ListType
-
-enum ListType {
-    case favorite, watchlist
 }

@@ -14,13 +14,13 @@ class TMDBParseOperation<T: Decodable>: ParseOperation<T> {
     
     // MARK: Properties
     
-    var errorString: String {
+    var error: TMDBError {
         if let errorResults = parsedResult as? ErrorResults {
-            return "\(errorResults)"
+            return .badRequestSemantics(errors: errorResults.errors)
         } else if let status = parsedResult as? Status {
-            return "\(status)"
+            return .badRequest(status: status)
         } else {
-            return "\(parsedError?.localizedDescription ?? "")"
+            return .parseFailed(error: parsedError)
         }
     }
     

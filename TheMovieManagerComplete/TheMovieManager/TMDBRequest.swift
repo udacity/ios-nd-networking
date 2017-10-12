@@ -11,17 +11,17 @@ import Foundation
 // MARK: - TMDBRequest
 
 enum TMDBRequest {
-    case createSession(String)
+    case createSession(token: String)
     case createToken
     case getAccount
     case getConfig
-    case getImage(String, String)
+    case getImage(size: String, path: String)
     case getFavorites
     case getWatchlist
-    case markFavorite(MarkMedia)
-    case markWatchlist(MarkMedia)
-    case movieState(Int)
-    case searchMovies(String)
+    case markFavorite(mark: MarkMedia)
+    case markWatchlist(mark: MarkMedia)
+    case movieState(id: Int)
+    case searchMovies(query: String)
     
     // MARK: URL Request
     
@@ -50,7 +50,7 @@ enum TMDBRequest {
     
     var method: HTTPMethod {
         switch self {
-        case .markFavorite(_), .markWatchlist(_):
+        case .markFavorite, .markWatchlist:
             return .post
         default:
             return .get
@@ -61,7 +61,7 @@ enum TMDBRequest {
     
     var headers: [String: String] {
         switch self {
-        case .markFavorite(_), .markWatchlist(_):
+        case .markFavorite, .markWatchlist:
             return ["Content-Type": "application/json;charset=utf-8"]
         default:
             return [:]
@@ -72,7 +72,7 @@ enum TMDBRequest {
     
     private var hostAndPath: (String, String) {
         switch self {
-        case .getImage(_, _):
+        case .getImage:
             if let secureBaseURL = TMDB.shared.config?.images.secureBaseURL {
                 // remove scheme from url
                 let endOfSchemeIndex = secureBaseURL.index(secureBaseURL.startIndex, offsetBy: 8)
@@ -119,8 +119,8 @@ enum TMDBRequest {
         case .getImage(let size, let path): return "\(size)\(path)"
         case .getFavorites: return "/account/\(accountID)/favorite/movies"
         case .getWatchlist: return "/account/\(accountID)/watchlist/movies"
-        case .markFavorite(_): return "/account/\(accountID)/favorite"
-        case .markWatchlist(_): return "/account/\(accountID)/watchlist"
+        case .markFavorite: return "/account/\(accountID)/favorite"
+        case .markWatchlist: return "/account/\(accountID)/watchlist"
         case .movieState(let movieID): return "/movie/\(movieID)/account_states"
         case .searchMovies: return "/search/movie"
         }
@@ -133,7 +133,7 @@ enum TMDBRequest {
         
         // most requests need the api key
         switch self {
-        case .getImage(_, _):
+        case .getImage:
             break
         default:
             items.append(URLQueryItem(name: TMDB.QueryKeys.apiKey, value: TMDB.apiKey))
@@ -146,7 +146,7 @@ enum TMDBRequest {
         case .searchMovies(let query):
             items.append(URLQueryItem(name: TMDB.QueryKeys.query, value: query))
         case .getAccount, .getFavorites, .getWatchlist,
-             .markFavorite(_), .markWatchlist(_), .movieState(_):
+             .markFavorite, .markWatchlist, .movieState:
             if let sessionID = TMDB.shared.sessionID {
                 items.append(URLQueryItem(name: TMDB.QueryKeys.sessionID, value: sessionID))
             }

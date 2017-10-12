@@ -6,6 +6,12 @@
 //  Copyright © 2017 Udacity. All rights reserved.
 //
 
+// MARK: - MediaType: String, Codable
+
+enum MediaType: String, Codable {
+    case movie, tv
+}
+
 // MARK: - MarkMedia: Codable
 
 struct MarkMedia: Codable {
@@ -25,10 +31,4 @@ struct MarkMedia: Codable {
         case favorite
         case watchlist
     }
-}
-
-// MARK: - MediaType: String, Codable
-
-enum MediaType: String, Codable {
-    case movie, tv
 }

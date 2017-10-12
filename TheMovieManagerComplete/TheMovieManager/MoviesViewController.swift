@@ -40,7 +40,7 @@ class MoviesViewController: UIViewController {
         let _ = moviesDataSource.loadDataWithRequest(loadRequest, completion: {
             self.moviesTableView.reloadData()
         }) { (error) in
-            self.alertError(error, handler: nil)            
+            self.presentAlertForError(error, dismiss: nil)            
         }
     }
     
@@ -57,8 +57,8 @@ extension MoviesViewController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {        
         if let controller = storyboard?.instantiateViewController(withIdentifier: "MovieDetailViewController") as? MovieViewController {
-            let movie = moviesDataSource.movies[indexPath.row]
-            controller.movieDataSource = MovieDataSource(movie: movie)
+            let movie = moviesDataSource.movieAtIndex(indexPath.row)
+            controller.movieDataSource = MovieDataSourceX(movie: movie)
             navigationController?.pushViewController(controller, animated: true)
         }
     }

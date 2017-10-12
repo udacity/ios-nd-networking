@@ -12,10 +12,10 @@ import UIKit
 
 extension UIViewController {
     
-    func alertError(_ error: String, handler: ((UIAlertAction) -> (Void))?) {
-        let controller = UIAlertController(title: "Error", message: error, preferredStyle: .alert)
-        let dismiss = UIAlertAction(title: "Dismiss", style: .default, handler: handler)
-        controller.addAction(dismiss)
+    func presentAlertForError(_ error: Error, dismiss: ((UIAlertAction) -> (Void))?) {
+        let controller = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
+        let dismissAction = UIAlertAction(title: "Dismiss", style: .default, handler: dismiss)
+        controller.addAction(dismissAction)
         present(controller, animated: true, completion: nil)
     }
 }

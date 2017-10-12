@@ -17,7 +17,7 @@ class TMDB {
     
     static let apiKey = "API_KEY_HERE"
     static let scheme = "https"
-    static let host = "api.themoviedb.org"    
+    static let host = "api.themoviedb.org"
     static let path = "/3"
     static let authorizationURL = "https://www.themoviedb.org/authenticate/"
     static let accountURL = "https://www.themoviedb.org/account/"
@@ -31,157 +31,133 @@ class TMDB {
     }
     
     // MARK: Properties
-
+    
     var sessionID: String?
     var account: Account?
     var config: Config?
-    let queue = OperationQueue()
+    private let queue = OperationQueue()
+    private let searchQueue = OperationQueue()
     
-    // FIXME: simplify requests
+    // MARK: Cancel
     
-    private func makeRequest<T: Decodable>(request: TMDBRequest, type: T.Type, completion: (() -> (Void))?) {
-        // create the operations
-        // add them to a centralized queue...
+    func cancelSearch() {
+        searchQueue.cancelAllOperations()
     }
-    
+            
     // MARK: Login
     
-    func loginWithHostViewController(_ hostViewController: UIViewController, completion: @escaping () -> (), error: @escaping (String) -> ()) {
+    func loginWithHostViewController(_ hostViewController: UIViewController, completion: @escaping () -> (), error: @escaping (Error) -> ()) {
+        // get configuration (needed for image paths)
         getConfig()
+        
+        // start authentication flow
         createRequestToken(hostViewController, completion: completion, error: error)
     }
     
-    private func createRequestToken(_ hostViewController: UIViewController, completion: @escaping () -> (), error: @escaping (String) -> ()) {
-        guard let request = TMDBRequest.createToken.urlRequest else {
-            error("could not create request")
+    func makeRequest<T>(request: TMDBRequest, type: T.Type, completion: ((TMDBParseOperation<T>) -> (Void))?) {
+        guard let urlRequest = request.urlRequest else {
             return
         }
         
-        let fetch = FetchOperation(request: request)
-        let parse = TMDBParseOperation(type: RequestToken.self)
+        let fetch = FetchOperation(request: urlRequest)
+        let parse = TMDBParseOperation(type: type)
         parse.addDependency(fetch)
         parse.completionBlock = {
+            DispatchQueue.main.async {
+                completion?(parse)
+            }
+        }
+        
+        switch request {
+        case .searchMovies:
+            searchQueue.addOperation(fetch)
+            searchQueue.addOperation(parse)
+        default:
+            queue.addOperation(fetch)
+            queue.addOperation(parse)
+        }
+    }
+            
+    private func createRequestToken(_ hostViewController: UIViewController, completion: @escaping () -> (), error: @escaping (Error) -> ()) {
+        makeRequest(request: .createToken, type: RequestToken.self) { (parse) in
             if let requestToken = parse.parsedResult as? RequestToken {
-                DispatchQueue.main.async {
-                    self.loginWithToken(requestToken.token, hostViewController: hostViewController, completion: {
-                        self.createSessionID(withToken: requestToken.token, completion: completion, error: error)
-                    }, error: { (errorString) in
-                        error(errorString)
-                    })
-                }
+                self.authorizeToken(requestToken.token, hostViewController: hostViewController, completion: {
+                    self.createSessionID(withToken: requestToken.token, completion: completion, error: error)
+                }, error: { (errorString) in
+                    error(errorString)
+                })
             } else {
-                error(parse.errorString)
+                error(parse.error)
             }
         }
-        
-        queue.addOperation(fetch)
-        queue.addOperation(parse)
     }
     
-    private func createSessionID(withToken token: String, completion: @escaping () -> (), error: @escaping (String) -> ()) {
-        guard let request = TMDBRequest.createSession(token).urlRequest else {
-            error("could not create request")
+    private func createSessionID(withToken token: String, completion: @escaping () -> (), error: @escaping (Error) -> ()) {
+        makeRequest(request: .createSession(token: token), type: SessionID.self) { (parse) in
+            if let sessionID = parse.parsedResult as? SessionID {
+                self.sessionID = sessionID.id
+                self.getAccount(completion: completion, error: error)
+            } else {
+                error(parse.error)
+            }
+        }
+    }
+    
+    private func getAccount(completion: @escaping () -> (), error: @escaping (Error) -> ()) {
+        makeRequest(request: .getAccount, type: Account.self) { (parse) in
+            if let account = parse.parsedResult as? Account {
+                self.account = account
+                completion()
+            } else {
+                error(parse.error)
+            }
+        }
+    }
+    
+    private func authorizeToken(_ requestToken: String, hostViewController controller: UIViewController, completion: @escaping () -> (), error: @escaping (Error) -> ()) {
+        guard let authorizationURL = URL(string: "\(TMDB.authorizationURL)\(requestToken)"), let authController = controller.storyboard?.instantiateViewController(withIdentifier: "TMDBAuthViewController") as? TMDBAuthViewController else {
+            error(TMDBError.basic(description: "could not initialize authorization controller"))
             return
         }
         
-        let fetch = FetchOperation(request: request)
-        let parse = TMDBParseOperation(type: SessionID.self)
-        parse.addDependency(fetch)
-        parse.completionBlock = {
-            DispatchQueue.main.async {
-                if let sessionID = parse.parsedResult as? SessionID {
-                    self.sessionID = sessionID.id
-                    self.getAccount(completion: completion, error: error)
-                } else {
-                    error(parse.errorString)
-                }
-            }            
-        }
+        authController.urlRequest = URLRequest(url: authorizationURL)
+        authController.requestToken = requestToken
+        authController.completion = completion
+        authController.error = error
         
-        queue.addOperation(fetch)
-        queue.addOperation(parse)
-    }
-    
-    private func getAccount(completion: @escaping () -> (), error: @escaping (String) -> ()) {
-        guard let request = TMDBRequest.getAccount.urlRequest else {
-            error("could not create request")
-            return
-        }
-        
-        let fetch = FetchOperation(request: request)
-        let parse = TMDBParseOperation(type: Account.self)
-        parse.addDependency(fetch)
-        parse.completionBlock = {
-            DispatchQueue.main.async {
-                if let account = parse.parsedResult as? Account {
-                    self.account = account
-                    completion()
-                } else {
-                    error(parse.errorString)
-                }
-            }
-        }
-        
-        queue.addOperation(fetch)
-        queue.addOperation(parse)
-    }
-    
-    private func loginWithToken(_ requestToken: String?, hostViewController: UIViewController, completion: @escaping () -> (), error: @escaping (String) -> ()) {
-        let authorizationURL = URL(string: "\(TMDB.authorizationURL)\(requestToken!)")
-        let request = URLRequest(url: authorizationURL!)
-        let webAuthViewController = hostViewController.storyboard!.instantiateViewController(withIdentifier: "TMDBAuthViewController") as! TMDBAuthViewController
-        webAuthViewController.urlRequest = request
-        webAuthViewController.requestToken = requestToken
-        webAuthViewController.completion = completion
-        webAuthViewController.error = error
-        
-        let webAuthNavigationController = UINavigationController()
-        webAuthNavigationController.pushViewController(webAuthViewController, animated: false)
+        let navigationController = UINavigationController()
+        navigationController.pushViewController(authController, animated: false)
         
         DispatchQueue.main.async {
-            hostViewController.present(webAuthNavigationController, animated: true, completion: nil)
+            controller.present(navigationController, animated: true, completion: nil)
         }
     }
     
     // MARK: Config
     
     func getConfig() {
-        guard let request = TMDBRequest.getConfig.urlRequest else { return }
-        
-        let fetch = FetchOperation(request: request)
-        let parse = TMDBParseOperation(type: Config.self)
-        parse.addDependency(fetch)
-        parse.completionBlock = {
+        makeRequest(request: .getConfig, type: Config.self) { (parse) in
             if let config = parse.parsedResult as? Config {
                 self.config = config
             }
         }
-        
-        queue.addOperation(fetch)
-        queue.addOperation(parse)
     }
     
     // MARK: Images
     
-    func getImageOfType(_ type: ImageType, path: String, completion: @escaping (UIImage) -> ()) {
-        if let size = config?.images.sizeForImageType(type), let request = TMDBRequest.getImage(size, path).urlRequest {
-            let fetch = FetchOperation(request: request)
-            let parse = ParseImageOperation()
-            parse.addDependency(fetch)
-            parse.completionBlock = {
-                DispatchQueue.main.async {
-                    if let parsedImage = parse.parsedImage {
-                        completion(parsedImage)
-                    }
-                }
-            }
-            
-            queue.addOperation(fetch)
-            queue.addOperation(parse)
+    func getImageOfType(_ type: ImageType, path: String, completion: @escaping (UIImage?) -> ()) {
+        guard let size = config?.images.sizeForImageType(type), let request = TMDBRequest.getImage(size: size, path: path).urlRequest, let url = request.url else {
+            return
+        }
+        
+        ImageCache.shared.loadImageWithURL(url) { (image) in
+            completion(image)
         }
     }
-        
+    
     // MARK: Shared Instance
+    
+    private init() {}
     
     static let shared = TMDB()
 }

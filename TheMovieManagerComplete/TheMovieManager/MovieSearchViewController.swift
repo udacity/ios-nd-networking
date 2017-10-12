@@ -15,7 +15,6 @@ class MovieSearchViewController: UIViewController {
     // MARK: Properties
     
     let moviesDataSource = MoviesDataSource(cellType: .search)
-    var searchQueue: OperationQueue? // last operation queue (allows us to cancel it)
     
     // MARK: Outlets
     
@@ -58,23 +57,20 @@ extension MovieSearchViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         
         // if query is empty, then we are done
-        if searchText == "" {
-            moviesDataSource.movies = [Movie]()
+        if searchText == "" {            
+            moviesDataSource.clearList()            
             moviesTableView?.reloadData()
             return
         }
         
         // if the search is still running, then cancel all the operations on the queue
-        if let searchQueue = searchQueue {
-            searchQueue.cancelAllOperations()
-        }
+        moviesDataSource.cancelSearch()
         
         // start new search
-        searchQueue = moviesDataSource.loadDataWithRequest(.searchMovies(searchText), completion: {
-            self.searchQueue = nil
+        moviesDataSource.loadDataWithRequest(.searchMovies(query: searchText), completion: {            
             self.moviesTableView.reloadData()
         }) { (error) in
-            self.alertError(error, handler: nil)
+            self.presentAlertForError(error, dismiss: nil)
         }
     }
     
@@ -97,8 +93,8 @@ extension MovieSearchViewController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let controller = storyboard?.instantiateViewController(withIdentifier: "MovieDetailViewController") as? MovieViewController {
-            let movie = moviesDataSource.movies[indexPath.row]
-            controller.movieDataSource = MovieDataSource(movie: movie)
+            let movie = moviesDataSource.movieAtIndex(indexPath.row)
+            controller.movieDataSource = MovieDataSourceX(movie: movie)
             navigationController?.pushViewController(controller, animated: true)
         }
     }

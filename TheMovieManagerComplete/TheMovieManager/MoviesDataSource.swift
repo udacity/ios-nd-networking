@@ -21,8 +21,8 @@ class MoviesDataSource: NSObject {
     
     // MARK: Properties
     
-    let cellType: MovieCellType
-    var movies = [Movie]()
+    private let cellType: MovieCellType
+    private var movies = [Movie]()
     
     // MARK: Initializer
     
@@ -32,33 +32,31 @@ class MoviesDataSource: NSObject {
     
     // MARK: Load
     
-    func loadDataWithRequest(_ request: TMDBRequest, completion: @escaping () -> (), error: @escaping (String) -> ()) -> OperationQueue {
-        let queue = OperationQueue()
-        
-        guard let urlRequest = request.urlRequest else {
-            error("could not create request")
-            return queue
-        }
-        
-        let fetch = FetchOperation(request: urlRequest)
-        let parse = TMDBParseOperation(type: MovieResults.self)
-        parse.addDependency(fetch)
-        parse.completionBlock = {            
+    func loadDataWithRequest(_ request: TMDBRequest, completion: @escaping () -> (), error: @escaping (Error) -> ()) {        
+        TMDB.shared.makeRequest(request: request, type: MovieResults.self) { (parse) in
             guard !parse.isCancelled else { return }
             
-            DispatchQueue.main.async {
-                if let movieResults = parse.parsedResult as? MovieResults {
-                    self.movies = movieResults.movies
-                    completion()
-                } else {
-                    error(parse.errorString)
-                }
+            if let movieResults = parse.parsedResult as? MovieResults {
+                self.movies = movieResults.movies
+                completion()
+            } else {
+                error(parse.error)
             }
         }
-        
-        queue.addOperation(fetch)
-        queue.addOperation(parse)        
-        return queue
+    }
+    
+    // MARK: Cancel Search
+    
+    func cancelSearch() {
+        TMDB.shared.cancelSearch()
+    }
+    
+    func clearList() {
+        movies = []
+    }
+    
+    func movieAtIndex(_ index: Int) -> Movie {
+        return movies[index]
     }
 }
 
@@ -81,13 +79,13 @@ extension MoviesDataSource: UITableViewDataSource {
             let cell = tableView.dequeueReusableCell(withIdentifier: "MovieTableViewCell", for: indexPath)
             let movie = movies[indexPath.row]
             
-            cell.textLabel!.text = movie.title
-            cell.imageView!.image = UIImage(named: "Film")
-            cell.imageView!.contentMode = UIViewContentMode.scaleAspectFit
+            cell.textLabel?.text = movie.title
+            cell.imageView?.image = UIImage(named: "Film")
+            cell.imageView?.contentMode = UIViewContentMode.scaleAspectFit
             
             if let posterPath = movie.posterPath {
-                TMDB.shared.getImageOfType(.poster(.small), path: posterPath) { (image) in
-                    cell.imageView!.image = image
+                TMDB.shared.getImageOfType(.poster(size: .small), path: posterPath) { (image) in
+                    cell.imageView?.image = image
                 }
             }
 
