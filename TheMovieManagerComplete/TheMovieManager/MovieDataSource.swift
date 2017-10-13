@@ -44,7 +44,7 @@ class MovieDataSource: NSObject {
     // MARK: Get
     
     func fetchState() {
-        TMDB.shared.makeRequest(.movieState(id: movie.id), type: MovieState.self) { (parse) in
+        TMDB.shared.makeRequest(.getMovieState(id: movie.id), type: MovieState.self) { (parse) in
             if let state = parse.parsedResult as? MovieState {
                 self.state = state
                 self.delegate?.movieDataSourceDidFetchMovieState(movieDataSource: self)

@@ -20,7 +20,7 @@ enum TMDBRequest {
     case getWatchlist
     case markFavorite(mark: MarkMedia)
     case markWatchlist(mark: MarkMedia)
-    case movieState(id: Int)
+    case getMovieState(id: Int)
     case searchMovies(query: String)
     
     // MARK: URL Request
@@ -121,7 +121,7 @@ enum TMDBRequest {
         case .getWatchlist: return "/account/\(accountID)/watchlist/movies"
         case .markFavorite: return "/account/\(accountID)/favorite"
         case .markWatchlist: return "/account/\(accountID)/watchlist"
-        case .movieState(let movieID): return "/movie/\(movieID)/account_states"
+        case .getMovieState(let movieID): return "/movie/\(movieID)/account_states"
         case .searchMovies: return "/search/movie"
         }
     }
@@ -146,7 +146,7 @@ enum TMDBRequest {
         case .searchMovies(let query):
             items.append(URLQueryItem(name: TMDB.QueryKeys.query, value: query))
         case .getAccount, .getFavorites, .getWatchlist,
-             .markFavorite, .markWatchlist, .movieState:
+             .markFavorite, .markWatchlist, .getMovieState:
             if let sessionID = TMDB.shared.sessionID {
                 items.append(URLQueryItem(name: TMDB.QueryKeys.sessionID, value: sessionID))
             }
