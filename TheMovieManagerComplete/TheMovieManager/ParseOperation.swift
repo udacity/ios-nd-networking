@@ -14,7 +14,7 @@ class ParseOperation<T: Decodable>: BaseOperation {
     
     // MARK: Properties
     
-    var parsedResult: AnyObject?
+    var parsedResult: Any?
     var parsedResponse: URLResponse?
     var parsedError: Error?    
     let type: T.Type
@@ -51,9 +51,8 @@ class ParseOperation<T: Decodable>: BaseOperation {
     
     func parseData(_ data: Data) {
         do {
-            let decoder = JSONDecoder()
-            let result = try decoder.decode(type, from: data)
-            parsedResult = result as AnyObject
+            let decoder = JSONDecoder()            
+            parsedResult = try decoder.decode(type, from: data)
         } catch let error {
             parsedError = error
         }

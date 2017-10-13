@@ -41,9 +41,11 @@ class MovieViewController: UIViewController {
         // load state
         movieDataSource.fetchState()
         
-        // load post
-        setActivityIndicatorEnabled(true)
-        movieDataSource.fetchPoster()
+        // load poster
+        if let _ = movie.posterPath {
+            setActivityIndicatorEnabled(true)
+            movieDataSource.fetchPoster()
+        }
     }
     
     // MARK: Actions

@@ -32,13 +32,13 @@ class TMDBParseOperation<T: Decodable>: ParseOperation<T> {
             if let parsedResponse = parsedResponse as? HTTPURLResponse {
                 switch parsedResponse.statusCode {
                 case 401:
-                    parsedResult = try decoder.decode(Status.self, from: data) as AnyObject
+                    parsedResult = try decoder.decode(Status.self, from: data)
                 case 404:
-                    parsedResult = try decoder.decode(Status.self, from: data) as AnyObject
+                    parsedResult = try decoder.decode(Status.self, from: data)
                 case 422:
-                    parsedResult = try decoder.decode(ErrorResults.self, from: data) as AnyObject
+                    parsedResult = try decoder.decode(ErrorResults.self, from: data)
                 default: 
-                    parsedResult = try decoder.decode(type, from: data) as AnyObject
+                    parsedResult = try decoder.decode(type, from: data)
                 }
             }
         } catch let error {
