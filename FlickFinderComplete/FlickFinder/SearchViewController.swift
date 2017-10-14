@@ -8,26 +8,25 @@
 
 import UIKit
 
-// FIXME: make keyboarding stuff easier
-
 // MARK: - SearchViewController: UIViewController
 
 class SearchViewController: UIViewController {
     
     // MARK: Properties
     
-    var keyboardOnScreen = false
+    var activeTextField: UITextField?
     let searchDataSource = SearchDataSource()
     
     // MARK: Outlets
     
     @IBOutlet weak var photoImageView: UIImageView!
     @IBOutlet weak var photoTitleLabel: UILabel!
-    @IBOutlet weak var phraseTextField: UITextField!
     @IBOutlet weak var phraseSearchButton: UIButton!
+    @IBOutlet weak var phraseTextField: UITextField!
     @IBOutlet weak var latitudeTextField: UITextField!
     @IBOutlet weak var longitudeTextField: UITextField!
     @IBOutlet weak var latLonSearchButton: UIButton!
+    @IBOutlet weak var mainScrollView: UIScrollView!
     
     // MARK: Life Cycle
     
@@ -41,8 +40,6 @@ class SearchViewController: UIViewController {
         
         subscribeToNotification(.UIKeyboardWillShow, selector: #selector(keyboardWillShow))
         subscribeToNotification(.UIKeyboardWillHide, selector: #selector(keyboardWillHide))
-        subscribeToNotification(.UIKeyboardDidShow, selector: #selector(keyboardDidShow))
-        subscribeToNotification(.UIKeyboardDidHide, selector: #selector(keyboardDidHide))
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -117,32 +114,47 @@ extension SearchViewController: UITextFieldDelegate {
         return true
     }
     
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        activeTextField = textField
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        activeTextField = nil
+    }
+    
     // MARK: Show/Hide Keyboard
     
     @objc func keyboardWillShow(_ notification: Notification) {
-        if !keyboardOnScreen {
-            view.frame.origin.y -= keyboardHeight(notification)
+        let inset = keyboardHeight(notification) * 1.5
+        let contentInsets = UIEdgeInsets(top: 0, left: 0, bottom: inset, right: 0)
+        mainScrollView.contentInset = contentInsets
+        mainScrollView.scrollIndicatorInsets = contentInsets
+        
+        guard let activeTextField = activeTextField else {
+            return
+        }
+        
+        var aRect = view.frame
+        aRect.size.height -= inset
+        if !aRect.contains(activeTextField.frame.origin) {
+            mainScrollView.scrollRectToVisible(activeTextField.frame, animated: true)
         }
     }
     
     @objc func keyboardWillHide(_ notification: Notification) {
-        if keyboardOnScreen {
-            view.frame.origin.y += keyboardHeight(notification)
-        }
-    }
-    
-    @objc func keyboardDidShow(_ notification: Notification) {
-        keyboardOnScreen = true
-    }
-    
-    @objc func keyboardDidHide(_ notification: Notification) {
-        keyboardOnScreen = false
+        let contentInsets = UIEdgeInsets.zero
+        mainScrollView.contentInset = contentInsets
+        mainScrollView.scrollIndicatorInsets = contentInsets
     }
     
     func keyboardHeight(_ notification: Notification) -> CGFloat {
         let userInfo = (notification as NSNotification).userInfo
-        let keyboardSize = userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue
-        return keyboardSize.cgRectValue.height
+        
+        if let keyboardSize = userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue {
+            return keyboardSize.cgRectValue.height
+        } else {
+            return 0
+        }
     }
     
     func resignIfFirstResponder(_ textField: UITextField) {
@@ -170,14 +182,8 @@ private extension SearchViewController {
         phraseSearchButton.isEnabled = enabled
         latLonSearchButton.isEnabled = enabled
         
-        // adjust search button alphas
-        if enabled {
-            phraseSearchButton.alpha = 1.0
-            latLonSearchButton.alpha = 1.0
-        } else {
-            phraseSearchButton.alpha = 0.5
-            latLonSearchButton.alpha = 0.5
-        }
+        phraseSearchButton.alpha = enabled ? 1.0 : 0.5
+        latLonSearchButton.alpha = enabled ? 1.0 : 0.5
         
         photoTitleLabel.text = photoText
     }
