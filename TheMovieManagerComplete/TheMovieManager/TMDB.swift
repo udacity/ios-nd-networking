@@ -43,16 +43,8 @@ class TMDB {
     func cancelSearch() {
         searchQueue.cancelAllOperations()
     }
-            
-    // MARK: Login
     
-    func login(withHostViewController hostViewController: UIViewController, completion: @escaping () -> (), error: @escaping (Error) -> ()) {
-        // get configuration (needed for image paths)
-        getConfig()
-        
-        // start authentication flow
-        createRequestToken(withHostViewController: hostViewController, completion: completion, error: error)
-    }
+    // MARK: Request
     
     func makeRequest<T>(_ request: TMDBRequest, type: T.Type, completion: ((TMDBParseOperation<T>) -> (Void))?) {
         guard let urlRequest = request.urlRequest else {
@@ -78,6 +70,16 @@ class TMDB {
         }
     }
             
+    // MARK: Login
+    
+    func login(withHostViewController hostViewController: UIViewController, completion: @escaping () -> (), error: @escaping (Error) -> ()) {
+        // get configuration (needed for image paths)
+        getConfig()
+        
+        // start authentication flow
+        createRequestToken(withHostViewController: hostViewController, completion: completion, error: error)
+    }
+    
     private func createRequestToken(withHostViewController: UIViewController, completion: @escaping () -> (), error: @escaping (Error) -> ()) {
         makeRequest(.createToken, type: RequestToken.self) { (parse) in
             if let requestToken = parse.parsedResult as? RequestToken {
@@ -145,7 +147,7 @@ class TMDB {
     
     // MARK: Images
     
-    func getImage(ofType type: ImageType, path: String, completion: @escaping (UIImage?) -> ()) {
+    func getImageWith(type: ImageType, path: String, completion: @escaping (UIImage?) -> ()) {
         guard let size = config?.images.size(forImageType: type), let request = TMDBRequest.getImage(size: size, path: path).urlRequest, let url = request.url else {
             return
         }

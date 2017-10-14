@@ -84,7 +84,7 @@ extension MoviesDataSource: UITableViewDataSource {
             cell.imageView?.contentMode = UIViewContentMode.scaleAspectFit
             
             if let posterPath = movie.posterPath {
-                TMDB.shared.getImage(ofType: .poster(size: .small), path: posterPath) { (image) in
+                TMDB.shared.getImageWith(type: .poster(size: .small), path: posterPath) { (image) in
                     cell.imageView?.image = image
                 }
             }

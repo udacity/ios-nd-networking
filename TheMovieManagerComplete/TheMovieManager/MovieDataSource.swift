@@ -56,7 +56,7 @@ class MovieDataSource: NSObject {
     
     func fetchPoster() {
         if let posterPath = movie.posterPath {
-            TMDB.shared.getImage(ofType: .poster(size: .large), path: posterPath, completion: { (image) in
+            TMDB.shared.getImageWith(type: .poster(size: .large), path: posterPath, completion: { (image) in
                 self.posterImage = image
                 self.delegate?.movieDataSourceDidFetchPoster(movieDataSource: self)
             })
