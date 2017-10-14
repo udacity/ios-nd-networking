@@ -43,12 +43,12 @@ enum FlickrRequest {
         var items = [URLQueryItem]()
         
         // items needed by both searches
-        items.append(URLQueryItem(name: Flickr.QueryKeys.searchMethod, value: Flickr.searchMethod))
+        items.append(URLQueryItem(name: Flickr.QueryKeys.searchMethod, value: Flickr.QueryValues.searchMethod))
         items.append(URLQueryItem(name: Flickr.QueryKeys.apiKey, value: Flickr.apiKey))
-        items.append(URLQueryItem(name: Flickr.QueryKeys.safeSearch, value: Flickr.safeSearch))
-        items.append(URLQueryItem(name: Flickr.QueryKeys.extras, value: Flickr.urls))
-        items.append(URLQueryItem(name: Flickr.QueryKeys.responseFormat, value: Flickr.responseFormat))
-        items.append(URLQueryItem(name: Flickr.QueryKeys.noJSONCallback, value: Flickr.noJSONCallback))
+        items.append(URLQueryItem(name: Flickr.QueryKeys.safeSearch, value: Flickr.QueryValues.safeSearch))
+        items.append(URLQueryItem(name: Flickr.QueryKeys.extras, value: Flickr.QueryValues.urls))
+        items.append(URLQueryItem(name: Flickr.QueryKeys.responseFormat, value: Flickr.QueryValues.responseFormat))
+        items.append(URLQueryItem(name: Flickr.QueryKeys.noJSONCallback, value: Flickr.QueryValues.noJSONCallback))
         
         switch self {
         case .searchPhotosByLocation(_, _, let pageNumber), .searchPhotosByPhrase(_, let pageNumber):

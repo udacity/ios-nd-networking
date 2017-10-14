@@ -18,11 +18,6 @@ struct Flickr {
     static let scheme = "https"
     static let host = "api.flickr.com"
     static let path = "/services/rest"
-    static let searchMethod = "flickr.photos.search"
-    static let noJSONCallback = "1" /* 1 means "disable callback" */
-    static let safeSearch = "1" /* 1 mean "use safe search" */
-    static let urls = "url_o,url_m"
-    static let responseFormat = "json"
     static let searchBBoxHalfWidth = 1.0
     static let searchBBoxHalfHeight = 1.0
     static let searchLatRange = (-90.0, 90.0)
@@ -38,6 +33,14 @@ struct Flickr {
         static let text = "text"
         static let boundingBox = "bbox"
         static let page = "page"
+    }
+    
+    struct QueryValues {
+        static let searchMethod = "flickr.photos.search"
+        static let noJSONCallback = "1" /* 1 means "disable callback" */
+        static let safeSearch = "1" /* 1 mean "use safe search" */
+        static let urls = "url_o,url_m"
+        static let responseFormat = "json"
     }
     
     // MARK: Properties
