@@ -8,6 +8,9 @@
 
 import UIKit
 
+let catURL = "https://upload.wikimedia.org/wikipedia/commons/4/4d/Cat_November_2010-1a.jpg"
+let dogURL = "https://upload.wikimedia.org/wikipedia/commons/e/ec/Terrier_mixed-breed_dog.jpg"
+
 // MARK: - ViewController: UIViewController
 
 class ViewController: UIViewController {

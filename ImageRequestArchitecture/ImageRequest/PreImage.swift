@@ -11,7 +11,7 @@ import Foundation
 // MARK: - PreImage
 
 struct PreImage: Codable {
-    
+            
     // MARK: Properties
     
     let title: String

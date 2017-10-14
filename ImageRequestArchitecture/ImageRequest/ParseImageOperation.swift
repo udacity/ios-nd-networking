@@ -1,5 +1,5 @@
 //
-//  ImageParseOperation.swift
+//  ParseImageOperation.swift
 //  ImageRequest
 //
 //  Created by Jarrod Parkes on 10/3/17.
@@ -9,9 +9,9 @@
 import UIKit
 import Foundation
 
-// MARK: - ImageParseOperation: BaseOperation
+// MARK: - ParseImageOperation: BaseOperation
 
-class ImageParseOperation: BaseOperation {
+class ParseImageOperation: BaseOperation {
     
     // MARK: Properties
     
@@ -21,18 +21,18 @@ class ImageParseOperation: BaseOperation {
     // MARK: Operation
     
     override func start() {
-        state = .Executing
+        guard !isCancelled else { return }
         
-        // extract data from finished fetch operation
-        if let imageFetchOp = dependencies.first as? ImageFetchOperation {
-            if let data = imageFetchOp.fetchedImageData {
+        state = .executing
+        
+        // get image from finished fetch operation
+        if let imageFetchOp = dependencies.first as? FetchOperation {
+            if let data = imageFetchOp.fetchedData {
                 parsedImage = UIImage(data: data)
             }
             parsedError = imageFetchOp.fetchedError
-        } else {
-            print("unexpected operation dependency chain")
         }
         
-        state = .Finished
+        state = .finished
     }
 }

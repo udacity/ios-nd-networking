@@ -8,6 +8,9 @@
 
 import UIKit
 
+let catURL = "https://upload.wikimedia.org/wikipedia/commons/4/4d/Cat_November_2010-1a.jpg"
+let dogURL = "https://upload.wikimedia.org/wikipedia/commons/e/ec/Terrier_mixed-breed_dog.jpg"
+
 // MARK: - ViewController: UIViewController
 
 class ViewController: UIViewController {
@@ -22,23 +25,22 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
         // create url
-        let imageURL = URL(string: Constants.CatURL)!
+        guard let imageURL = URL(string: catURL) else {
+            return
+        }
         
         // create network request
         let task = URLSession.shared.dataTask(with: imageURL) { (data, response, error) in
-            
-            if error == nil {
-                
+            if let data = data {
                 // create image
-                let downloadedImage = UIImage(data: data!)
+                let downloadedImage = UIImage(data: data)
                 
                 // update UI on a main thread
-                performUIUpdatesOnMain {
+                DispatchQueue.main.async {
                     self.imageView.image = downloadedImage
                 }
-                
             } else {
-                print(error!)
+                print(error ?? "unknown error")
             }
         }
         

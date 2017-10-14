@@ -24,28 +24,28 @@ class ImageViewController: UIViewController {
     // MARK: Life Cycle
     
     override func viewDidLoad() {
-        super.viewDidLoad()
+        super.viewDidLoad()        
+        imageDataSource.delegate = self
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         
-        // get image
-        imageDataSource.load(completionHandler: { (image, title) in
-            DispatchQueue.main.async {
-                self.showImage(image, withTitle: title)
-            }
-        }) { (error) in
-            DispatchQueue.main.async {
-                self.showError(error)
-            }
+        // fetch image
+        imageDataSource.fetchImage()
+    }
+}
+
+extension ImageViewController: ImageDataSourceDelegate {
+    
+    func imageDataSourceDidFetchImage(imageDataSource: ImageDataSource) {
+        imageView.image = imageDataSource.image
+        titleLabel.text = imageDataSource.preImage?.title
+    }
+    
+    func imageDataSource(_ imageDataSource: ImageDataSource, didFailWithError error: Error) {
+        presentAlert(forError: error) { (alert) in
+            self.titleLabel.text = "fix problem and retry 🙂!"
         }
-    }
-    
-    // MARK: Handlers
-    
-    func showImage(_ image: UIImage, withTitle title: String) {
-        imageView.image = image
-        titleLabel.text = title
-    }
-    
-    func showError(_ error: String) {
-        titleLabel.text = "Error: \(error)"
     }
 }

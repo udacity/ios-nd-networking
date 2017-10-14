@@ -9,47 +9,69 @@
 import UIKit
 import Foundation
 
+// MARK: - Constants
+
+let catJSONString = """
+{
+"urlString": "https://upload.wikimedia.org/wikipedia/commons/4/4d/Cat_November_2010-1a.jpg",
+"title": "Cat November 2010-1a"
+}
+"""
+
+let dogJSONString = """
+{
+"urlString": "https://upload.wikimedia.org/wikipedia/commons/e/ec/Terrier_mixed-breed_dog.jpg",
+"title": "Terrier mixed-breed dog"
+}
+"""
+
+// MARK: - ImageDataSourceDelegate
+
+protocol ImageDataSourceDelegate {
+    func imageDataSourceDidFetchImage(imageDataSource: ImageDataSource)
+    func imageDataSource(_ imageDataSource: ImageDataSource, didFailWithError error: Error)
+}
+
 // MARK: - ImageDataSource: NSObject
 
 class ImageDataSource: NSObject {
-
+    
     // MARK: Properties
     
-    let imageJSONString = Constants.CatJSONString
+    let preImage = catJSONString.toPreImage()
+    var image: UIImage?    
+    var delegate: ImageDataSourceDelegate?
     
-    // MARK: Load
+    // MARK: Fetch
 
-    func load(completionHandler: @escaping (UIImage, String) -> (), errorHandler: @escaping (String) -> ()) {
-        loadFromNetwork(completionHandler: completionHandler, errorHandler: errorHandler)
-    }
-    
-    // MARK: Network
-    
-    private func loadFromNetwork(completionHandler: @escaping (UIImage, String) -> (), errorHandler: @escaping (String) -> ()) {
-        // use codable to construct preimage and url
-        guard let preImage = imageJSONString.toPreImage(), let url = preImage.url else {
-            errorHandler("cannot create preimage for request")
+    func fetchImage() {
+        // get url
+        guard let url = preImage?.url else {
+            self.delegate?.imageDataSource(self, didFailWithError: ImageRequestError.basic(description: "cannot create preimage for request"))
             return
         }
         
         // create fetch
-        let fetch = ImageFetchOperation(url: url)
-    
+        let fetch = FetchOperation(request: URLRequest(url: url))
+        
         // create parse (depends on fetch)
-        let parse = ImageParseOperation()
+        let parse = ParseImageOperation()
         parse.addDependency(fetch)
         parse.completionBlock = {
-            if let parsedImage = parse.parsedImage {
-                completionHandler(parsedImage, preImage.title)
-            } else {
-                if let parsedError = parse.parsedError {
-                    errorHandler("cannot parse image data - \(parsedError)")
+            DispatchQueue.main.async {
+                if let image = parse.parsedImage {
+                    self.image = image
+                    self.delegate?.imageDataSourceDidFetchImage(imageDataSource: self)
                 } else {
-                    errorHandler("cannot parse image data")
+                    if let error = parse.parsedError {
+                        self.delegate?.imageDataSource(self, didFailWithError: ImageRequestError.parseFailed(error: error))
+                    } else {
+                        self.delegate?.imageDataSource(self, didFailWithError: ImageRequestError.basic(description: "could not parse image data"))
+                    }
                 }
             }
         }
-    
+        
         // run operations on background queue
         let queue = OperationQueue()
         queue.addOperation(fetch)

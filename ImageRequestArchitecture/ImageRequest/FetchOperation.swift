@@ -1,5 +1,5 @@
 //
-//  ImageFetchOperation.swift
+//  FetchOperation.swift
 //  ImageRequest
 //
 //  Created by Jarrod Parkes on 10/3/17.
@@ -8,43 +8,42 @@
 
 import Foundation
 
-// MARK: - ImageFetchOperation: BaseOperation
+// MARK: - FetchOperation: BaseOperation
 
-class ImageFetchOperation: BaseOperation {
+class FetchOperation: BaseOperation {
     
     // MARK: Properties
     
-    var fetchedImageData: Data?
+    var fetchedData: Data?
     var fetchedResponse: URLResponse?
     var fetchedError: Error?
     
-    private let url: URL
+    private let request: URLRequest
     private var task: URLSessionDataTask?
     
     // MARK: Initialize
     
-    init(url: URL) {
-        self.url = url
+    init(request: URLRequest) {
+        self.request = request
         super.init()
         setup()
     }
     
-    func setup() {
-        // setup fetch
-        task = URLSession.shared.dataTask(with: url) { (data, response, error) in
-            self.fetchedImageData = data
+    private func setup() {
+        task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+            self.fetchedData = data
             self.fetchedResponse = response
             self.fetchedError = error
-            self.state = .Finished
+            self.state = .finished
         }
-        state = .Ready
     }
     
     // MARK: Operation
     
     override func start() {
-        // start fetch
-        state = .Executing
+        guard !isCancelled else { return }
+        
+        state = .executing
         task?.resume()
     }
 }
