@@ -9,14 +9,12 @@
 // MARK: - OperationState
 
 enum OperationState {
-    case pending, ready, executing, finished
+    case ready, executing, finished
     
     // MARK: Key Paths
     
     func keyPath() -> String {
         switch self {
-        case .pending:
-            return "isPending"
         case .ready:
             return "isReady"
         case .executing:

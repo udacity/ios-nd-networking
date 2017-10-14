@@ -8,6 +8,8 @@
 
 import UIKit
 
+// FIXME: make keyboarding stuff easier
+
 // MARK: - SearchViewController: UIViewController
 
 class SearchViewController: UIViewController {
@@ -31,9 +33,12 @@ class SearchViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        searchDataSource.delegate = self        
         phraseTextField.delegate = self
         latitudeTextField.delegate = self
         longitudeTextField.delegate = self
+        
         subscribeToNotification(.UIKeyboardWillShow, selector: #selector(keyboardWillShow))
         subscribeToNotification(.UIKeyboardWillHide, selector: #selector(keyboardWillHide))
         subscribeToNotification(.UIKeyboardDidShow, selector: #selector(keyboardDidShow))
@@ -47,51 +52,56 @@ class SearchViewController: UIViewController {
     
     // MARK: Search Actions
     
-    @IBAction func searchByPhrase(_ sender: AnyObject) {
-
+    @IBAction func search(_ sender: AnyObject) {
         userDidTapView(self)
-        
         setUIEnabled(false, withPhotoText: "Searching...")
         
-        guard let phrase = phraseTextField.text, !phrase.isEmpty else {
-            setUIEnabled(true, withPhotoText: "Phrase Empty.")
+        guard let tag = sender.tag else {
             return
         }
         
-        searchDataSource.searchWithType(.phrase(phrase), completion: { (image, title) in
-            DispatchQueue.main.async {
-                self.setUIEnabled(true, withPhotoText: title)
-                self.photoImageView.image = image
-            }
-        }) { (error) in
-            DispatchQueue.main.async {
-                self.setUIEnabled(true, withPhotoText: error)
-                self.photoImageView.image = nil
-            }
+        if tag == 0 {
+            searchByPhrase()
+        } else {
+            searchByLocation()
         }
     }
     
-    @IBAction func searchByLocation(_ sender: AnyObject) {
-
-        userDidTapView(self)
-        
-        setUIEnabled(false, withPhotoText: "Searching...")
-        
-        guard let latitude = Double(latitudeTextField.text ?? ""), let longitude = Double(longitudeTextField.text ?? "") else {
-            setUIEnabled(true, withPhotoText: "Lat should be [-90, 90].\nLon should be [-180, 180].")
+    private func searchByPhrase() {
+        guard let phrase = phraseTextField.text, !phrase.isEmpty else {
+            presentAlert(forError: FlickrError.emptyPhrase) { alert in
+                self.setUIEnabled(true)
+            }
             return
         }
         
-        searchDataSource.searchWithType(.location(latitude, longitude), completion: { (image, title) in
-            DispatchQueue.main.async {
-                self.setUIEnabled(true, withPhotoText: title)
-                self.photoImageView.image = image
+        searchDataSource.searchForRandomPhoto(withRequest: .searchPhotosByPhrase(phrase, page: nil))
+    }
+    
+    private func searchByLocation() {
+        guard let latitude = Double(latitudeTextField.text ?? ""), let longitude = Double(longitudeTextField.text ?? "") else {
+            presentAlert(forError: FlickrError.invalidLocation) { alert in
+                self.setUIEnabled(true)
             }
-        }) { (error) in
-            DispatchQueue.main.async {
-                self.setUIEnabled(true, withPhotoText: error)
-                self.photoImageView.image = nil
-            }
+            return
+        }
+        
+        searchDataSource.searchForRandomPhoto(withRequest: .searchPhotosByLocation(latitude: latitude, longitude: longitude, page: nil))
+    }
+}
+
+// MARK: - SearchViewController: SearchDataSourceDelegate
+
+extension SearchViewController: SearchDataSourceDelegate {
+    
+    func searchDataSourceDidFetchPhoto(searchDataSource: SearchDataSource) {
+        setUIEnabled(true, withPhotoText: searchDataSource.photo?.title)
+        photoImageView.image = searchDataSource.photo?.image
+    }
+    
+    func searchDataSource(_ searchDataSource: SearchDataSource, didFailWithError error: Error) {
+        presentAlert(forError: error) { (alert) -> (Void) in
+            self.setUIEnabled(true)
         }
     }
 }
@@ -152,7 +162,7 @@ extension SearchViewController: UITextFieldDelegate {
 
 private extension SearchViewController {
     
-    func setUIEnabled(_ enabled: Bool, withPhotoText photoText: String? = nil) {
+    func setUIEnabled(_ enabled: Bool, withPhotoText photoText: String? = "") {
         photoTitleLabel.isEnabled = enabled
         phraseTextField.isEnabled = enabled
         latitudeTextField.isEnabled = enabled
@@ -169,10 +179,7 @@ private extension SearchViewController {
             latLonSearchButton.alpha = 0.5
         }
         
-        // set photo text, if provided
-        if let photoText = photoText {
-            photoTitleLabel.text = photoText
-        }
+        photoTitleLabel.text = photoText
     }
 }
 

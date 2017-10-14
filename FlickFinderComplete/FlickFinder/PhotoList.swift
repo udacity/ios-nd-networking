@@ -22,7 +22,7 @@ struct PhotoList: Codable {
     
     // MARK: Keys
     
-    enum CodingKeys : String, CodingKey {
+    enum CodingKeys: String, CodingKey {
         case page
         case pages
         case photosPerPage = "perpage"

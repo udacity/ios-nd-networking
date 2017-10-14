@@ -17,7 +17,7 @@ struct PhotoResponse: Codable {
     
     // MARK: Keys
     
-    enum CodingKeys : String, CodingKey {
+    enum CodingKeys: String, CodingKey {
         case photoList = "photos"
         case stat
     }

@@ -14,7 +14,8 @@ class BaseOperation: Operation {
     
     // MARK: Properties
     
-    var state = OperationState.pending {
+    var state = OperationState.ready {
+        // send KVO triggers for state and anything observing isReady, isExecuting, etc.
         willSet {
             willChangeValue(forKey: newValue.keyPath())
             willChangeValue(forKey: state.keyPath())
@@ -41,3 +42,4 @@ class BaseOperation: Operation {
         return false
     }
 }
+

@@ -56,7 +56,7 @@
                                                 </constraints>
                                                 <state key="normal" image="SearchIcon"/>
                                                 <connections>
-                                                    <action selector="searchByPhrase:" destination="BYZ-38-t0r" eventType="touchUpInside" id="xRm-so-0vE"/>
+                                                    <action selector="search:" destination="BYZ-38-t0r" eventType="touchUpInside" id="vKL-G5-moc"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -74,14 +74,14 @@
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" keyboardType="numbersAndPunctuation"/>
                                             </textField>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="q5d-Fu-0Tg">
+                                            <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="q5d-Fu-0Tg">
                                                 <rect key="frame" x="295" y="0.0" width="32" height="32"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="q5d-Fu-0Tg" secondAttribute="height" multiplier="1:1" id="HCf-1k-HqD"/>
                                                 </constraints>
                                                 <state key="normal" image="SearchIcon"/>
                                                 <connections>
-                                                    <action selector="searchByLocation:" destination="BYZ-38-t0r" eventType="touchUpInside" id="HPq-cZ-P6x"/>
+                                                    <action selector="search:" destination="BYZ-38-t0r" eventType="touchUpInside" id="aUc-eZ-ZKO"/>
                                                 </connections>
                                             </button>
                                         </subviews>

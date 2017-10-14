@@ -9,70 +9,60 @@
 import UIKit
 import Foundation
 
+// MARK: - SearchDataSourceDelegate
+
+protocol SearchDataSourceDelegate {
+    func searchDataSourceDidFetchPhoto(searchDataSource: SearchDataSource)
+    func searchDataSource(_ searchDataSource: SearchDataSource, didFailWithError error: Error)
+}
+
 // MARK: - SearchDataSource: NSObject
 
 class SearchDataSource: NSObject {
     
     // MARK: Properties
     
-    let flickr = FlickrAPI()
-    var photoResponse: PhotoResponse?
+    var photo: Photo?
+    var delegate: SearchDataSourceDelegate?
     
     // MARK: Search
     
-    func searchWithType(_ type: SearchType, completion: @escaping (UIImage, String) -> (), error: @escaping (String) -> ()) {
-        
-        guard type.isValid else {
-            error(type.invalidString)
+    func searchForRandomPhoto(withRequest request: FlickrRequest) {
+        guard request.isValid else {
+            delegate?.searchDataSource(self, didFailWithError: FlickrError.invalidSearch(description: request.invalidString))
             return
         }
         
-        let fetchForPageNumber = FlickrFetchOperation(searchType: type)
-        fetchForPageNumber.makeReady()
-        
-        let parseForPageNumber = FlickrParseOperation(searchType: type)
-        parseForPageNumber.addDependency(fetchForPageNumber)
-        
-        let fetchForPhoto = FlickrFetchOperation(searchType: type)
-        fetchForPhoto.addDependency(parseForPageNumber)
-        
-        let parseForPhoto = FlickrParseOperation(searchType: type)
-        parseForPhoto.addDependency(fetchForPhoto)
-        
-        parseForPageNumber.completionBlock = {
-            if let photoResponse = parseForPageNumber.parsedResult as? PhotoResponse {
+        fetchRandomPage(withRequest: request)
+    }
+    
+    private func fetchRandomPage(withRequest request: FlickrRequest) {
+        Flickr.shared.makeRequest(request, type: PhotoResponse.self) { (parse) -> (Void) in
+            if let photoResponse = parse.parsedResult as? PhotoResponse {
                 let randomPage = photoResponse.photoList.randomPage()
-                fetchForPhoto.makeReady(withPageNumber: randomPage)
+                
+                switch request {
+                case .searchPhotosByLocation(let latitude, let longitude, _):
+                    self.fetchRandomPhoto(withRequest: .searchPhotosByLocation(latitude: latitude, longitude: longitude, page: randomPage))
+                case .searchPhotosByPhrase(let phrase, _):
+                    self.fetchRandomPhoto(withRequest: .searchPhotosByPhrase(phrase, page: randomPage))
+                }
             } else {
-                if let parsedError = parseForPageNumber.parsedError {
-                    error("Could not retrieve data: \(parsedError)")
-                }
-                else {
-                    error("Could not retrieve data")
-                }
+                self.delegate?.searchDataSource(self, didFailWithError: parse.error)
             }
         }
-        
-        parseForPhoto.completionBlock = {
-            if let photoResponse = parseForPageNumber.parsedResult as? PhotoResponse {
-                self.photoResponse = photoResponse
+    }
+    
+    private func fetchRandomPhoto(withRequest request: FlickrRequest) {
+        Flickr.shared.makeRequest(request, type: PhotoResponse.self) { (parse) -> (Void) in
+            if let photoResponse = parse.parsedResult as? PhotoResponse {
                 let randomPhoto = photoResponse.photoList.randomPhoto()
-                completion(randomPhoto.image, randomPhoto.title)
+                self.photo = randomPhoto
+                self.delegate?.searchDataSourceDidFetchPhoto(searchDataSource: self)
             } else {
-                if let parsedError = parseForPageNumber.parsedError {
-                    error("Could not retrieve data: \(parsedError)")
-                }
-                else {
-                    error("Could not retrieve data")
-                }
+                self.delegate?.searchDataSource(self, didFailWithError: parse.error)
             }
         }
-        
-        let queue = OperationQueue()
-        queue.addOperation(fetchForPageNumber)
-        queue.addOperation(parseForPageNumber)
-        queue.addOperation(fetchForPhoto)
-        queue.addOperation(parseForPhoto)
     }
 }
 
