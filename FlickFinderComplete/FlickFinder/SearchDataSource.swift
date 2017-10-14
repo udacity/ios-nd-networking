@@ -39,6 +39,7 @@ class SearchDataSource: NSObject {
     private func fetchRandomPage(withRequest request: FlickrRequest) {
         Flickr.shared.makeRequest(request, type: PhotoResponse.self) { (parse) -> (Void) in
             if let photoResponse = parse.parsedResult as? PhotoResponse {
+                // pick a random page, ignore other data
                 let randomPage = photoResponse.photoList.randomPage()
                 
                 switch request {
@@ -56,6 +57,7 @@ class SearchDataSource: NSObject {
     private func fetchRandomPhoto(withRequest request: FlickrRequest) {
         Flickr.shared.makeRequest(request, type: PhotoResponse.self) { (parse) -> (Void) in
             if let photoResponse = parse.parsedResult as? PhotoResponse {
+                // pick a random photo
                 let randomPhoto = photoResponse.photoList.randomPhoto()
                 self.photo = randomPhoto
                 self.delegate?.searchDataSourceDidFetchPhoto(searchDataSource: self)
