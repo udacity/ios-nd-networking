@@ -36,6 +36,8 @@ class ImageViewController: UIViewController {
     }
 }
 
+// MARK: - ImageViewController: ImageDataSourceDelegate
+
 extension ImageViewController: ImageDataSourceDelegate {
     
     func imageDataSourceDidFetchImage(imageDataSource: ImageDataSource) {

@@ -42,7 +42,7 @@ enum FlickrRequest {
     var queryItems: [URLQueryItem] {
         var items = [URLQueryItem]()
         
-        // items needed by both searches
+        // add items needed by both searches
         items.append(URLQueryItem(name: Flickr.QueryKeys.searchMethod, value: Flickr.QueryValues.searchMethod))
         items.append(URLQueryItem(name: Flickr.QueryKeys.apiKey, value: Flickr.apiKey))
         items.append(URLQueryItem(name: Flickr.QueryKeys.safeSearch, value: Flickr.QueryValues.safeSearch))
@@ -50,6 +50,7 @@ enum FlickrRequest {
         items.append(URLQueryItem(name: Flickr.QueryKeys.responseFormat, value: Flickr.QueryValues.responseFormat))
         items.append(URLQueryItem(name: Flickr.QueryKeys.noJSONCallback, value: Flickr.QueryValues.noJSONCallback))
         
+        // add page number, if provided
         switch self {
         case .searchPhotosByLocation(_, _, let pageNumber), .searchPhotosByPhrase(_, let pageNumber):
             if let pageNumber = pageNumber {
@@ -57,6 +58,7 @@ enum FlickrRequest {
             }
         }
         
+        // add items specific to the type of search
         switch self {
         case .searchPhotosByLocation(let latitude, let longitude, _):
             let bboxString = Flickr.shared.bboxStringWith(latitude: latitude, longitude: longitude)
@@ -66,25 +68,5 @@ enum FlickrRequest {
         }
         
         return items
-    }
-    
-    // MARK: Errors
-    
-    var isValid: Bool {
-        switch self {
-        case .searchPhotosByLocation(let latitude, let longitude, _):
-            return latitude.inRange(Flickr.searchLatRange) && longitude.inRange(Flickr.searchLonRange)
-        case .searchPhotosByPhrase(let phrase, _):
-            return !phrase.isEmpty
-        }
-    }
-    
-    var invalidString: String {
-        switch self {
-        case .searchPhotosByLocation:
-            return "Lat should be [-90, 90].\nLon should be [-180, 180]."
-        case .searchPhotosByPhrase:
-            return "Phrase is empty."
-        }
     }
 }

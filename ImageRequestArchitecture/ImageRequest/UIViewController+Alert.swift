@@ -10,8 +10,7 @@ import UIKit
 
 // MARK: - UIViewController (Alert)
 
-extension UIViewController {
-    
+extension UIViewController {    
     func presentAlert(forError error: Error, dismiss: ((UIAlertAction) -> (Void))?) {
         let controller = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
         let dismissAction = UIAlertAction(title: "Dismiss", style: .default, handler: dismiss)

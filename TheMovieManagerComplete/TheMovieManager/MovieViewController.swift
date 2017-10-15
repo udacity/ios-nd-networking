@@ -64,9 +64,7 @@ class MovieViewController: UIViewController {
     // MARK: Helpers
     
     private func value(forTag tag: Int) -> Bool {
-        guard let state = movieDataSource.state else {
-            return false
-        }
+        guard let state = movieDataSource.state else { return false }
         
         return tag == 0 ? !state.isFavorite : !state.isWatchlist
     }

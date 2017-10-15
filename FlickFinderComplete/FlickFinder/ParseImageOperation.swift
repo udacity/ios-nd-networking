@@ -1,6 +1,6 @@
 //
 //  ParseImageOperation.swift
-//  TheMovieManager
+//  FlickFinder
 //
 //  Created by Jarrod Parkes on 10/10/17.
 //  Copyright © 2017 Udacity. All rights reserved.

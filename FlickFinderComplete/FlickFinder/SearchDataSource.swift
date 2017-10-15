@@ -28,16 +28,11 @@ class SearchDataSource: NSObject {
     // MARK: Search
     
     func searchForRandomPhoto(withRequest request: FlickrRequest) {
-        guard request.isValid else {
-            delegate?.searchDataSource(self, didFailWithError: FlickrError.invalidSearch(description: request.invalidString))
-            return
-        }
-        
         fetchRandomPage(withRequest: request)
     }
     
     private func fetchRandomPage(withRequest request: FlickrRequest) {
-        Flickr.shared.makeRequest(request, type: PhotoResponse.self) { (parse) -> (Void) in
+        Flickr.shared.makeRequest(request, type: PhotoResponse.self) { (parse) in
             if let photoResponse = parse.parsedResult as? PhotoResponse {
                 // pick a random page, ignore other data
                 let randomPage = photoResponse.photoList.randomPage()
@@ -55,7 +50,7 @@ class SearchDataSource: NSObject {
     }
     
     private func fetchRandomPhoto(withRequest request: FlickrRequest) {
-        Flickr.shared.makeRequest(request, type: PhotoResponse.self) { (parse) -> (Void) in
+        Flickr.shared.makeRequest(request, type: PhotoResponse.self) { (parse) in
             if let photoResponse = parse.parsedResult as? PhotoResponse {
                 // pick a random photo
                 let randomPhoto = photoResponse.photoList.randomPhoto()
@@ -67,4 +62,3 @@ class SearchDataSource: NSObject {
         }
     }
 }
-

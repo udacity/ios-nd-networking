@@ -42,4 +42,3 @@ class BaseOperation: Operation {
         return false
     }
 }
-

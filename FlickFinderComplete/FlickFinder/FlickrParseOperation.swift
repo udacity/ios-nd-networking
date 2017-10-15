@@ -39,4 +39,3 @@ class FlickrParseOperation<T: Decodable>: ParseOperation<T> {
         }
     }
 }
-

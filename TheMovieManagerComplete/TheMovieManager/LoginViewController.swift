@@ -36,7 +36,7 @@ class LoginViewController: UIViewController {
         TMDB.shared.login(withHostViewController: self, completion: {
             self.completeLogin()
         }, error: { (error) in
-            self.presentAlert(forError: error) { alert in
+            self.presentAlert(forError: error) { (alert) in
                 self.setUIEnabled(true)
             }
         })

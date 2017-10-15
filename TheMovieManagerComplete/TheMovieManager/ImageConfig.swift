@@ -35,6 +35,7 @@ struct ImageConfig: Codable {
     // MARK: Size
     
     func size(forImageType imageType: ImageType) -> String? {
+        // NOTE: Documentation at developers.themoviedb.org/3/getting-started/images
         switch imageType {
         case .backdrop(let type):
             return backdropSizes[type.rawValue]

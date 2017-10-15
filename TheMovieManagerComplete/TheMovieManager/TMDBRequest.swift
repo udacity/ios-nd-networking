@@ -8,6 +8,16 @@
 
 import Foundation
 
+// MARK: - HTTPMethod: String
+
+enum HTTPMethod: String {
+    case get = "GET"
+    case post = "POST"
+    case put = "PUT"
+    case update = "UPDATE"
+    case delete = "DELETE"
+}
+
 // MARK: - TMDBRequest
 
 enum TMDBRequest {
@@ -74,7 +84,7 @@ enum TMDBRequest {
         switch self {
         case .getImage:
             if let secureBaseURL = TMDB.shared.config?.images.secureBaseURL {
-                // remove scheme from url
+                // remove scheme from url (format: {scheme}://{host}/{path})
                 let endOfSchemeIndex = secureBaseURL.index(secureBaseURL.startIndex, offsetBy: 8)
                 let hostAndPath = String(secureBaseURL.suffix(from: endOfSchemeIndex))
                 
@@ -95,14 +105,11 @@ enum TMDBRequest {
     // MARK: Components
     
     var components: URLComponents {
-        let hostAndPath = self.hostAndPath
-        
         var components = URLComponents()
         components.scheme = TMDB.scheme
         components.host = hostAndPath.0
         components.path = hostAndPath.1
-        components.queryItems = queryItems
-        
+        components.queryItems = queryItems        
         return components
     }
     
@@ -173,14 +180,3 @@ enum TMDBRequest {
         }
     }
 }
-
-// MARK: - HTTPMethod: String
-
-enum HTTPMethod: String {
-    case get = "GET"
-    case post = "POST"
-    case put = "PUT"
-    case update = "UPDATE"
-    case delete = "DELETE"
-}
-

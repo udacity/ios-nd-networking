@@ -53,9 +53,7 @@ class SearchViewController: UIViewController {
         userDidTapView(self)
         setUIEnabled(false, withPhotoText: "Searching...")
         
-        guard let tag = sender.tag else {
-            return
-        }
+        guard let tag = sender.tag else { return }
         
         if tag == 0 {
             searchByPhrase()
@@ -66,7 +64,7 @@ class SearchViewController: UIViewController {
     
     private func searchByPhrase() {
         guard let phrase = phraseTextField.text, !phrase.isEmpty else {
-            presentAlert(forError: FlickrError.emptyPhrase) { alert in
+            presentAlert(forError: FlickrError.emptyPhrase) { (alert) in
                 self.setUIEnabled(true)
             }
             return
@@ -76,8 +74,8 @@ class SearchViewController: UIViewController {
     }
     
     private func searchByLocation() {
-        guard let latitude = Double(latitudeTextField.text ?? ""), let longitude = Double(longitudeTextField.text ?? "") else {
-            presentAlert(forError: FlickrError.invalidLocation) { alert in
+        guard let latitude = Double(latitudeTextField.text ?? ""), let longitude = Double(longitudeTextField.text ?? ""), latitude.inRange(Flickr.searchLatRange), longitude.inRange(Flickr.searchLatRange) else {
+            presentAlert(forError: FlickrError.invalidLocation) { (alert) in
                 self.setUIEnabled(true)
             }
             return
@@ -97,7 +95,7 @@ extension SearchViewController: SearchDataSourceDelegate {
     }
     
     func searchDataSource(_ searchDataSource: SearchDataSource, didFailWithError error: Error) {
-        presentAlert(forError: error) { (alert) -> (Void) in
+        presentAlert(forError: error) { (alert) in
             self.setUIEnabled(true)
         }
     }
@@ -125,7 +123,8 @@ extension SearchViewController: UITextFieldDelegate {
     // MARK: Show/Hide Keyboard
     
     @objc func keyboardWillShow(_ notification: Notification) {
-        let inset = keyboardHeight(notification) * 1.5
+        // apply inset to move scroll view up when keyboard appears
+        let inset = keyboardHeight(forNotification: notification) * 1.5
         let contentInsets = UIEdgeInsets(top: 0, left: 0, bottom: inset, right: 0)
         mainScrollView.contentInset = contentInsets
         mainScrollView.scrollIndicatorInsets = contentInsets
@@ -134,6 +133,7 @@ extension SearchViewController: UITextFieldDelegate {
             return
         }
         
+        // if text field is obscured by the keyboard, then scroll to it
         var aRect = view.frame
         aRect.size.height -= inset
         if !aRect.contains(activeTextField.frame.origin) {
@@ -147,8 +147,8 @@ extension SearchViewController: UITextFieldDelegate {
         mainScrollView.scrollIndicatorInsets = contentInsets
     }
     
-    func keyboardHeight(_ notification: Notification) -> CGFloat {
-        let userInfo = (notification as NSNotification).userInfo
+    func keyboardHeight(forNotification notification: Notification) -> CGFloat {
+        let userInfo = notification.userInfo
         
         if let keyboardSize = userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue {
             return keyboardSize.cgRectValue.height

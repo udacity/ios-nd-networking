@@ -8,7 +8,7 @@
 
 import Foundation
 
-// MARK: - PreImage
+// MARK: - PreImage: Codable
 
 struct PreImage: Codable {
             

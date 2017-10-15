@@ -8,7 +8,7 @@
 
 import Foundation
 
-// MARK: - String+PreImage
+// MARK: - String (PreImage)
 
 extension String {
     
@@ -16,10 +16,10 @@ extension String {
         
         var image: PreImage?
         
-        // use codable to decode json string into preimage
+        // use codable to decode json string into preimage struct
         do {
             let decoder = JSONDecoder()
-            if let data = self.data(using: .utf8) {
+            if let data = data(using: .utf8) {
                 image = try decoder.decode(PreImage.self, from: data)
             }
         } catch {}

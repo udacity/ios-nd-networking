@@ -47,4 +47,3 @@ class FetchOperation: BaseOperation {
         task?.resume()
     }
 }
-

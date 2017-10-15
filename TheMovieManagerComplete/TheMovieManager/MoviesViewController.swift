@@ -27,8 +27,7 @@ class MoviesViewController: UIViewController {
         super.viewDidLoad()
         
         moviesTableView.delegate = self
-        moviesTableView.dataSource = moviesDataSource
-        
+        moviesTableView.dataSource = moviesDataSource        
         moviesDataSource.delegate = self
         
         // logout

@@ -38,7 +38,7 @@ class TMDB {
     private let queue = OperationQueue()
     private let searchQueue = OperationQueue()
     
-    // MARK: Cancel
+    // MARK: Search
     
     func cancelSearch() {
         searchQueue.cancelAllOperations()
@@ -73,8 +73,15 @@ class TMDB {
     // MARK: Login
     
     func login(withHostViewController hostViewController: UIViewController, completion: @escaping () -> (), error: @escaping (Error) -> ()) {
-        // get configuration (needed for image paths)
+        // get configuration (for image paths)
         getConfig()
+        
+        // NOTE: Documentation (user auth) at developers.themoviedb.org/3/getting-started/authentication
+        /*
+         1. Create a new request token
+         2. Get the user to authorize the request token
+         3. Create a new session id with the authorized request token
+         */
         
         // start authentication flow
         createRequestToken(withHostViewController: hostViewController, completion: completion, error: error)
@@ -88,28 +95,6 @@ class TMDB {
                 }, error: { (errorString) in
                     error(errorString)
                 })
-            } else {
-                error(parse.error)
-            }
-        }
-    }
-    
-    private func createSessionID(withToken token: String, completion: @escaping () -> (), error: @escaping (Error) -> ()) {
-        makeRequest(.createSession(token: token), type: SessionID.self) { (parse) in
-            if let sessionID = parse.parsedResult as? SessionID {
-                self.sessionID = sessionID.id
-                self.getAccount(completion: completion, error: error)
-            } else {
-                error(parse.error)
-            }
-        }
-    }
-    
-    private func getAccount(completion: @escaping () -> (), error: @escaping (Error) -> ()) {
-        makeRequest(.getAccount, type: Account.self) { (parse) in
-            if let account = parse.parsedResult as? Account {
-                self.account = account
-                completion()
             } else {
                 error(parse.error)
             }
@@ -135,9 +120,32 @@ class TMDB {
         }
     }
     
+    private func createSessionID(withToken token: String, completion: @escaping () -> (), error: @escaping (Error) -> ()) {
+        makeRequest(.createSession(token: token), type: SessionID.self) { (parse) in
+            if let sessionID = parse.parsedResult as? SessionID {
+                self.sessionID = sessionID.id
+                // as an extra step, fetch the user account
+                self.getAccount(completion: completion, error: error)
+            } else {
+                error(parse.error)
+            }
+        }
+    }
+    
+    private func getAccount(completion: @escaping () -> (), error: @escaping (Error) -> ()) {
+        makeRequest(.getAccount, type: Account.self) { (parse) in
+            if let account = parse.parsedResult as? Account {
+                self.account = account
+                completion()
+            } else {
+                error(parse.error)
+            }
+        }
+    }
+    
     // MARK: Config
     
-    func getConfig() {
+    private func getConfig() {
         makeRequest(.getConfig, type: Config.self) { (parse) in
             if let config = parse.parsedResult as? Config {
                 self.config = config
@@ -152,7 +160,7 @@ class TMDB {
             return
         }
         
-        ImageCache.shared.loadImage(withURL: url) { (image) in
+        ImageCache.shared.fetchImage(withURL: url) { (image) in
             completion(image)
         }
     }

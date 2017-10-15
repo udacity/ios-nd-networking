@@ -14,7 +14,7 @@ struct Flickr {
     
     // MARK: Constants
     
-    static let apiKey = "bb90aa6f358ecb3404b6c9c1684d6aad"
+    static let apiKey = "API_KEY_HERE"
     static let scheme = "https"
     static let host = "api.flickr.com"
     static let path = "/services/rest"
@@ -50,10 +50,9 @@ struct Flickr {
     // MARK: Request
     
     func makeRequest<T>(_ request: FlickrRequest, type: T.Type, completion: ((FlickrParseOperation<T>) -> (Void))?) {
-        guard let urlRequest = request.urlRequest else {
-            return
-        }
+        guard let urlRequest = request.urlRequest else { return }
         
+        // create fetch and parse operations
         let fetch = FetchOperation(request: urlRequest)
         let parse = FlickrParseOperation(type: type)
         parse.addDependency(fetch)
@@ -63,6 +62,7 @@ struct Flickr {
             }
         }
         
+        // run operations on queue
         queue.addOperation(fetch)
         queue.addOperation(parse)
     }

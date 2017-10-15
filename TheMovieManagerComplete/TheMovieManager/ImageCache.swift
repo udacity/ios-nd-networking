@@ -15,9 +15,9 @@ class ImageCache {
     private let imageCache = NSCache<NSString, UIImage>()
     private let queue = OperationQueue()
     
-    // MARK: Load Image
+    // MARK: Fetch Image
     
-    func loadImage(withURL url: URL, completion: @escaping (UIImage?) -> ()) {
+    func fetchImage(withURL url: URL, completion: @escaping (UIImage?) -> ()) {
         guard let path = url.relativePath.removingPercentEncoding else {
             completion(nil)
             return
@@ -31,14 +31,14 @@ class ImageCache {
             return
         }
         
-        // otherwise, get image from network
+        // otherwise, download image
         let request = URLRequest(url: url)
         let fetch = FetchOperation(request: request)
         let parse = ParseImageOperation()
         parse.addDependency(fetch)
         parse.completionBlock = {
             if let parsedImage = parse.parsedImage {
-                self.imageCache.setObject(parsedImage, forKey: key) // add image to cache
+                self.imageCache.setObject(parsedImage, forKey: key) // add image to the cache
             }
             
             DispatchQueue.main.async {

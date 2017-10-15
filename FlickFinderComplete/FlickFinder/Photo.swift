@@ -31,7 +31,7 @@ struct Photo: Codable {
     var isFamily: Bool { return _isFamily == 1 }
     
     var image: UIImage? {
-        // NOTE: In certain cases you may not see the originalURL. That is because free accounts are not allowed to view there original photos. But, in the search results, you will have atleast one or the other.
+        // NOTE: In certain cases you may not see the originalURL. Occasionally, free accounts will not have access to view the original photo. But, for all search results, you will have either the originalURL or the mediumURL.
         var urlString = ""
         if let originalURL = originalURL {
             urlString = originalURL
