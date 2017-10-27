@@ -52,7 +52,7 @@ enum FlickrRequest {
         
         // add page number, if provided
         switch self {
-        case .searchPhotosByLocation(_, _, let pageNumber), .searchPhotosByPhrase(_, let pageNumber):
+        case let .searchPhotosByLocation(_, _, pageNumber), .searchPhotosByPhrase(_, let pageNumber):
             if let pageNumber = pageNumber {
                 items.append(URLQueryItem(name: Flickr.QueryKeys.page, value: "\(pageNumber)"))
             }
@@ -60,10 +60,10 @@ enum FlickrRequest {
         
         // add items specific to the type of search
         switch self {
-        case .searchPhotosByLocation(let latitude, let longitude, _):
+        case let .searchPhotosByLocation(latitude, longitude, _):
             let bboxString = Flickr.shared.bboxStringWith(latitude: latitude, longitude: longitude)
             items.append(URLQueryItem(name: Flickr.QueryKeys.boundingBox, value: bboxString))
-        case .searchPhotosByPhrase(let phrase, _):
+        case let .searchPhotosByPhrase(phrase, _):
             items.append(URLQueryItem(name: Flickr.QueryKeys.text, value: phrase))
         }
         

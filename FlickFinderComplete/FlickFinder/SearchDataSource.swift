@@ -38,9 +38,9 @@ class SearchDataSource: NSObject {
                 let randomPage = photoResponse.photoList.randomPage()
                 
                 switch request {
-                case .searchPhotosByLocation(let latitude, let longitude, _):
+                case let .searchPhotosByLocation(latitude, longitude, _):
                     self.fetchRandomPhoto(withRequest: .searchPhotosByLocation(latitude: latitude, longitude: longitude, page: randomPage))
-                case .searchPhotosByPhrase(let phrase, _):
+                case let .searchPhotosByPhrase(phrase, _):
                     self.fetchRandomPhoto(withRequest: .searchPhotosByPhrase(phrase, page: randomPage))
                 }
             } else {

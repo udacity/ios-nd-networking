@@ -123,7 +123,7 @@ enum TMDBRequest {
         case .createToken: return "/authentication/token/new"
         case .getAccount: return "/account"
         case .getConfig: return "/configuration"
-        case .getImage(let size, let path): return "\(size)\(path)"
+        case let .getImage(size, path): return "\(size)\(path)"
         case .getFavorites: return "/account/\(accountID)/favorite/movies"
         case .getWatchlist: return "/account/\(accountID)/watchlist/movies"
         case .markFavorite: return "/account/\(accountID)/favorite"
