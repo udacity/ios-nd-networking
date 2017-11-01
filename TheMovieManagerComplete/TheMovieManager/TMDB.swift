@@ -47,9 +47,7 @@ class TMDB {
     // MARK: Request
     
     func makeRequest<T>(_ request: TMDBRequest, type: T.Type, completion: ((TMDBParseOperation<T>) -> (Void))?) {
-        guard let urlRequest = request.urlRequest else {
-            return
-        }
+        guard let urlRequest = request.urlRequest else { return }
         
         let fetch = FetchOperation(request: urlRequest)
         let parse = TMDBParseOperation(type: type)
