@@ -9,22 +9,6 @@
 import UIKit
 import Foundation
 
-// MARK: - Constants
-
-let catJSONString = """
-{
-"urlString": "https://upload.wikimedia.org/wikipedia/commons/4/4d/Cat_November_2010-1a.jpg",
-"title": "Cat November 2010-1a"
-}
-"""
-
-let dogJSONString = """
-{
-"urlString": "https://upload.wikimedia.org/wikipedia/commons/e/ec/Terrier_mixed-breed_dog.jpg",
-"title": "Terrier mixed-breed dog"
-}
-"""
-
 // MARK: - ImageDataSourceDelegate
 
 protocol ImageDataSourceDelegate {
@@ -38,21 +22,21 @@ class ImageDataSource: NSObject {
     
     // MARK: Properties
     
-    let preImage = catJSONString.toPreImage()
-    var image: UIImage?    
+    var image: UIImage?
+    var title: String?
     var delegate: ImageDataSourceDelegate?
     
     // MARK: Fetch
 
-    func fetchImage() {
-        // get url
-        guard let url = preImage?.url else {
-            self.delegate?.imageDataSource(self, didFailWithError: ImageRequestError.basic(description: "cannot create preimage for request"))
+    func fetchImage(of request: ImageRequest) {
+        // get request
+        guard let urlRequest = request.urlRequest else {
+            self.delegate?.imageDataSource(self, didFailWithError: ImageRequestError.basic(description: "cannot get url request"))
             return
         }
-        
+
         // create fetch
-        let fetch = FetchOperation(request: URLRequest(url: url))
+        let fetch = FetchOperation(request: urlRequest)
         
         // create parse (depends on fetch)
         let parse = ParseImageOperation()
@@ -61,6 +45,7 @@ class ImageDataSource: NSObject {
             DispatchQueue.main.async {
                 if let image = parse.parsedImage {
                     self.image = image
+                    self.title = request.rawValue
                     self.delegate?.imageDataSourceDidFetchImage(imageDataSource: self)
                 } else {
                     if let error = parse.parsedError {

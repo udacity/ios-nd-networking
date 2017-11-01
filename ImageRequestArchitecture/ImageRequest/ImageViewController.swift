@@ -32,7 +32,7 @@ class ImageViewController: UIViewController {
         super.viewDidAppear(animated)
         
         // fetch image
-        imageDataSource.fetchImage()
+        imageDataSource.fetchImage(of: .cat)
     }
 }
 
@@ -42,7 +42,7 @@ extension ImageViewController: ImageDataSourceDelegate {
     
     func imageDataSourceDidFetchImage(imageDataSource: ImageDataSource) {
         imageView.image = imageDataSource.image
-        titleLabel.text = imageDataSource.preImage?.title
+        titleLabel.text = imageDataSource.title
     }
     
     func imageDataSource(_ imageDataSource: ImageDataSource, didFailWithError error: Error) {
