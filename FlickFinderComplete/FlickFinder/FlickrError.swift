@@ -13,7 +13,7 @@ import Foundation
 enum FlickrError: Error {
     case emptyPhrase
     case invalidLocation
-    case failedReqest(status: Status)
+    case failedRequest(status: Status)
     case parseFailed(error: Error?)
 }
 
@@ -26,7 +26,7 @@ extension FlickrError: LocalizedError {
             return "Phrase Empty."
         case .invalidLocation:
             return "Lat should be [-90, 90].\nLon should be [-180, 180]."
-        case .failedReqest(let status):
+        case .failedRequest(let status):
             return status.message
         case .parseFailed(let error):
             return error?.localizedDescription
@@ -45,7 +45,7 @@ extension FlickrError: CustomNSError {
     
     public var errorCode: Int {
         switch self {
-        case .failedReqest(let status):
+        case .failedRequest(let status):
             return status.code
         case .emptyPhrase:
             return 150

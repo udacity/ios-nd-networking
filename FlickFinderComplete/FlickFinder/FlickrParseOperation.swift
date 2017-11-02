@@ -16,7 +16,7 @@ class FlickrParseOperation<T: Decodable>: ParseOperation<T> {
     
     var error: FlickrError {
         if let status = parsedResult as? Status {
-            return .failedReqest(status: status)
+            return .failedRequest(status: status)
         } else {
             return .parseFailed(error: parsedError)
         }
