@@ -7,17 +7,33 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A90EE0461FACE0D500F6BA3B /* DownloadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A90EE0451FACE0D500F6BA3B /* DownloadViewController.swift */; };
+		A90EE0481FACE0E200F6BA3B /* UploadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A90EE0471FACE0E200F6BA3B /* UploadViewController.swift */; };
+		A98747641FACAFE2000EF32F /* ComponentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98747631FACAFE2000EF32F /* ComponentsViewController.swift */; };
+		A98747661FACB267000EF32F /* ExampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98747651FACB267000EF32F /* ExampleViewController.swift */; };
+		A98747691FACB330000EF32F /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98747681FACB330000EF32F /* Constants.swift */; };
+		A987476C1FACB59E000EF32F /* InsecureDomainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A987476B1FACB59E000EF32F /* InsecureDomainViewController.swift */; };
+		A987476E1FACB7B1000EF32F /* URLSessionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A987476D1FACB7B1000EF32F /* URLSessionViewController.swift */; };
+		A98747701FACBA86000EF32F /* URLSessionDelegateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A987476F1FACBA86000EF32F /* URLSessionDelegateViewController.swift */; };
 		A9DB69411BE963C9005E6ADD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9DB69401BE963C9005E6ADD /* AppDelegate.swift */; };
-		A9DB69431BE963C9005E6ADD /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9DB69421BE963C9005E6ADD /* ViewController.swift */; };
+		A9DB69431BE963C9005E6ADD /* BasicRequestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9DB69421BE963C9005E6ADD /* BasicRequestViewController.swift */; };
 		A9DB69461BE963C9005E6ADD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A9DB69441BE963C9005E6ADD /* Main.storyboard */; };
 		A9DB69481BE963C9005E6ADD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A9DB69471BE963C9005E6ADD /* Assets.xcassets */; };
 		A9FA13441D1AB6B700B5F46E /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = A9FA13421D1AB6B700B5F46E /* LaunchScreen.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A90EE0451FACE0D500F6BA3B /* DownloadViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadViewController.swift; sourceTree = "<group>"; };
+		A90EE0471FACE0E200F6BA3B /* UploadViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadViewController.swift; sourceTree = "<group>"; };
+		A98747631FACAFE2000EF32F /* ComponentsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentsViewController.swift; sourceTree = "<group>"; };
+		A98747651FACB267000EF32F /* ExampleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleViewController.swift; sourceTree = "<group>"; };
+		A98747681FACB330000EF32F /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		A987476B1FACB59E000EF32F /* InsecureDomainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsecureDomainViewController.swift; sourceTree = "<group>"; };
+		A987476D1FACB7B1000EF32F /* URLSessionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionViewController.swift; sourceTree = "<group>"; };
+		A987476F1FACBA86000EF32F /* URLSessionDelegateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionDelegateViewController.swift; sourceTree = "<group>"; };
 		A9DB693D1BE963C9005E6ADD /* ImageRequest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ImageRequest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A9DB69401BE963C9005E6ADD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		A9DB69421BE963C9005E6ADD /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		A9DB69421BE963C9005E6ADD /* BasicRequestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicRequestViewController.swift; sourceTree = "<group>"; };
 		A9DB69451BE963C9005E6ADD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		A9DB69471BE963C9005E6ADD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A9DB694C1BE963C9005E6ADD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -35,6 +51,45 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A98747671FACB31C000EF32F /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				A98747651FACB267000EF32F /* ExampleViewController.swift */,
+				A9B489AA1FACFAA500320E0E /* Essentials */,
+				A9B489AB1FACFAAB00320E0E /* Connectivity */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		A987476A1FACB335000EF32F /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				A98747681FACB330000EF32F /* Constants.swift */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		A9B489AA1FACFAA500320E0E /* Essentials */ = {
+			isa = PBXGroup;
+			children = (
+				A9DB69421BE963C9005E6ADD /* BasicRequestViewController.swift */,
+				A98747631FACAFE2000EF32F /* ComponentsViewController.swift */,
+				A987476B1FACB59E000EF32F /* InsecureDomainViewController.swift */,
+				A987476D1FACB7B1000EF32F /* URLSessionViewController.swift */,
+				A987476F1FACBA86000EF32F /* URLSessionDelegateViewController.swift */,
+				A90EE0451FACE0D500F6BA3B /* DownloadViewController.swift */,
+				A90EE0471FACE0E200F6BA3B /* UploadViewController.swift */,
+			);
+			name = Essentials;
+			sourceTree = "<group>";
+		};
+		A9B489AB1FACFAAB00320E0E /* Connectivity */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Connectivity;
+			sourceTree = "<group>";
+		};
 		A9DB69341BE963C9005E6ADD = {
 			isa = PBXGroup;
 			children = (
@@ -55,7 +110,8 @@
 			isa = PBXGroup;
 			children = (
 				A9DB69401BE963C9005E6ADD /* AppDelegate.swift */,
-				A9DB69421BE963C9005E6ADD /* ViewController.swift */,
+				A987476A1FACB335000EF32F /* Models */,
+				A98747671FACB31C000EF32F /* Controllers */,
 				A9DB69521BE968EA005E6ADD /* Assets */,
 				A9DB69531BE968F4005E6ADD /* Supporting Files */,
 			);
@@ -152,7 +208,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A9DB69431BE963C9005E6ADD /* ViewController.swift in Sources */,
+				A98747691FACB330000EF32F /* Constants.swift in Sources */,
+				A90EE0481FACE0E200F6BA3B /* UploadViewController.swift in Sources */,
+				A98747641FACAFE2000EF32F /* ComponentsViewController.swift in Sources */,
+				A98747701FACBA86000EF32F /* URLSessionDelegateViewController.swift in Sources */,
+				A987476C1FACB59E000EF32F /* InsecureDomainViewController.swift in Sources */,
+				A90EE0461FACE0D500F6BA3B /* DownloadViewController.swift in Sources */,
+				A98747661FACB267000EF32F /* ExampleViewController.swift in Sources */,
+				A9DB69431BE963C9005E6ADD /* BasicRequestViewController.swift in Sources */,
+				A987476E1FACB7B1000EF32F /* URLSessionViewController.swift in Sources */,
 				A9DB69411BE963C9005E6ADD /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -285,6 +349,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = ImageRequest/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Udacity.ImageRequest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -298,6 +363,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = ImageRequest/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Udacity.ImageRequest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
