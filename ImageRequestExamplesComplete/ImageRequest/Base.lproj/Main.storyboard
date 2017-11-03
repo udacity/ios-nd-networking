@@ -4,7 +4,6 @@
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13174"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -38,92 +37,110 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Q7g-FR-fDF">
-                                <rect key="frame" x="16" y="84" width="240" height="409"/>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zcb-Fn-OQh">
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Essentials ⭐️" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IF7-iI-fNK">
-                                        <rect key="frame" x="0.0" y="0.0" width="104" height="20.5"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ivD-9M-IzZ">
-                                        <rect key="frame" x="0.0" y="28.5" width="98" height="30"/>
-                                        <state key="normal" title="Basic Request"/>
-                                        <connections>
-                                            <segue destination="BYZ-38-t0r" kind="show" id="EyJ-cA-13N"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eSx-Pc-ujZ">
-                                        <rect key="frame" x="0.0" y="66.5" width="121" height="30"/>
-                                        <state key="normal" title="URL Components"/>
-                                        <connections>
-                                            <segue destination="hq2-6Y-kxT" kind="show" id="6ED-qQ-BDw"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c6K-Hd-lwk">
-                                        <rect key="frame" x="0.0" y="104.5" width="115" height="30"/>
-                                        <state key="normal" title="Insecure Domain"/>
-                                        <connections>
-                                            <segue destination="0lh-D8-pQF" kind="show" id="9h5-Wt-4Pm"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SkS-IX-sX4">
-                                        <rect key="frame" x="0.0" y="142.5" width="144" height="30"/>
-                                        <state key="normal" title="Custom URL Session"/>
-                                        <connections>
-                                            <segue destination="Vrc-an-22G" kind="show" id="0QS-Dx-ukN"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="t6Z-7k-mRh">
-                                        <rect key="frame" x="0.0" y="180.5" width="152" height="30"/>
-                                        <state key="normal" title="URL Session Delegate"/>
-                                        <connections>
-                                            <segue destination="ztl-Ft-Ffw" kind="show" id="seo-jS-A9h"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="b42-U7-eWU">
-                                        <rect key="frame" x="0.0" y="218.5" width="104" height="30"/>
-                                        <state key="normal" title="Download Task"/>
-                                        <connections>
-                                            <segue destination="mZb-jx-2rm" kind="show" id="BTV-kh-dr4"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cDh-Ju-z09">
-                                        <rect key="frame" x="0.0" y="256.5" width="85" height="30"/>
-                                        <state key="normal" title="Upload Task"/>
-                                        <connections>
-                                            <segue destination="Cbx-ZX-9dG" kind="show" id="b11-fx-6cM"/>
-                                        </connections>
-                                    </button>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xrn-Zn-xKA">
-                                        <rect key="frame" x="0.0" y="294.5" width="240" height="10"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="10" id="ewL-WK-ukJ"/>
-                                        </constraints>
-                                    </view>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Connectivity 🌐" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BKd-wr-enz">
-                                        <rect key="frame" x="0.0" y="312.5" width="123.5" height="20.5"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pLg-HX-bP7">
-                                        <rect key="frame" x="0.0" y="341" width="170" height="30"/>
-                                        <state key="normal" title="Retry and Pull to Refresh"/>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="v22-u1-cR4">
-                                        <rect key="frame" x="0.0" y="379" width="144" height="30"/>
-                                        <state key="normal" title="Wait for Connectivity"/>
-                                    </button>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Q7g-FR-fDF">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="475"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Essentials ⭐️" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IF7-iI-fNK">
+                                                <rect key="frame" x="16" y="20" width="104" height="20.5"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ivD-9M-IzZ">
+                                                <rect key="frame" x="16" y="48.5" width="98" height="30"/>
+                                                <state key="normal" title="Basic Request"/>
+                                                <connections>
+                                                    <segue destination="BYZ-38-t0r" kind="show" id="EyJ-cA-13N"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eSx-Pc-ujZ">
+                                                <rect key="frame" x="16" y="86.5" width="121" height="30"/>
+                                                <state key="normal" title="URL Components"/>
+                                                <connections>
+                                                    <segue destination="hq2-6Y-kxT" kind="show" id="6ED-qQ-BDw"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c6K-Hd-lwk">
+                                                <rect key="frame" x="16" y="124.5" width="115" height="30"/>
+                                                <state key="normal" title="Insecure Domain"/>
+                                                <connections>
+                                                    <segue destination="0lh-D8-pQF" kind="show" id="9h5-Wt-4Pm"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SkS-IX-sX4">
+                                                <rect key="frame" x="16" y="162.5" width="144" height="30"/>
+                                                <state key="normal" title="Custom URL Session"/>
+                                                <connections>
+                                                    <segue destination="Vrc-an-22G" kind="show" id="0QS-Dx-ukN"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="t6Z-7k-mRh">
+                                                <rect key="frame" x="16" y="200.5" width="152" height="30"/>
+                                                <state key="normal" title="URL Session Delegate"/>
+                                                <connections>
+                                                    <segue destination="ztl-Ft-Ffw" kind="show" id="seo-jS-A9h"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="b42-U7-eWU">
+                                                <rect key="frame" x="16" y="238.5" width="104" height="30"/>
+                                                <state key="normal" title="Download Task"/>
+                                                <connections>
+                                                    <segue destination="mZb-jx-2rm" kind="show" id="BTV-kh-dr4"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cDh-Ju-z09">
+                                                <rect key="frame" x="16" y="276.5" width="85" height="30"/>
+                                                <state key="normal" title="Upload Task"/>
+                                                <connections>
+                                                    <segue destination="Cbx-ZX-9dG" kind="show" id="b11-fx-6cM"/>
+                                                </connections>
+                                            </button>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xrn-Zn-xKA">
+                                                <rect key="frame" x="16" y="314.5" width="304" height="10"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="10" id="ewL-WK-ukJ"/>
+                                                </constraints>
+                                            </view>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Connectivity 🌐" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BKd-wr-enz">
+                                                <rect key="frame" x="16" y="332.5" width="123.5" height="20.5"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pLg-HX-bP7">
+                                                <rect key="frame" x="16" y="361" width="90" height="30"/>
+                                                <state key="normal" title="Manual Retry"/>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aYB-Zc-ZQk">
+                                                <rect key="frame" x="16" y="399" width="84" height="30"/>
+                                                <state key="normal" title="Reachability"/>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="v22-u1-cR4">
+                                                <rect key="frame" x="16" y="437" width="144" height="30"/>
+                                                <state key="normal" title="Wait for Connectivity"/>
+                                            </button>
+                                        </subviews>
+                                        <edgeInsets key="layoutMargins" top="20" left="16" bottom="8" right="16"/>
+                                    </stackView>
                                 </subviews>
-                            </stackView>
+                                <constraints>
+                                    <constraint firstItem="Q7g-FR-fDF" firstAttribute="width" secondItem="Zcb-Fn-OQh" secondAttribute="width" id="0qd-5T-FD3"/>
+                                    <constraint firstItem="Q7g-FR-fDF" firstAttribute="top" secondItem="Zcb-Fn-OQh" secondAttribute="top" id="1OZ-Ma-gW0"/>
+                                    <constraint firstAttribute="trailing" secondItem="Q7g-FR-fDF" secondAttribute="trailing" id="4Jq-oF-mpj"/>
+                                    <constraint firstAttribute="bottom" secondItem="Q7g-FR-fDF" secondAttribute="bottom" id="i7r-jx-4mK"/>
+                                    <constraint firstItem="Q7g-FR-fDF" firstAttribute="leading" secondItem="Zcb-Fn-OQh" secondAttribute="leading" id="wqc-qS-XHe"/>
+                                </constraints>
+                            </scrollView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="Q7g-FR-fDF" firstAttribute="leading" secondItem="PVl-9z-cXp" secondAttribute="leadingMargin" id="EUx-Yi-e3r"/>
-                            <constraint firstItem="Q7g-FR-fDF" firstAttribute="top" secondItem="itE-NR-Dw1" secondAttribute="bottom" constant="20" id="GKb-ii-pkf"/>
+                            <constraint firstItem="Zcb-Fn-OQh" firstAttribute="top" secondItem="itE-NR-Dw1" secondAttribute="bottom" id="8O7-sa-x54"/>
+                            <constraint firstItem="Zcb-Fn-OQh" firstAttribute="leading" secondItem="PVl-9z-cXp" secondAttribute="leading" id="V2j-aQ-mnz"/>
+                            <constraint firstAttribute="trailing" secondItem="Zcb-Fn-OQh" secondAttribute="trailing" id="o7C-ub-iOY"/>
+                            <constraint firstItem="gEm-Ke-h7N" firstAttribute="top" secondItem="Zcb-Fn-OQh" secondAttribute="bottom" id="p5M-JK-v4R"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Image Request 📸" id="vb7-hg-sjg">

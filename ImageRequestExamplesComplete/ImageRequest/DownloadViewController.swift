@@ -51,20 +51,22 @@ extension DownloadViewController: URLSessionDownloadDelegate {
     
     func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {        
         // create file path
-        guard let documentsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else { return }
-        let filePath = documentsPath.appendingPathComponent("uploaded_image.jpg")
+        guard let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else { return }
+        let fileURL = documentsURL.appendingPathComponent("uploaded_image.jpg")
         
         // remove existing file (if exists), then copy temporary file to documents directory
         do {
-            try FileManager.default.removeItem(at: filePath)
-            try FileManager.default.copyItem(at: location, to: filePath)
+            if FileManager.default.fileExists(atPath: fileURL.path) {
+                try FileManager.default.removeItem(at: fileURL)
+            }
+            try FileManager.default.copyItem(at: location, to: fileURL)
         } catch let error {
-            print("error creating a file \(filePath): \(error)")
+            print("error creating a file \(fileURL): \(error)")
             return
         }
         
         // create image
-        guard let imageData = try? Data(contentsOf: filePath) else { return }
+        guard let imageData = try? Data(contentsOf: fileURL) else { return }
         let downloadedImage = UIImage(data: imageData)
         
         // update UI on the main thread
