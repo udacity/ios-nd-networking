@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		A90EE0461FACE0D500F6BA3B /* DownloadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A90EE0451FACE0D500F6BA3B /* DownloadViewController.swift */; };
 		A90EE0481FACE0E200F6BA3B /* UploadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A90EE0471FACE0E200F6BA3B /* UploadViewController.swift */; };
+		A94095DD1FAD09CF007841C8 /* ConnectivityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94095DC1FAD09CF007841C8 /* ConnectivityViewController.swift */; };
 		A98747641FACAFE2000EF32F /* ComponentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98747631FACAFE2000EF32F /* ComponentsViewController.swift */; };
 		A98747661FACB267000EF32F /* ExampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98747651FACB267000EF32F /* ExampleViewController.swift */; };
 		A98747691FACB330000EF32F /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98747681FACB330000EF32F /* Constants.swift */; };
@@ -25,6 +26,7 @@
 /* Begin PBXFileReference section */
 		A90EE0451FACE0D500F6BA3B /* DownloadViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadViewController.swift; sourceTree = "<group>"; };
 		A90EE0471FACE0E200F6BA3B /* UploadViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadViewController.swift; sourceTree = "<group>"; };
+		A94095DC1FAD09CF007841C8 /* ConnectivityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectivityViewController.swift; sourceTree = "<group>"; };
 		A98747631FACAFE2000EF32F /* ComponentsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentsViewController.swift; sourceTree = "<group>"; };
 		A98747651FACB267000EF32F /* ExampleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleViewController.swift; sourceTree = "<group>"; };
 		A98747681FACB330000EF32F /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -55,8 +57,14 @@
 			isa = PBXGroup;
 			children = (
 				A98747651FACB267000EF32F /* ExampleViewController.swift */,
-				A9B489AA1FACFAA500320E0E /* Essentials */,
-				A9B489AB1FACFAAB00320E0E /* Connectivity */,
+				A9DB69421BE963C9005E6ADD /* BasicRequestViewController.swift */,
+				A98747631FACAFE2000EF32F /* ComponentsViewController.swift */,
+				A987476B1FACB59E000EF32F /* InsecureDomainViewController.swift */,
+				A987476D1FACB7B1000EF32F /* URLSessionViewController.swift */,
+				A987476F1FACBA86000EF32F /* URLSessionDelegateViewController.swift */,
+				A90EE0451FACE0D500F6BA3B /* DownloadViewController.swift */,
+				A90EE0471FACE0E200F6BA3B /* UploadViewController.swift */,
+				A94095DC1FAD09CF007841C8 /* ConnectivityViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -67,27 +75,6 @@
 				A98747681FACB330000EF32F /* Constants.swift */,
 			);
 			name = Models;
-			sourceTree = "<group>";
-		};
-		A9B489AA1FACFAA500320E0E /* Essentials */ = {
-			isa = PBXGroup;
-			children = (
-				A9DB69421BE963C9005E6ADD /* BasicRequestViewController.swift */,
-				A98747631FACAFE2000EF32F /* ComponentsViewController.swift */,
-				A987476B1FACB59E000EF32F /* InsecureDomainViewController.swift */,
-				A987476D1FACB7B1000EF32F /* URLSessionViewController.swift */,
-				A987476F1FACBA86000EF32F /* URLSessionDelegateViewController.swift */,
-				A90EE0451FACE0D500F6BA3B /* DownloadViewController.swift */,
-				A90EE0471FACE0E200F6BA3B /* UploadViewController.swift */,
-			);
-			name = Essentials;
-			sourceTree = "<group>";
-		};
-		A9B489AB1FACFAAB00320E0E /* Connectivity */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Connectivity;
 			sourceTree = "<group>";
 		};
 		A9DB69341BE963C9005E6ADD = {
@@ -211,6 +198,7 @@
 				A98747691FACB330000EF32F /* Constants.swift in Sources */,
 				A90EE0481FACE0E200F6BA3B /* UploadViewController.swift in Sources */,
 				A98747641FACAFE2000EF32F /* ComponentsViewController.swift in Sources */,
+				A94095DD1FAD09CF007841C8 /* ConnectivityViewController.swift in Sources */,
 				A98747701FACBA86000EF32F /* URLSessionDelegateViewController.swift in Sources */,
 				A987476C1FACB59E000EF32F /* InsecureDomainViewController.swift in Sources */,
 				A90EE0461FACE0D500F6BA3B /* DownloadViewController.swift in Sources */,
