@@ -41,6 +41,8 @@
 		A99306C31F87B18900BB7680 /* RequestToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = A99306C21F87B18900BB7680 /* RequestToken.swift */; };
 		A99306C51F87B1A100BB7680 /* SessionID.swift in Sources */ = {isa = PBXBuildFile; fileRef = A99306C41F87B1A100BB7680 /* SessionID.swift */; };
 		A99306C71F87B27F00BB7680 /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = A99306C61F87B27F00BB7680 /* Account.swift */; };
+		A9A2D44B1FADED56007DC569 /* Secrets.plist in Resources */ = {isa = PBXBuildFile; fileRef = A9A2D44A1FADED56007DC569 /* Secrets.plist */; };
+		A9A2D44D1FADEDA9007DC569 /* Secrets.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A2D44C1FADEDA9007DC569 /* Secrets.swift */; };
 		A9AFBD181F8D78E8006DF792 /* UIViewController+Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9AFBD171F8D78E8006DF792 /* UIViewController+Alert.swift */; };
 		A9FA13591D1AB76500B5F46E /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = A9FA13571D1AB76500B5F46E /* LaunchScreen.xib */; };
 /* End PBXBuildFile section */
@@ -82,6 +84,8 @@
 		A99306C21F87B18900BB7680 /* RequestToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestToken.swift; sourceTree = "<group>"; };
 		A99306C41F87B1A100BB7680 /* SessionID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionID.swift; sourceTree = "<group>"; };
 		A99306C61F87B27F00BB7680 /* Account.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
+		A9A2D44A1FADED56007DC569 /* Secrets.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Secrets.plist; sourceTree = "<group>"; };
+		A9A2D44C1FADEDA9007DC569 /* Secrets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Secrets.swift; sourceTree = "<group>"; };
 		A9AFBD171F8D78E8006DF792 /* UIViewController+Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Alert.swift"; sourceTree = "<group>"; };
 		A9FA13581D1AB76500B5F46E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -158,6 +162,7 @@
 			isa = PBXGroup;
 			children = (
 				A9855BB81BEC3EDB00000031 /* Info.plist */,
+				A9A2D44A1FADED56007DC569 /* Secrets.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -172,6 +177,7 @@
 				A97DE19E1F8D6CFD00DA5E31 /* ImageConfig.swift */,
 				A97DE19A1F8D3A9100DA5E31 /* ImageTypes.swift */,
 				A99306BE1F87B06A00BB7680 /* MarkMedia.swift */,
+				A9A2D44C1FADEDA9007DC569 /* Secrets.swift */,
 				A99306C01F87B11200BB7680 /* Status.swift */,
 				A99306C21F87B18900BB7680 /* RequestToken.swift */,
 				A99306C41F87B1A100BB7680 /* SessionID.swift */,
@@ -296,6 +302,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A9A2D44B1FADED56007DC569 /* Secrets.plist in Resources */,
 				A9855BB41BEC3EDB00000031 /* Assets.xcassets in Resources */,
 				A9FA13591D1AB76500B5F46E /* LaunchScreen.xib in Resources */,
 				A9855BB21BEC3EDB00000031 /* Main.storyboard in Resources */,
@@ -314,6 +321,7 @@
 				A910068C1F8EC810009CF381 /* ImageCache.swift in Sources */,
 				A9AFBD181F8D78E8006DF792 /* UIViewController+Alert.swift in Sources */,
 				A99306C71F87B27F00BB7680 /* Account.swift in Sources */,
+				A9A2D44D1FADEDA9007DC569 /* Secrets.swift in Sources */,
 				A9855BCF1BEC41A800000031 /* Movie.swift in Sources */,
 				A99306BF1F87B06A00BB7680 /* MarkMedia.swift in Sources */,
 				A99306C31F87B18900BB7680 /* RequestToken.swift in Sources */,

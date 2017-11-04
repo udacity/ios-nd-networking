@@ -15,7 +15,7 @@ class TMDB {
     
     // MARK: Constants
     
-    static let apiKey = "API_KEY_HERE"
+    static var apiKey = "API_KEY_HERE"
     static let scheme = "https"
     static let host = "api.themoviedb.org"
     static let path = "/3"
@@ -165,7 +165,12 @@ class TMDB {
     
     // MARK: Shared Instance
     
-    private init() {}
+    private init() {
+        // load api key
+        if let secretsURL = Bundle.main.url(forResource: "Secrets", withExtension: "plist"), let data = try? Data(contentsOf: secretsURL), let secrets = try? PropertyListDecoder().decode(Secrets.self, from: data) {
+            TMDB.apiKey = secrets.theMovieDBAPIKey
+        }
+    }
     
     static let shared = TMDB()
 }
