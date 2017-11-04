@@ -23,6 +23,7 @@ class SearchDataSource: NSObject {
     // MARK: Properties
     
     var photo: Photo?
+    var image: UIImage?
     var delegate: SearchDataSourceDelegate?
     
     // MARK: Search
@@ -55,7 +56,12 @@ class SearchDataSource: NSObject {
                 // pick a random photo
                 let randomPhoto = photoResponse.photoList.randomPhoto()
                 self.photo = randomPhoto
-                self.delegate?.searchDataSourceDidFetchPhoto(searchDataSource: self)
+                
+                // get image for photo
+                Flickr.shared.getImageFor(photo: randomPhoto, completion: { (image) in
+                    self.image = image
+                    self.delegate?.searchDataSourceDidFetchPhoto(searchDataSource: self)
+                })
             } else {
                 self.delegate?.searchDataSource(self, didFailWithError: parse.error)
             }

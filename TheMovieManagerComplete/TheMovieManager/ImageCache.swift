@@ -38,11 +38,12 @@ class ImageCache {
         parse.addDependency(fetch)
         parse.completionBlock = {
             if let parsedImage = parse.parsedImage {
-                self.imageCache.setObject(parsedImage, forKey: key) // add image to the cache
-            }
-            
-            DispatchQueue.main.async {
-                completion(parse.parsedImage)
+                // add image to the cache
+                self.imageCache.setObject(parsedImage, forKey: key)
+                
+                DispatchQueue.main.async {
+                    completion(parsedImage)
+                }
             }
         }
         

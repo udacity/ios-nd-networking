@@ -6,6 +6,7 @@
 //  Copyright © 2017 Udacity. All rights reserved.
 //
 
+import UIKit
 import Foundation
 
 // MARK: - Flickr
@@ -63,6 +64,27 @@ struct Flickr {
         }
         
         // run operations on queue
+        queue.addOperation(fetch)
+        queue.addOperation(parse)
+    }
+    
+    // MARK: Images
+    
+    func getImageFor(photo: Photo, completion: @escaping (UIImage?) -> ()) {
+        guard let url = photo.imageURL else { return }
+        
+        let request = URLRequest(url: url)
+        let fetch = FetchOperation(request: request)
+        let parse = ParseImageOperation()
+        parse.addDependency(fetch)
+        parse.completionBlock = {
+            if let parsedImage = parse.parsedImage {
+                DispatchQueue.main.async {
+                    completion(parsedImage)
+                }
+            }
+        }
+        
         queue.addOperation(fetch)
         queue.addOperation(parse)
     }

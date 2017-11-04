@@ -30,20 +30,15 @@ struct Photo: Codable {
     var isFriend: Bool { return _isFriend == 1 }
     var isFamily: Bool { return _isFamily == 1 }
     
-    var image: UIImage? {
-        // NOTE: In certain cases you may not see the originalURL. Occasionally, free accounts will not have access to view the original photo. But, for all search results, you will have either the originalURL or the mediumURL.
-        var urlString = ""
+    var imageURL: URL? {
+        // NOTE: In certain cases you may not see the originalURL. Occasionally, free accounts will not have access to view the original photo. But, for all search results, you should have either the originalURL or the mediumURL.
         if let originalURL = originalURL {
-            urlString = originalURL
+            return URL(string: originalURL)
         } else if let mediumURL = mediumURL {
-            urlString = mediumURL
+            return URL(string: mediumURL)
+        } else {
+            return nil
         }
-        
-        if let url = URL(string: urlString), let imageData = try? Data(contentsOf: url), let image = UIImage(data: imageData) {
-            return image
-        }
-        
-        return nil
     }
     
     // MARK: Keys

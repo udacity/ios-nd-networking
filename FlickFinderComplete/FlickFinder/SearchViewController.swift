@@ -91,7 +91,7 @@ extension SearchViewController: SearchDataSourceDelegate {
     
     func searchDataSourceDidFetchPhoto(searchDataSource: SearchDataSource) {
         setUIEnabled(true, withPhotoText: searchDataSource.photo?.title)
-        photoImageView.image = searchDataSource.photo?.image
+        photoImageView.image = searchDataSource.image
     }
     
     func searchDataSource(_ searchDataSource: SearchDataSource, didFailWithError error: Error) {
