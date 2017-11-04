@@ -54,7 +54,7 @@ extension URLSessionDelegateViewController: URLSessionDataDelegate {
     // MARK: URLSessionDataDelegate
     
     func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive data: Data) {
-        // aggregate the received
+        // aggregate the received data
         receivedData.append(data)
     }
     
