@@ -8,19 +8,43 @@ This repository contains resources for Udacity's iOS Networking with Swift cours
 
 ## Overview
 
-iOS Networking teaches foundational principles of networking and how they are applied in an iOS-context. The course uses a series of example applications as demonstrations:
+The iOS Networking course teaches students how to use Apple's networking APIs for iOS. The course includes three example applications:
 
 - ImageRequest
-- SleepingInTheLibrary
 - FlickFinder
-- MyFavoriteMovies
 - TheMovieManager
 
-Each application has a corresponding "complete" version which is already fully-implemented. Also, TheMovieManger has two versions: one with and without a seperate "API client".
+Each application has an initial and complete version that is fully implemented. For FlickFinder and TheMovieManager, special setup instructions are provided below:
 
-## Setup
+## FlickFinder
 
-Generally speaking, most projects can run without any additional setup. However, consult the iOS Networking with Swift course for more information.
+Create a `Secrets.plist` file in the same directory as the project's `Info.plist` file. Substitute a Flickr API key where you see "API-KEY-HERE":
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>FlickrAPIKey</key>
+	<string>API-KEY-HERE</string>
+</dict>
+</plist>
+```
+
+## TheMovieManager
+
+Create a `Secrets.plist` file in the same directory as the project's `Info.plist` file. Substitute a MovieDB API key where you see "API-KEY-HERE":
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>TheMovieDBAPIKey</key>
+	<string>API-KEY-HERE</string>
+</dict>
+</plist>
+```
 
 ## Maintainers
 
