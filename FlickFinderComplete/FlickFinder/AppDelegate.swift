@@ -20,6 +20,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // MARK: UIApplicationDelegate
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
+        // initiate secret loading
+        let _ = Flickr.shared
+        
         return true
     }
 }

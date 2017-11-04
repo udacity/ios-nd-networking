@@ -14,7 +14,7 @@ struct Flickr {
     
     // MARK: Constants
     
-    static let apiKey = "API_KEY_HERE"
+    static var apiKey = "API_KEY_HERE"
     static let scheme = "https"
     static let host = "api.flickr.com"
     static let path = "/services/rest"
@@ -79,7 +79,12 @@ struct Flickr {
     
     // MARK: Shared Instance
     
-    private init() {}
+    private init() {
+        // load api key
+        if let secretsURL = Bundle.main.url(forResource: "Secrets", withExtension: "plist"), let data = try? Data(contentsOf: secretsURL), let secrets = try? PropertyListDecoder().decode(Secrets.self, from: data) {
+            Flickr.apiKey = secrets.flickrAPIKey
+        }
+    }
     
     static let shared = Flickr()
 }

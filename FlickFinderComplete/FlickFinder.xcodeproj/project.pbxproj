@@ -17,6 +17,8 @@
 		A955139E1F86B6CA0041C52B /* Double+InRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = A955139D1F86B6CA0041C52B /* Double+InRange.swift */; };
 		A957A2311F841860006C95CD /* SearchDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = A957A2301F841860006C95CD /* SearchDataSource.swift */; };
 		A957A2341F8418D6006C95CD /* Flickr.swift in Sources */ = {isa = PBXBuildFile; fileRef = A957A2331F8418D6006C95CD /* Flickr.swift */; };
+		A9A2D4471FADEA36007DC569 /* Secrets.plist in Resources */ = {isa = PBXBuildFile; fileRef = A9A2D4461FADEA36007DC569 /* Secrets.plist */; };
+		A9A2D4491FADEA61007DC569 /* Secrets.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A2D4481FADEA61007DC569 /* Secrets.swift */; };
 		A9A3A2081BEBB443009BE8E1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A3A2071BEBB443009BE8E1 /* AppDelegate.swift */; };
 		A9A3A20A1BEBB443009BE8E1 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A3A2091BEBB443009BE8E1 /* SearchViewController.swift */; };
 		A9A3A20D1BEBB443009BE8E1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A9A3A20B1BEBB443009BE8E1 /* Main.storyboard */; };
@@ -41,6 +43,8 @@
 		A955139D1F86B6CA0041C52B /* Double+InRange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+InRange.swift"; sourceTree = "<group>"; };
 		A957A2301F841860006C95CD /* SearchDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchDataSource.swift; sourceTree = "<group>"; };
 		A957A2331F8418D6006C95CD /* Flickr.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Flickr.swift; sourceTree = "<group>"; };
+		A9A2D4461FADEA36007DC569 /* Secrets.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Secrets.plist; sourceTree = "<group>"; };
+		A9A2D4481FADEA61007DC569 /* Secrets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Secrets.swift; sourceTree = "<group>"; };
 		A9A3A2041BEBB443009BE8E1 /* FlickFinder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FlickFinder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A9A3A2071BEBB443009BE8E1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A9A3A2091BEBB443009BE8E1 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
@@ -73,6 +77,7 @@
 				A94286C21F83F10D0080CF17 /* Photo.swift */,
 				A94286C61F83F55C0080CF17 /* PhotoList.swift */,
 				A94286C41F83F1360080CF17 /* PhotoResponse.swift */,
+				A9A2D4481FADEA61007DC569 /* Secrets.swift */,
 				A9FF3D891F91A59B006FC420 /* Status.swift */,
 				A957A2321F8418CC006C95CD /* API */,
 				A94286C01F83F0180080CF17 /* Operations */,
@@ -180,6 +185,7 @@
 			isa = PBXGroup;
 			children = (
 				A9A3A2131BEBB443009BE8E1 /* Info.plist */,
+				A9A2D4461FADEA36007DC569 /* Secrets.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -243,6 +249,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A9A2D4471FADEA36007DC569 /* Secrets.plist in Resources */,
 				A9A3A20F1BEBB443009BE8E1 /* Assets.xcassets in Resources */,
 				A9FA133E1D1AB67C00B5F46E /* LaunchScreen.xib in Resources */,
 				A9A3A20D1BEBB443009BE8E1 /* Main.storyboard in Resources */,
@@ -256,6 +263,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A9A2D4491FADEA61007DC569 /* Secrets.swift in Sources */,
 				A955139B1F866F640041C52B /* ParseOperation.swift in Sources */,
 				A9FF3D881F917D89006FC420 /* FlickrError.swift in Sources */,
 				A955139E1F86B6CA0041C52B /* Double+InRange.swift in Sources */,
