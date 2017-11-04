@@ -14,7 +14,11 @@ The iOS Networking course teaches students how to use Apple's networking APIs fo
 - FlickFinder
 - TheMovieManager
 
-Each application has an initial and complete version that is fully implemented. For FlickFinder and TheMovieManager, special setup instructions are provided below:
+Each application has an initial and complete version that is fully implemented. Special setup instructions are provided below:
+
+## ImageRequest
+
+For the `UploadViewController` example, run the `UploadServer.command` file located alongside the Xcode project. By running this file, a server is started on the Desktop, and it awaits an image upload from the `UploadViewController`.
 
 ## FlickFinder
 
