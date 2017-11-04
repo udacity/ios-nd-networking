@@ -38,7 +38,7 @@ class ConnectivityViewController: ExampleViewController {
         configuration.waitsForConnectivity = true
         
         // create session and specify delegate
-        let session = URLSession(configuration: configuration)
+        let session = URLSession(configuration: configuration, delegate: self, delegateQueue: .main)
         
         // create task
         let task = session.dataTask(with: request) { (data, response, error) in
