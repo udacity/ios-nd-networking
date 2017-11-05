@@ -31,9 +31,9 @@ enum ImageRequest: String {
     var path: String {
         switch self {
         case .cat:
-            return "/wikipedia/commons/4/4d/Cat_November_2010-1a.jpg"
+            return "/topher/2017/November/59fe511b_cat/cat.jpg"
         case .dog:
-            return "/wikipedia/commons/e/ec/Terrier_mixed-breed_dog.jpg"
+            return "/topher/2017/November/59fe5124_terrier/terrier.jpg"
         }
     }
     
@@ -42,7 +42,7 @@ enum ImageRequest: String {
     var components: URLComponents {
         var components = URLComponents()
         components.scheme = "https"
-        components.host = "upload.wikimedia.org"
+        components.host = "d17h27t6h515a5.cloudfront.net"
         components.path = path
         return components
     }

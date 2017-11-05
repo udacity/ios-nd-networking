@@ -15,8 +15,8 @@ struct Constants {
     // MARK: - BasicRequest
     
     struct BasicRequest {
-        static let catURLString = "https://upload.wikimedia.org/wikipedia/commons/4/4d/Cat_November_2010-1a.jpg"
-        static let dogURLString = "https://upload.wikimedia.org/wikipedia/commons/e/ec/Terrier_mixed-breed_dog.jpg"
+        static let catURLString = "https://d17h27t6h515a5.cloudfront.net/topher/2017/November/59fe511b_cat/cat.jpg"
+        static let dogURLString = "https://d17h27t6h515a5.cloudfront.net/topher/2017/November/59fe5124_terrier/terrier.jpg"
     }
     
     // MARK: - Components
@@ -43,8 +43,8 @@ struct Constants {
     
     struct URLSession {
         static let scheme = "https"
-        static let host = "upload.wikimedia.org"
-        static let path = "/wikipedia/commons/c/cb/Bengal_Cat_Details_of_Face.jpeg"
+        static let host = "d17h27t6h515a5.cloudfront.net"
+        static let path = "/topher/2017/November/59fe5118_bigcat/bigcat.jpeg"
     }
     
     // MARK: - Upload
