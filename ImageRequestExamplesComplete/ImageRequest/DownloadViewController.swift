@@ -50,10 +50,11 @@ extension DownloadViewController: URLSessionDownloadDelegate {
     // MARK: URLSessionDownloadDelegate
     
     func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
-        // update UI on the main thread
-        if let downloadedImage = saveImage(withTemporaryURL: location) {
+        // "save file" by moving it to a permanent location (documents directory)
+        if let permanentURL = moveTempURLToPermanentURL(tempURL: location), let imageData = try? Data(contentsOf: permanentURL) {
+            // update UI on the main thread
             DispatchQueue.main.async {
-                self.imageView.image = downloadedImage
+                self.imageView.image = UIImage(data: imageData)
             }
         }
     }
@@ -63,7 +64,7 @@ extension DownloadViewController: URLSessionDownloadDelegate {
         print("\(downloadProgress * 100)% downloaded")
     }
     
-    func saveImage(withTemporaryURL temporaryURL: URL) -> UIImage? {
+    func moveTempURLToPermanentURL(tempURL: URL) -> URL? {
         // create file path
         guard let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else { return nil }
         let fileURL = documentsURL.appendingPathComponent("uploaded_image.jpg")
@@ -73,15 +74,13 @@ extension DownloadViewController: URLSessionDownloadDelegate {
             if FileManager.default.fileExists(atPath: fileURL.path) {
                 try FileManager.default.removeItem(at: fileURL)
             }
-            try FileManager.default.copyItem(at: temporaryURL, to: fileURL)
+            try FileManager.default.copyItem(at: tempURL, to: fileURL)
         } catch let error {
             print("error creating a file \(fileURL): \(error)")
             return nil
         }
         
-        // create image
-        guard let imageData = try? Data(contentsOf: fileURL) else { return nil }
-        return UIImage(data: imageData)
+        return fileURL
     }
     
     // MARK: URLSessionTaskDelegate
