@@ -51,7 +51,7 @@ extension DownloadViewController: URLSessionDownloadDelegate {
     
     func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
         // "save file" by moving it to a permanent location (documents directory)
-        if let permanentURL = moveTempURLToPermanentURL(tempURL: location), let imageData = try? Data(contentsOf: permanentURL) {
+        if let permanentURL = move(tempURL: location, toDocumentsWithName: "uploaded_image.jpg"), let imageData = try? Data(contentsOf: permanentURL) {
             // update UI on the main thread
             DispatchQueue.main.async {
                 self.imageView.image = UIImage(data: imageData)
@@ -64,10 +64,10 @@ extension DownloadViewController: URLSessionDownloadDelegate {
         print("\(downloadProgress * 100)% downloaded")
     }
     
-    func moveTempURLToPermanentURL(tempURL: URL) -> URL? {
+    func move(tempURL: URL, toDocumentsWithName name: String) -> URL? {
         // create file path
         guard let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else { return nil }
-        let fileURL = documentsURL.appendingPathComponent("uploaded_image.jpg")
+        let fileURL = documentsURL.appendingPathComponent(name)
         
         // remove existing file (if exists), then copy temporary file to documents directory
         do {
