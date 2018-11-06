@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<playground version='6.0' target-platform='ios' display-mode='raw'>
+    <pages>
+        <page name='Intro'/>
+        <page name='Arrays are Generic'/>
+        <page name='A Generic Function'/>
+        <page name='A Generic Type'/>
+        <page name='Subclass a Generic Type'/>
+        <page name='Multiple Generic Types'/>
+    </pages>
+</playground>

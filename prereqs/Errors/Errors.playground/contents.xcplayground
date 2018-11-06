@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<playground version='6.0' target-platform='ios' display-mode='raw'>
+    <pages>
+        <page name='Intro'/>
+        <page name='Handle Errors'/>
+        <page name='Propagate Errors'/>
+        <page name='The Many Faces of Try'/>
+        <page name='Error Handling Summary'/>
+        <page name='Create Custom Errors'/>
+        <page name='Describe Custom Errors'/>
+        <page name='Cleanup with Defer'/>
+    </pages>
+</playground>

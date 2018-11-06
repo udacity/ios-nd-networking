@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<playground version='6.0' target-platform='ios' display-mode='rendered'>
+    <pages>
+        <page name='JSON Review Exercise'/>
+        <page name='JSON Review Solution'/>
+        <page name='Coding Keys Exercise'/>
+        <page name='Coding Keys Solution'/>
+        <page name='Arrays Exercise'/>
+        <page name='Arrays Solution'/>
+        <page name='Nested Objects Exercise'/>
+        <page name='Nested Objects Solution\'/>
+        <page name='Accessing Keys and Values'/>
+    </pages>
+</playground>
