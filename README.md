@@ -8,15 +8,17 @@ This repository contains resources for Udacity's iOS Networking with Swift cours
 
 ## Overview
 
-iOS Networking teaches foundational principles of networking and how they are applied in an iOS-context. The course uses a series of example applications as demonstrations:
+iOS Networking teaches foundational principles of networking and how they are applied in an iOS-context. The course uses a series of example applications and playgrounds as demonstrations:
 
+- Prereqs (associated values, errors, generics, guards)
+- URLPlayground
 - ImageRequest
-- SleepingInTheLibrary
-- FlickFinder
-- MyFavoriteMovies
+- Randog
+- HouseJSON
+- JSONParsingExercises
 - TheMovieManager
 
-Each application has a corresponding "complete" version which is already fully-implemented. Also, TheMovieManger has two versions: one with and without a seperate "API client".
+Each application has a "complete" version which is already fully-implemented.
 
 ## Setup
 
@@ -24,4 +26,4 @@ Generally speaking, most projects can run without any additional setup. However,
 
 ## Maintainers
 
-@jarrodparkes
+@OwenLaRosa
