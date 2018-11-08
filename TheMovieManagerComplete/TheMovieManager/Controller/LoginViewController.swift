@@ -24,10 +24,12 @@ class LoginViewController: UIViewController {
     }
     
     @IBAction func loginTapped(_ sender: UIButton) {
+        setLoggingIn(true)
         TMDBClient.getRequestToken(completion: handleRequestTokenResponse(success:error:))
     }
     
     @IBAction func loginViaWebsiteTapped() {
+        setLoggingIn(true)
         TMDBClient.getRequestToken() { success, error in
             if success {
                 UIApplication.shared.open(TMDBClient.Endpoints.webAuth.url, options: [:], completionHandler: nil)
@@ -47,17 +49,17 @@ class LoginViewController: UIViewController {
     
     func handleLoginResponse(success: Bool, error: Error?) {
         if success {
-            TMDBClient.createSessionId(completion: handleSessionIdResponse(success:error:))
+            TMDBClient.createSessionId(completion: handleSessionResponse(success:error:))
         } else {
             showLoginFailure(message: error?.localizedDescription ?? "")
         }
     }
     
-    func handleSessionIdResponse(success: Bool, error: Error?) {
+    func handleSessionResponse(success: Bool, error: Error?) {
+        setLoggingIn(false)
         if success {
             performSegue(withIdentifier: "completeLogin", sender: nil)
         } else {
-            setLoggingIn(false)
             showLoginFailure(message: error?.localizedDescription ?? "")
         }
     }
