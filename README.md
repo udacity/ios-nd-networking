@@ -20,6 +20,10 @@ iOS Networking teaches foundational principles of networking and how they are ap
 
 Each application has a "complete" version which is already fully-implemented.
 
+## Movie Manager Challenge
+
+The issue tracker has many issues tagged `moviemanagerchallenge`. These are challenges presented at the end of "Lesson 7: Common Networking Challenges". While not intended to be "fixed" in the completed version of the Movie Manager, you're welcome to share your approach on how you addressed them on the individual issues.
+
 ## Setup
 
 Generally speaking, most projects can run without any additional setup. However, consult the iOS Networking with Swift course for more information.
