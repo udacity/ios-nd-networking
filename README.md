@@ -22,7 +22,7 @@ Each application has a "complete" version which is already fully-implemented.
 
 ## Movie Manager Challenge
 
-The issue tracker has many issues tagged `moviemanagerchallenge`. These are challenges presented at the end of "Lesson 7: Common Networking Challenges". While not intended to be "fixed" in the completed version of the Movie Manager, you're welcome to share your approach on how you addressed them on the individual issues.
+The issue tracker has many issues labeled `moviemanagerchallenge`. These are challenges presented at the end of "Lesson 7: Common Networking Challenges". While not intended to be "fixed" in the completed version of the Movie Manager, you're welcome to share your approach on how you addressed them on the individual issues.
 
 ## Setup
 
