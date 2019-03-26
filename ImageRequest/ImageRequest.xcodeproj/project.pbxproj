@@ -120,6 +120,7 @@
 				TargetAttributes = {
 					23CD4E5D216FE45E00541164 = {
 						CreatedOnToolsVersion = 10.0;
+						LastSwiftMigration = 1020;
 					};
 				};
 			};
@@ -314,7 +315,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.udacity.ImageRequest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -331,7 +332,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.udacity.ImageRequest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
